@@ -14,15 +14,15 @@ Die Dokumentation enthält u.a. folgende Punkte:
 4. Implementierung (Softwarearchitektur, wichtigste Klassen, wie könnten wir Code erweitern (z.B. neue APIs), ...)
 5. Probleme/Lösungen (Welche Probleme sind euch bekannt/wie kann man die beheben?, Bekannte Fehlermeldungen, wichtige Einstellungen, etc.)
 6. Reflexion (Was hat gut funktioniert?, Was weniger?, Was könnte man beim nächsten Mal besser machen?, Ausblick für potenzielle Folgeprojekte, ...)
-6.1. Individuelle Reflexion (Bitte jede(r) individuell die eigene Arbeit und die eigene Rolle im Team reflektieren - max 1/2 Seite pro Person)
+   1. Individuelle Reflexion (Bitte jede(r) individuell die eigene Arbeit und die eigene Rolle im Team reflektieren - max 1/2 Seite pro Person)
 7. **Deployment** (Wie kann eine komplett unwissende Person das Projekt wie es hier im GitLab vorliegt das Projekt in Betrieb nehmen)
-7.1 Zur Projektzeit verwendete Hardware
-7.2 Softwareanforderungen/Unity-Version/Accounts für APIs/...?
-7.3 Wo müssen im Projekt Anpassungen durchgeführt werden für den Einsatz z.B. IP-Adressen in Config-Datei o.ä.)
+   1. Zur Projektzeit verwendete Hardware
+   2. Softwareanforderungen/Unity-Version/Accounts für APIs/...?
+   3. Wo müssen im Projekt Anpassungen durchgeführt werden für den Einsatz z.B. IP-Adressen in Config-Datei o.ä.)
 
 Alle Punkte in der neutralen Form geschrieben, Punkt 6 kann in der Ich/Wir-Form geschrieben werden.
 
-Dokumentation kann im Wiki vom Repro erstellt werden, abgegeben werden muss als eine PDF-Datei (Kapitel 1-6)
+Dokumentation kann im Wiki vom Repo erstellt werden, abgegeben werden muss als eine PDF-Datei (Kapitel 1-6)
 ZUSÄTZLICH **Deployment** als eine eigene Datei (Kapitel 7)
 
 Dokumentation des Projektes im Ordner
@@ -46,6 +46,7 @@ Für das Projekt soll eine geeignete Lizenz gewählt werden, welche sowohl die N
 Dokumentation der Lizenzen im Ordner
 /Lizenzen
 
+
 ## Abgabe
 
 Ansonsten möchten wir am Ende:
@@ -53,7 +54,8 @@ Einen Ordner (z.B. als .zip) mit dem fertigen Build (wenn anwendbar, z.B. .apk)
 /Build
 
 Ins Gitlab: finale Codeversion inkl. verständlicher Readme und .gitignore (die ihr hoffentlich bereits habt ;))
-- Kurzbeschreibung in den Einstellungen im Repro, bei mehreren Repros (z.B. für verschiedene Komponenten), nachvollziehbare Reprobezeichnung basierend auf der Bezeichnung von diesem Repro.
+- Kurzbeschreibung in den Einstellungen im Repo, bei mehreren Repos (z.B. für verschiedene Komponenten), nachvollziehbare Repobezeichnung basierend auf der Bezeichnung von diesem Repo.
+
 
 ## Sonstiges
 Vergesst auch nicht die Rückgabe der ausgeliehenen Hardware 
@@ -62,22 +64,19 @@ Vergesst auch nicht die Rückgabe der ausgeliehenen Hardware
 - Entfernt aus alles Device-Portalen, z.B. bei Apple
 - Kein eigen-gesetztes Passwort
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
-.
 ----
-**Im folgenden die Original-readME zum Einstieg in dieses Repro:**
+**Im folgenden die Original-readME zum Einstieg in dieses Repo:**
 
 ## Getting started
 
