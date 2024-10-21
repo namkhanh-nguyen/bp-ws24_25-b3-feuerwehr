@@ -49,21 +49,21 @@ Für die Präsentation der im Rahmen vom FKI/FG Creative Media begleiteten Proje
 Für sehr große Daten kann auf Nachfrage ein Nextcloud-Ordner als Cloudspeicher der Forschungsgruppe zur Verfügung gestellt werden.
 
 Medien des Projektes im Ordner
-<br>**/media**
+<br>(/media)[/media]
 
 
 ## Lizenz
 Für das Projekt soll eine geeignete Lizenz gewählt werden, welche sowohl die Nutzung, als auch die Weiterentwicklung des Projektes ermöglichen. Darüber hinaus soll dokumentiert werden welche Lizenzen ggf. verwendet bzw. benötigt werden für eingesetzte externe Ressourcen (Assets, API-Zugänge etc.). Damit soll sichergestellt werden, dass bekannt ist welchen Lizenzeinschränkungen das Projekt unterliegt oder welche Lizenzen für eine weitere Verwendung in Anspruch genommen werden müssen.
 
 Dokumentation der Lizenzen im Ordner
-<br>**/licence**
+<br>(/licence)[/licence]
 
 
 ## Abgabe
 
 Ansonsten möchten wir am Ende:
 Einen Ordner (z.B. als .zip) mit dem fertigen Build (wenn anwendbar, z.B. .apk)
-<br>**/build**
+<br>(/build)[/build]
 
 Ins Gitlab: finale Codeversion inkl. verständlicher Readme und .gitignore (die ihr hoffentlich bereits habt ;))
 - Kurzbeschreibung in den Einstellungen im Repo, bei mehreren Repos (z.B. für verschiedene Komponenten), nachvollziehbare Repobezeichnung basierend auf der Bezeichnung von diesem Repo.
