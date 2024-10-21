@@ -9,7 +9,7 @@ Sollten für ein Projekt mehrere Repros benötigt werden, z.B. weil ein Projekt 
 
 
 Ordner für die Entwicklungsarbeiten:
-<br>[/development]
+<br>(/development)
 
 
 ## Dokumentation
