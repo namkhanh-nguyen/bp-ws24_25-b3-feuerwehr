@@ -10,12 +10,13 @@ Die Dokumentation enthält u.a. folgende Punkte:
 
 1. Allgemeines (Teamvorstellung (inkl. Studi-Mailadressen), Worum ging es in dem Projekt, Link zur Showtimewebseite, ...)
 2. Prozess (Projekt-Meilensteine, genutzte UND verworfene Konzepte/Technologien (gerne mit Links), technische Herausforderungen, ...)
-3. Wichtigste Rechercheergebnisse (eingeflossene Publikationen etc.)
-4. Implementierung (Softwarearchitektur, wichtigste Klassen, wie könnten wir Code erweitern (z.B. neue APIs), ...)
-5. Probleme/Lösungen (Welche Probleme sind euch bekannt/wie kann man die beheben?, Bekannte Fehlermeldungen, wichtige Einstellungen, etc.)
-6. Reflexion (Was hat gut funktioniert?, Was weniger?, Was könnte man beim nächsten Mal besser machen?, Ausblick für potenzielle Folgeprojekte, ...)
+3. Konzeptentwicklung und Konzeptergebnis
+4. Wichtigste Rechercheergebnisse (eingeflossene Publikationen etc., Darstellung von MockUps etc.)
+5. Implementierung (Softwarearchitektur, wichtigste Klassen, wie könnten wir Code erweitern (z.B. neue APIs), ...)
+6. Probleme/Lösungen (Welche Probleme sind euch bekannt/wie kann man die beheben?, Bekannte Fehlermeldungen, wichtige Einstellungen, etc.)
+7. Reflexion (Was hat gut funktioniert?, Was weniger?, Was könnte man beim nächsten Mal besser machen?, Ausblick für potenzielle Folgeprojekte, ...)
    1. Individuelle Reflexion (Bitte jede(r) individuell die eigene Arbeit und die eigene Rolle im Team reflektieren - max 1/2 Seite pro Person)
-7. **Deployment** (Wie kann eine komplett unwissende Person das Projekt wie es hier im GitLab vorliegt das Projekt in Betrieb nehmen)
+8. **Deployment** (Wie kann eine komplett unwissende Person das Projekt wie es hier im GitLab vorliegt das Projekt in Betrieb nehmen)
    1. Zur Projektzeit verwendete Hardware
    2. Softwareanforderungen/Unity-Version/Accounts für APIs/...?
    3. Wo müssen im Projekt Anpassungen durchgeführt werden für den Einsatz z.B. IP-Adressen in Config-Datei o.ä.)
@@ -35,6 +36,8 @@ Für die Präsentation der im Rahmen vom FKI/FG Creative Media begleiteten Proje
 - Kurze Beschreibung des Projektes (1-2 Absätze)
 - Nachvollziehbare Bilder (Screenshots, Fotos der Showtime, ggf. relevante technische Bilder)
 - Wenn für die Showtime angefertigt: Vorstellungsvideo des Projektes, Posterdateien etc.
+
+Für sehr große Daten kann auf Nachfrage ein Nextcloud-Ordner als Cloudspeicher der Forschungsgruppe zur Verfügung gestellt werden.
 
 Medien des Projektes im Ordner
 /Medien
