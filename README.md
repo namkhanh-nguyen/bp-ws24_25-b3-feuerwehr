@@ -1,6 +1,71 @@
 # BP WS24_25-B3 Feuerwehr-SocialMedia
 
+Hier finden sich grundlegende Angaben zu den Abgaben, welche im Rahmen des obben genannten IMI-Projektes am Ende des Bearbeitungszeitraumes den Betreuern zur Verfügung gestellt werden müssen um eine Bewertung des Projektes zu ermöglichen.
 
+
+## Dokumentation
+Für den Abschluss des Projektes soll eine Dokumentation erstellt werden, diese dient sowohl der Dokumentation des Projektprozesses, als auch der Dokumentation der verwendete Technologien, benutzten Ressourcen und Anleitung zum Aufsetzen des Projektes (Deployment-Sheet).
+
+Die Dokumentation enthält u.a. folgende Punkte:
+
+1. Allgemeines (Teamvorstellung (inkl. Studi-Mailadressen), Worum ging es in dem Projekt, Link zur Showtimewebseite, ...)
+2. Prozess (Projekt-Meilensteine, genutzte UND verworfene Konzepte/Technologien (gerne mit Links), technische Herausforderungen, ...)
+3. Wichtigste Rechercheergebnisse (eingeflossene Publikationen etc.)
+4. Implementierung (Softwarearchitektur, wichtigste Klassen, wie könnten wir Code erweitern (z.B. neue APIs), ...)
+5. Probleme/Lösungen (Welche Probleme sind euch bekannt/wie kann man die beheben?, Bekannte Fehlermeldungen, wichtige Einstellungen, etc.)
+6. Reflexion (Was hat gut funktioniert?, Was weniger?, Was könnte man beim nächsten Mal besser machen?, Ausblick für potenzielle Folgeprojekte, ...)
+6.1. Individuelle Reflexion (Bitte jede(r) individuell die eigene Arbeit und die eigene Rolle im Team reflektieren - max 1/2 Seite pro Person)
+7. **Deployment** (Wie kann eine komplett unwissende Person das Projekt wie es hier im GitLab vorliegt das Projekt in Betrieb nehmen)
+7.1 Zur Projektzeit verwendete Hardware
+7.2 Softwareanforderungen/Unity-Version/Accounts für APIs/...?
+7.3 Wo müssen im Projekt Anpassungen durchgeführt werden für den Einsatz z.B. IP-Adressen in Config-Datei o.ä.)
+
+Alle Punkte in der neutralen Form geschrieben, Punkt 6 kann in der Ich/Wir-Form geschrieben werden.
+
+Dokumentation kann im Wiki vom Repro erstellt werden, abgegeben werden muss als eine PDF-Datei (Kapitel 1-6)
+ZUSÄTZLICH **Deployment** als eine eigene Datei (Kapitel 7)
+
+Dokumentation des Projektes im Ordner
+/Dokumentation
+
+
+## Medien
+Für die Präsentation der im Rahmen vom FKI/FG Creative Media begleiteten Projekte sollen passende Medien in einem getrennten Ordner zur Verfügung gestellt werden. Diese müssen unter einer zeitlich unbeschränkten Nutzungslizenz zur nicht-commerziellen Präsentation und Vervielfälltigung stehen, u.a. damit sie aufexterne Datenträger für Präsentationen kopiert werden dürfen.
+
+- Kurze Beschreibung des Projektes (1-2 Absätze)
+- Nachvollziehbare Bilder (Screenshots, Fotos der Showtime, ggf. relevante technische Bilder)
+- Wenn für die Showtime angefertigt: Vorstellungsvideo des Projektes, Posterdateien etc.
+
+Medien des Projektes im Ordner
+/Medien
+
+
+## Lizenz
+Für das Projekt soll eine geeignete Lizenz gewählt werden, welche sowohl die Nutzung, als auch die Weiterentwicklung des Projektes ermöglichen. Darüber hinaus soll dokumentiert werden welche Lizenzen ggf. verwendet bzw. benötigt werden für eingesetzte externe Ressourcen (Assets, API-Zugänge etc.). Damit soll sichergestellt werden, dass bekannt ist welchen Lizenzeinschränkungen das Projekt unterliegt oder welche Lizenzen für eine weitere Verwendung in Anspruch genommen werden müssen.
+
+Dokumentation der Lizenzen im Ordner
+/Lizenzen
+
+## Abgabe
+
+Ansonsten möchten wir am Ende:
+Einen Ordner (z.B. als .zip) mit dem fertigen Build (wenn anwendbar, z.B. .apk)
+/Build
+
+Ins Gitlab: finale Codeversion inkl. verständlicher Readme und .gitignore (die ihr hoffentlich bereits habt ;))
+- Kurzbeschreibung in den Einstellungen im Repro, bei mehreren Repros (z.B. für verschiedene Komponenten), nachvollziehbare Reprobezeichnung basierend auf der Bezeichnung von diesem Repro.
+
+## Sonstiges
+Vergesst auch nicht die Rückgabe der ausgeliehenen Hardware 
+- Zurückgesetzt, ohne persönliche Accounts
+- Lauffähige Version kann nach Rücksprache auf dem Gerät verbleiben
+- Entfernt aus alles Device-Portalen, z.B. bei Apple
+- Kein eigen-gesetztes Passwort
+
+
+
+----
+Im folgenden die Original-readME zum Einstieg in dieses Repro:
 
 ## Getting started
 
@@ -57,37 +122,3 @@ Choose a self-explaining name for your project.
 
 ## Description
 Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
