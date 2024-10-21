@@ -33,10 +33,13 @@ Die Dokumentation enthält u.a. folgende Punkte:
 Alle Punkte in der neutralen Form geschrieben, Punkt 6 kann in der Ich/Wir-Form geschrieben werden.
 
 Dokumentation kann im Wiki vom Repo erstellt werden, abgegeben werden muss als eine PDF-Datei (Kapitel 1-6)
-ZUSÄTZLICH **Deployment** als eine eigene Datei (Kapitel 7)
+<br>ZUSÄTZLICH **Deployment** als eine eigene Datei (Kapitel 7)
 
-Dokumentation des Projektes im Ordner
+Ordner für die Dokumentation des Projektes:
 <br>[/documentation](/documentation)
+
+Wiki des Projektes:
+<br>[/-/wikis/home](/-/wikis/home)
 
 
 ## Medien
