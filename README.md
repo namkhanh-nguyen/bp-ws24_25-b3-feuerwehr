@@ -9,7 +9,7 @@ Sollten für ein Projekt mehrere Repros benötigt werden, z.B. weil ein Projekt 
 
 
 Ordner für die Entwicklungsarbeiten:
-<br>(/development)
+<br>[/development](/development) 
 
 
 ## Dokumentation
@@ -36,7 +36,7 @@ Dokumentation kann im Wiki vom Repo erstellt werden, abgegeben werden muss als e
 ZUSÄTZLICH **Deployment** als eine eigene Datei (Kapitel 7)
 
 Dokumentation des Projektes im Ordner
-<br>**/documentation**
+<br>(/documentation)[/documentation]
 
 
 ## Medien
