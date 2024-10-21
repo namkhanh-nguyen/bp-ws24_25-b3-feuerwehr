@@ -1,6 +1,15 @@
 # BP WS24_25-B3 Feuerwehr-SocialMedia
 
-Hier finden sich grundlegende Angaben zu den Abgaben, welche im Rahmen des obben genannten IMI-Projektes am Ende des Bearbeitungszeitraumes den Betreuern zur Verfügung gestellt werden müssen um eine Bewertung des Projektes zu ermöglichen.
+Hier finden sich grundlegende Angaben zu den Abgaben, welche im Rahmen des oben genannten IMI-Projektes am Ende des Bearbeitungszeitraumes den Betreuern zur Verfügung gestellt werden müssen um eine Bewertung des Projektes zu ermöglichen.
+
+## Entwicklung
+Die Entwicklungsarbeit soll gesammelt im dafür vorgesehenen Ordner abgelegt werden. Dabei ist darauf zu achten, dass eine passende .gitignore-Datei verwendet wird um unnötige Uploads wie z.B. Build-Ordner zu vermeiden. Für verschiedene Projekte, wie z.B. Unity-Projekte, findet man entsprechende .gitignore-Vorlagen im Netz.
+
+Sollten für ein Projekt mehrere Repros benötigt werden, z.B. weil ein Projekt aus mehreren Komponenten besteht, können für das Projekt eine Projektgruppe mit mehreren Repros angelegt werden. In den Beschreibungen muss dann klargestellt werden welches das Hauptrepro mit der Dokumentation und diesem Dokument ist.
+
+
+Ordner für die Entwicklungsarbeiten:
+<br>**/development**
 
 
 ## Dokumentation
@@ -27,7 +36,7 @@ Dokumentation kann im Wiki vom Repo erstellt werden, abgegeben werden muss als e
 ZUSÄTZLICH **Deployment** als eine eigene Datei (Kapitel 7)
 
 Dokumentation des Projektes im Ordner
-/Dokumentation
+<br>**/documentation**
 
 
 ## Medien
@@ -40,21 +49,21 @@ Für die Präsentation der im Rahmen vom FKI/FG Creative Media begleiteten Proje
 Für sehr große Daten kann auf Nachfrage ein Nextcloud-Ordner als Cloudspeicher der Forschungsgruppe zur Verfügung gestellt werden.
 
 Medien des Projektes im Ordner
-/Medien
+<br>**/media**
 
 
 ## Lizenz
 Für das Projekt soll eine geeignete Lizenz gewählt werden, welche sowohl die Nutzung, als auch die Weiterentwicklung des Projektes ermöglichen. Darüber hinaus soll dokumentiert werden welche Lizenzen ggf. verwendet bzw. benötigt werden für eingesetzte externe Ressourcen (Assets, API-Zugänge etc.). Damit soll sichergestellt werden, dass bekannt ist welchen Lizenzeinschränkungen das Projekt unterliegt oder welche Lizenzen für eine weitere Verwendung in Anspruch genommen werden müssen.
 
 Dokumentation der Lizenzen im Ordner
-/Lizenzen
+<br>**/licence**
 
 
 ## Abgabe
 
 Ansonsten möchten wir am Ende:
 Einen Ordner (z.B. als .zip) mit dem fertigen Build (wenn anwendbar, z.B. .apk)
-/Build
+<br>**/build**
 
 Ins Gitlab: finale Codeversion inkl. verständlicher Readme und .gitignore (die ihr hoffentlich bereits habt ;))
 - Kurzbeschreibung in den Einstellungen im Repo, bei mehreren Repos (z.B. für verschiedene Komponenten), nachvollziehbare Repobezeichnung basierend auf der Bezeichnung von diesem Repo.
