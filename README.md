@@ -39,7 +39,7 @@ Ordner für die Dokumentation des Projektes:
 <br>[/documentation](/documentation)
 
 Wiki des Projektes:
-<br>[../../wikis/home](/-/wikis/home)
+<br>[/-/wikis/home](../../wikis/home)
 
 
 ## Medien
