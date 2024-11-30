@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import React from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,13 +26,20 @@ export default function RootLayout({
 }>) {
   return (
       <html lang="en">
-      <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-      <header>
-        <img src="/public/header/Berliner-Feuerwehr-Logo.png" alt="Berliner Feuerwehr Logo"/>
-      </header>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+
+      <a href="/">
+        <header>
+          <img
+              src="https://res.cloudinary.com/dassgyrzu/image/upload/v1732989923/Berliner_Feuerwehr_qd9nry.png"
+              alt="Berliner Feuerwehr Logo"
+              style={{width: "300px", height: "auto", padding: "15px"}}
+          />
+        </header>
+      </a>
+
       {children}
+
       </body>
       </html>
   );
