@@ -1,9 +1,13 @@
 // index.js
 
 const express = require('express');
+const cors = require('cors');  // Import the CORS package
 
 const index = express();
 const PORT = 4000;
+
+// Enable CORS
+index.use(cors());
 
 // Middleware to parse JSON bodies
 index.use(express.json());
@@ -23,7 +27,7 @@ index.post('/data', (req, res) => {
 
 // Route to send data
 index.get('/data', (req, res) => {
-    const dataToSend = { message: 'Hello from server!' };
+    const dataToSend = {message: 'Hello from server!'};
     res.status(200).json(dataToSend);
 });
 
