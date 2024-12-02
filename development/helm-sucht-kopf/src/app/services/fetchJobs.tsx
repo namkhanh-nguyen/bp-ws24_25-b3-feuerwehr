@@ -1,10 +1,10 @@
 /**
- * Endpoint to access job data from any API
+ * Endpoint to access job data from API
  */
 
 export async function fetchJobs() {
   try {
-    const response = await fetch('http://localhost:8080/jobs')
+    const response = await fetch('http://localhost:4000/jobs')
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`)
