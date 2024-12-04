@@ -43,7 +43,8 @@ export default function RootLayout({
                   }}
               />
           </a>
-          <span style={{
+          <a href="/">
+            <span style={{
               color: "red",
               marginLeft: "0px",
               fontSize: "200%",
@@ -51,9 +52,10 @@ export default function RootLayout({
               verticalAlign: "middle",
               fontWeight: "bold",
               fontFamily: "Inter, sans-serif"
-          }}>
-            Karriere
+            }}>
+                Karriere
             </span>
+          </a>
       </header>
 
       {children}
