@@ -31,17 +31,29 @@ export default function RootLayout({
 
 
       <header>
-          <a href="/" style={{display: "inline-block"}}>
+          <a href="/" style={{display: "inline-block", verticalAlign: "middle"}}>
               <img
-                  src="https://res.cloudinary.com/dassgyrzu/image/upload/v1732989923/Berliner_Feuerwehr_qd9nry.png"
+                  src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733327873/Berliner-Feuerwehr-Logo_wgpm1l.png"
                   alt="Berliner Feuerwehr Logo"
                   style={{
-                      width: "300px",
+                      width: "100px",
                       height: "auto",
-                      padding: "15px"
+                      padding: "15px",
+                      verticalAlign: "middle"
                   }}
               />
           </a>
+          <span style={{
+              color: "red",
+              marginLeft: "0px",
+              fontSize: "200%",
+              padding: "5px 10px",
+              verticalAlign: "middle",
+              fontWeight: "bold",
+              fontFamily: "Inter, sans-serif"
+          }}>
+            Karriere
+            </span>
       </header>
 
       {children}
