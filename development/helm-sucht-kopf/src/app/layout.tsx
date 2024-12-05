@@ -4,15 +4,16 @@ import "./globals.css";
 import React from "react";
 import Image from "next/image";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const berlinTypeWebRegular = localFont({
+    src: "./fonts/BerlinTypeWeb-Regular.woff",
+    variable: "--font-berlin-type-regular",
+    weight: "400 400",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const berlinTypeWebBold = localFont({
+    src: "./fonts/BerlinTypeWeb-Bold.woff",
+    variable: "--font-berlin-type-bold",
+    weight: "700 700",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
       <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${berlinTypeWebRegular.variable} ${berlinTypeWebBold.variable} antialiased`}>
 
 
       <header>
@@ -43,7 +44,8 @@ export default function RootLayout({
                   }}
               />
           </a>
-          <span style={{
+          <a href="/">
+            <span style={{
               color: "red",
               marginLeft: "0px",
               fontSize: "200%",
@@ -51,9 +53,10 @@ export default function RootLayout({
               verticalAlign: "middle",
               fontWeight: "bold",
               fontFamily: "Inter, sans-serif"
-          }}>
-            Karriere
+            }}>
+                Karriere
             </span>
+          </a>
       </header>
 
       {children}
