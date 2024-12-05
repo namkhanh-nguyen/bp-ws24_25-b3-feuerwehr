@@ -14,9 +14,11 @@ index.use(express.json());
 
 // Import the jobs route
 const jobsRoute = require('./routes/jobs');
+const quizRoute = require('./routes/quiz');
 
 // Use the jobs route with the base path '/jobs'
 index.use('/jobs', jobsRoute);
+index.use('/quiz', quizRoute);
 
 // Route to receive data
 index.post('/data', (req, res) => {
