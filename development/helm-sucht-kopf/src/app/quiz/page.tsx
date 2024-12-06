@@ -5,7 +5,7 @@ import styles from './quiz.module.css';
 import { quizData } from './quizData';
 import { fetchJobs } from '../services/fetchJobs';
 
-const Quiz = ()git => {
+const Quiz = () => {
 
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'results'>('intro');
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
