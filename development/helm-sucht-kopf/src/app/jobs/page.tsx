@@ -15,12 +15,11 @@ const filters = [
     // TODO: Filter by misc factors
 ];
 
-export default function jobsPage() {
+export default function JobsPage() {
     const [jobs, setJobs] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    const router = useRouter();
-
+    useRouter();
     useEffect(() => {
         const getJobs = async () => {
             const data = await fetchJobs();
@@ -57,20 +56,25 @@ export default function jobsPage() {
                     Laufbahn.
                 </p>
                 <div style={{display: 'flex', justifyContent: 'center', marginTop: '2rem'}}>
-                    <button style={{
-                        padding: '0.5rem',
-                        backgroundColor: 'var(--red-primary)',
-                        color: 'white',
-                        borderRadius: '1.5rem',
-                        fontFamily: 'var(--font-berlin-type-bold)',
-                        fontSize: '1.2rem'
-                    }} className="w-full md:w-[20%]">
+                    <button
+                        onClick={() => window.location.href = '/quiz'}
+                        style={{
+                            padding: '0.5rem',
+                            backgroundColor: 'var(--red-primary)',
+                            color: 'white',
+                            borderRadius: '1.5rem',
+                            fontFamily: 'var(--font-berlin-type-bold)',
+                            fontSize: '1.2rem'
+                        }}
+                        className="w-full md:w-[20%]"
+                    >
                         Zum Navigator
                     </button>
                 </div>
-            </div>
+            
+        </div>
 
-            <div className="flex md:flex-row flex-col">
+    <div className="flex md:flex-row flex-col">
                 <div style={{
                     flexShrink: '0',
                     padding: '20px',
@@ -91,7 +95,8 @@ export default function jobsPage() {
                     }}>
                         Ergebnisse: {filteredJobs.length}
                     </div>
-                    <div className="block p-2">
+                    <div className="block p-2"
+                    >
                         <select
                             value={selectedFilters[0] || ""}
                             onChange={(e) => setSelectedFilters([e.target.value])}
@@ -99,7 +104,7 @@ export default function jobsPage() {
                         >
                             <option value="" disabled>Schulabschluss</option>
                             {filters.map(({key, label}) => (
-                                <option key={key} value={key} className="p-2">
+                                <option key={key} value={key} className="p-2" >
                                     {label}
                                 </option>
                             ))}
@@ -210,8 +215,8 @@ export default function jobsPage() {
                                 className="job-card flex flex-col md:flex-row md:items-center mt-8
                                 space-x-4 border rounded-lg relative hover:border-transparent"
                             >
-                                <a href={`/jobs/${slug}`}>
                                     <img
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
                                         src={imageUrl}
                                         alt={name}
                                         className="job-image w-full md:w-80 rounded-t-lg md:rounded-l-lg md:rounded-tr-none rounded-bl-none"
@@ -219,7 +224,6 @@ export default function jobsPage() {
                                             cursor: 'pointer'
                                         }}
                                     />
-                                </a>
 
                                 <div className="flex flex-col justify-between flex-grow relative">
                                     <h3
@@ -270,8 +274,8 @@ export default function jobsPage() {
                                     }}
                                 >
                                     <p>{description}</p>
-                                    <a href={`/jobs/${slug}`}>
                                         <span
+                                            onClick={() => window.location.href = `/jobs/${slug}`}
                                             style={{
                                                 marginTop: '0.5rem',
                                                 paddingBottom: '0.5rem',
@@ -282,13 +286,12 @@ export default function jobsPage() {
                                         >
                                             Mehr Infos
                                         </span>
-                                    </a>
                                 </div>
                                 <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg mt-2"
                                      style={{width: '85%'}}>
                                     <p style={{fontSize: '85%'}}>{description}</p>
-                                    <a href={`/jobs/${slug}`}>
                                         <span
+                                            onClick={() => window.location.href = `/jobs/${slug}`}
                                             style={{
                                                 marginTop: '0.5rem',
                                                 fontSize: '85%',
@@ -300,7 +303,6 @@ export default function jobsPage() {
                                         >
                                             Mehr Infos
                                         </span>
-                                    </a>
                                 </div>
                             </div>
                         ))}
