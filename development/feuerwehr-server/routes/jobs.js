@@ -33,9 +33,8 @@ const jobsData = [
         id: 4,
         name: '112 Direkt Plus',
         slug: '112-direkt-plus',
-        description: 'Die Ausbildung erfolgt in zwei Teilen. Sie erlernen zunächst einen staatlich anerkannten Handwerksberuf. ' +
-            'Nach Abschluss der Berufsausbildung absolvieren Sie den Vorbereitungsdienst in der Beamtenlaufbahn des mittleren ' +
-            'feuerwehrtechnischen Dienstes',
+        description: 'Nach Abschluss der Berufsausbildung absolvieren Sie den Vorbereitungsdienst ' +
+            'in der Beamtenlaufbahn des mittleren feuerwehrtechnischen Dienstes',
         tags: ['bbr'],
         imageUrl: 'https://res.cloudinary.com/dassgyrzu/image/upload/v1730818439/112_Direkt_Plus_rtn7ak.png'
     },

@@ -20,6 +20,7 @@ export default function jobsPage() {
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const router = useRouter();
+
     useEffect(() => {
         const getJobs = async () => {
             const data = await fetchJobs();
@@ -27,14 +28,17 @@ export default function jobsPage() {
         };
         getJobs().then(r => console.log(r));
     }, []);
+
     const handleFilterChange = (filter: string) => {
         setSelectedFilters(prev =>
             prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
         );
     };
+
     const handleReset = () => {
         setSelectedFilters([]);
     };
+
     const filteredJobs = jobs.filter((job: { tags: string[] }) =>
         selectedFilters.every(filter => job.tags.includes(filter))
     );
@@ -114,7 +118,7 @@ export default function jobsPage() {
                             }}
                             onClick={() => setIsFiltersVisible(true)}
                         >
-                            Filters
+                            Filtern
                         </button>
                     </div>
                     {isFiltersVisible && (
@@ -169,13 +173,16 @@ export default function jobsPage() {
                             <div
                                 key={id}
                                 className="job-card flex flex-col md:flex-row md:items-center mt-8
-                                space-x-4 cursor-pointer border rounded-lg relative"
-                                onClick={() => router?.push(`/jobs/${slug}`)}
+                                space-x-4 border rounded-lg relative hover:border-transparent"
                             >
                                 <img
                                     src={imageUrl}
                                     alt={name}
                                     className="job-image w-full md:w-80 rounded-t-lg md:rounded-l-lg md:rounded-tr-none rounded-bl-none"
+                                    style={{
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={() => router?.push(`/jobs/${slug}`)}
                                 />
                                 <div className="flex flex-col justify-between flex-grow relative">
                                     <h3
@@ -188,7 +195,8 @@ export default function jobsPage() {
                                             marginTop: '1rem',
                                             overflowWrap: 'break-word',
                                             wordBreak: 'break-all',
-                                            paddingBottom: '1rem'}}
+                                            paddingBottom: '1rem'
+                                        }}
                                     >
                                         {name}</h3>
                                     <div className="md:hidden"
@@ -211,8 +219,32 @@ export default function jobsPage() {
                                     </div>
                                 </div>
                                 <div
-                                    className="hidden md:block absolute top-0 left-0 w-full h-full bg-white opacity-0 hover:opacity-100 transition-opacity rounded-lg p-4 text-sm">
+                                    className="hidden md:block opacity-0 hover:opacity-100 transition-opacity"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '0px',
+                                        left: '50%',
+                                        width: '50%',
+                                        height: '100%',
+                                        padding: '1rem',
+                                        fontSize: '0.8rem',
+                                        lineHeight: '1.2rem',
+                                        backgroundColor: 'rgb(255 255 255 / var(--tw-bg-opacity, 1))'
+                                    }}
+                                >
                                     <p>{description}</p>
+                                    <span
+                                        style={{
+                                            marginTop: '0.5rem',
+                                            paddingBottom: '0.5rem',
+                                            color: 'var(--red-primary)',
+                                            textDecorationLine: 'underline',
+                                            cursor: 'pointer'
+                                        }}
+                                        onClick={() => router?.push(`/jobs/${slug}`)}
+                                    >
+                                        Mehr Infos
+                                    </span>
                                 </div>
                                 <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg mt-2"
                                      style={{width: '85%'}}>
@@ -228,7 +260,7 @@ export default function jobsPage() {
                                         }}
                                         onClick={() => router?.push(`/jobs/${slug}`)}
                                     >
-                                    Mehr Infos
+                                        Mehr Infos
                                     </span>
                                 </div>
                             </div>
