@@ -12,6 +12,7 @@ const filters = [
     {key: 'hsa2j', label: 'Hauptschulabschluss und 2 Jahre Berufsausbildung'},
     {key: 'aghr', label: 'Allgemeine Hochschulreife'},
     {key: 'arb', label: 'Abgeschlossener Rettungsdienstberuf'}
+
     // TODO: Filter by misc factors
 ];
 
@@ -95,12 +96,58 @@ export default function JobsPage() {
                     }}>
                         Ergebnisse: {filteredJobs.length}
                     </div>
+
                     <div className="block p-2"
                     >
                         <select
                             value={selectedFilters[0] || ""}
                             onChange={(e) => setSelectedFilters([e.target.value])}
-                            className="p-2 mr-2 block w-full rounded-xl border-black border"
+                            className="p-2 mr-2 block w-full rounded-2xl border-black border"
+                        >
+                            <option value="" disabled>Stichwort</option>
+                            {filters.map(({key, label}) => (
+                                <option key={key} value={key} className="p-2">
+                                    {label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="block p-2"
+                    >
+                        <select
+                            value={selectedFilters[0] || ""}
+                            onChange={(e) => setSelectedFilters([e.target.value])}
+                            className="p-2 mr-2 block w-full rounded-2xl border-black border"
+                        >
+                            <option value="" disabled>Einstiegsmöglichkeiten</option>
+                            {filters.map(({key, label}) => (
+                                <option key={key} value={key} className="p-2">
+                                    {label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="block p-2"
+                    >
+                        <select
+                            value={selectedFilters[0] || ""}
+                            onChange={(e) => setSelectedFilters([e.target.value])}
+                            className="p-2 mr-2 block w-full rounded-2xl border-black border"
+                        >
+                            <option value="" disabled>Interessen</option>
+                            {filters.map(({key, label}) => (
+                                <option key={key} value={key} className="p-2">
+                                    {label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="block p-2"
+                    >
+                        <select
+                            value={selectedFilters[0] || ""}
+                            onChange={(e) => setSelectedFilters([e.target.value])}
+                            className="p-2 mr-2 block w-full rounded-2xl border-black border"
                         >
                             <option value="" disabled>Schulabschluss</option>
                             {filters.map(({key, label}) => (
@@ -110,6 +157,7 @@ export default function JobsPage() {
                             ))}
                         </select>
                     </div>
+
                     <button
                         style={{
                             backgroundColor: 'var(--red-primary)',
@@ -173,7 +221,49 @@ export default function JobsPage() {
                                 <select
                                     value={selectedFilters[0] || ""}
                                     onChange={(e) => setSelectedFilters([e.target.value])}
-                                    className="p-2 mr-2 block w-4/5 border-black border rounded-xl"
+                                    className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"
+                                >
+                                    <option value="" disabled>Stichwort</option>
+                                    {filters.map(({key, label}) => (
+                                        <option key={key} value={key} className="p-2">
+                                            {label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>
+                                <select
+                                    value={selectedFilters[0] || ""}
+                                    onChange={(e) => setSelectedFilters([e.target.value])}
+                                    className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"
+                                >
+                                    <option value="" disabled>Einstiegsmöglichkeiten</option>
+                                    {filters.map(({key, label}) => (
+                                        <option key={key} value={key} className="p-2">
+                                            {label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>
+                                <select
+                                    value={selectedFilters[0] || ""}
+                                    onChange={(e) => setSelectedFilters([e.target.value])}
+                                    className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"
+                                >
+                                    <option value="" disabled>Interessen</option>
+                                    {filters.map(({key, label}) => (
+                                        <option key={key} value={key} className="p-2">
+                                            {label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>
+                                <select
+                                    value={selectedFilters[0] || ""}
+                                    onChange={(e) => setSelectedFilters([e.target.value])}
+                                    className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"
                                 >
                                     <option value="" disabled>Schulabschluss</option>
                                     {filters.map(({key, label}) => (
@@ -183,6 +273,7 @@ export default function JobsPage() {
                                     ))}
                                 </select>
                             </div>
+
                             <button
                                 style={{
                                     backgroundColor: 'var(--red-primary)',
