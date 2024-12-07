@@ -300,7 +300,7 @@ export default function JobsPage() {
                              paddingRight: '2.5rem',
                              flexGrow: '1'
                          }}>
-                        {filteredJobs.map(({id, imageUrl, name, slug, description}) => (
+                        {filteredJobs.map(({id, imageUrl, name, slug, shortDesc}) => (
                             <div
                                 key={id}
                                 className="job-card flex flex-col md:flex-row md:items-center mt-8
@@ -364,7 +364,7 @@ export default function JobsPage() {
                                         backgroundColor: 'rgb(255 255 255 / var(--tw-bg-opacity, 1))'
                                     }}
                                 >
-                                    <p>{description}</p>
+                                    <p>{shortDesc}</p>
                                     <span
                                         onClick={() => window.location.href = `/jobs/${slug}`}
                                         style={{
@@ -383,7 +383,7 @@ export default function JobsPage() {
                                          width: '85%',
                                          marginTop: '0.5rem',
                                      }}>
-                                    <p style={{fontSize: '85%'}}>{description}</p>
+                                    <p style={{fontSize: '85%'}}>{shortDesc}</p>
                                     <span
                                         onClick={() => window.location.href = `/jobs/${slug}`}
                                         style={{
