@@ -41,8 +41,6 @@ export default function JobsPage() {
         <div className="flex flex-col relative md:pt-[2vh] md:pr-[5vh] md:pb-[5vh] md:pl-[5vh]"
              style={{fontFamily: 'var(--font-berlin-type-regular)'}}>
 
-            <p>test</p>
-
             <div style={{width: '100%', padding: '1.5rem'}}>
                 <h1 style={{
                     maxWidth: '75%',
