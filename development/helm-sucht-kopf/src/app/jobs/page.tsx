@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {fetchJobs} from '../services/fetchJobs';
 import {useRouter} from 'next/compat/router';
+import Loading from "@/app/jobs/loading";
 
 const filters = [
     // Filter by qualification type
@@ -20,14 +21,20 @@ export default function JobsPage() {
     const [jobs, setJobs] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     useRouter();
     useEffect(() => {
         const getJobs = async () => {
             const data = await fetchJobs();
             setJobs(data);
+            setIsLoading(false);
         };
-        getJobs().then(r => console.log(r));
+        getJobs();
     }, []);
+
+    if (isLoading) {
+        return <Loading/>;
+    }
 
     const handleReset = () => {
         setSelectedFilters([]);

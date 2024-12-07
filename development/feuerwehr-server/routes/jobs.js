@@ -56,7 +56,7 @@ const jobsData = [
             'oder 01.05. oder 01.07.2025\n' +
             '\n' +
             'Ende der Bewerbungsfrist: 31.12.2024 ',
-        tags: ['hsa-2j'],
+        tags: ['hsa2j'],
         imageUrl: 'https://res.cloudinary.com/dassgyrzu/image/upload/v1730818439/112_Classic_ijwtzv.png',
         jobUrl: 'https://www.karriereportal-stellen.berlin.de/112-Classic-1242024-Ausbildung-Feuerwehrfrau-Feuerwehrmann-de-j52296.html'
     },
@@ -142,7 +142,7 @@ const jobsData = [
         id: 7,
         name: '112 Medic',
         slug: '112-medic',
-        requirements: 'Sie haben mindestens einen Mittleren Schulabschluss und keine abgeschlossene Berufsausbildung, oder' +
+        requirements: 'Sie haben mindestens einen Mittleren Schulabschluss und keine abgeschlossene Berufsausbildung, oder\n\n' +
             'Sie haben mindestens einen Hauptschulabschluss und eine Berufsausbildung von mindestens zweijähriger Dauer abgeschlossen.',
         shortDesc: 'Ausbildung zur Notfallsanitäterin oder zum Notfallsanitäter auch als Kombiausbildung zur Feuerwehrfrau / ' +
             'zum Feuerwehrmann (m/w/d)',
@@ -185,7 +185,7 @@ const jobsData = [
         id: 9,
         name: 'Notfallsanitäterausbildung',
         slug: 'nsa',
-        requirements: 'Sie haben mindestens einen Mittleren Schulabschluss und keine abgeschlossene Berufsausbildung, oder' +
+        requirements: 'Sie haben mindestens einen Mittleren Schulabschluss und keine abgeschlossene Berufsausbildung, oder\n\n' +
             'Sie haben mindestens einen Hauptschulabschluss und eine Berufsausbildung von mindestens zweijähriger Dauer abgeschlossen.',
         shortDesc: 'Berufsausausbildung im Beschäftigtenverhältnis',
         longDesc: ' Berufsausausbildung im Beschäftigtenverhältnis\n' +

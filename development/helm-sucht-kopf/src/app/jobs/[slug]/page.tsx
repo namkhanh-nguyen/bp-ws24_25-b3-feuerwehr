@@ -34,7 +34,7 @@ export default async function JobPage({params}: JobProps) {
                 fontFamily: 'var(--font-berlin-type-bold)',
                 marginBottom: '20px'
             }}>Das bringen Sie mit: </p>
-            <p style={{marginBottom: '20px'}}>{job.requirements}</p>
+            <p style={{marginBottom: '20px', whiteSpace: 'pre-line'}}>{job.requirements}</p>
             <p style={{
                 fontSize: '1rem',
                 fontFamily: 'var(--font-berlin-type-bold)',
