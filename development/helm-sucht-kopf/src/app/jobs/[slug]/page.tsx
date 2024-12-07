@@ -16,6 +16,7 @@ export default async function JobPage({params}: JobProps) {
         return <div>Job not found</div>;
     }
 
+    // TODO: Fill page with job info
     return (
         <div>
             <h1>{job.name}</h1>

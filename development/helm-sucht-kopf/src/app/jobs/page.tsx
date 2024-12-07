@@ -378,22 +378,23 @@ export default function JobsPage() {
                                                     Mehr Infos
                                                 </span>
                                 </div>
-                                <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg mt-2"
-                                     style={{width: '85%'}}>
+                                <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg"
+                                     style={{
+                                         width: '85%',
+                                         marginTop: '0.5rem',
+                                     }}>
                                     <p style={{fontSize: '85%'}}>{description}</p>
                                     <span
                                         onClick={() => window.location.href = `/jobs/${slug}`}
                                         style={{
-                                            marginTop: '0.5rem',
                                             fontSize: '85%',
-                                            paddingBottom: '0.5rem',
                                             color: 'var(--red-primary)',
                                             textDecorationLine: 'underline',
                                             cursor: 'pointer'
                                         }}
                                     >
-                                                    Mehr Infos
-                                                </span>
+                                        Mehr Infos
+                                    </span>
                                 </div>
                             </div>
                         ))}
