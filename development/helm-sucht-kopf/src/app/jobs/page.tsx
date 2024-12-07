@@ -27,7 +27,7 @@ export default function JobsPage() {
         };
         getJobs().then(r => console.log(r));
     }, []);
-    
+
     const handleReset = () => {
         setSelectedFilters([]);
     };
@@ -71,10 +71,10 @@ export default function JobsPage() {
                         Zum Navigator
                     </button>
                 </div>
-            
-        </div>
 
-    <div className="flex md:flex-row flex-col">
+            </div>
+
+            <div className="flex md:flex-row flex-col">
                 <div style={{
                     flexShrink: '0',
                     padding: '20px',
@@ -104,7 +104,7 @@ export default function JobsPage() {
                         >
                             <option value="" disabled>Schulabschluss</option>
                             {filters.map(({key, label}) => (
-                                <option key={key} value={key} className="p-2" >
+                                <option key={key} value={key} className="p-2">
                                     {label}
                                 </option>
                             ))}
@@ -213,17 +213,17 @@ export default function JobsPage() {
                             <div
                                 key={id}
                                 className="job-card flex flex-col md:flex-row md:items-center mt-8
-                                space-x-4 border rounded-lg relative hover:border-transparent"
+                                        space-x-4 border rounded-lg relative hover:border-transparent"
                             >
-                                    <img
-                                        onClick={() => window.location.href = `/jobs/${slug}`}
-                                        src={imageUrl}
-                                        alt={name}
-                                        className="job-image w-full md:w-80 rounded-t-lg md:rounded-l-lg md:rounded-tr-none rounded-bl-none"
-                                        style={{
-                                            cursor: 'pointer'
-                                        }}
-                                    />
+                                <img
+                                    onClick={() => window.location.href = `/jobs/${slug}`}
+                                    src={imageUrl}
+                                    alt={name}
+                                    className="job-image w-full md:w-80 rounded-t-lg md:rounded-l-lg md:rounded-tr-none rounded-bl-none"
+                                    style={{
+                                        cursor: 'pointer'
+                                    }}
+                                />
 
                                 <div className="flex flex-col justify-between flex-grow relative">
                                     <h3
@@ -274,41 +274,161 @@ export default function JobsPage() {
                                     }}
                                 >
                                     <p>{description}</p>
-                                        <span
-                                            onClick={() => window.location.href = `/jobs/${slug}`}
-                                            style={{
-                                                marginTop: '0.5rem',
-                                                paddingBottom: '0.5rem',
-                                                color: 'var(--red-primary)',
-                                                textDecorationLine: 'underline',
-                                                cursor: 'pointer'
-                                            }}
-                                        >
-                                            Mehr Infos
-                                        </span>
+                                    <span
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
+                                        style={{
+                                            marginTop: '0.5rem',
+                                            paddingBottom: '0.5rem',
+                                            color: 'var(--red-primary)',
+                                            textDecorationLine: 'underline',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                                    Mehr Infos
+                                                </span>
                                 </div>
                                 <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg mt-2"
                                      style={{width: '85%'}}>
                                     <p style={{fontSize: '85%'}}>{description}</p>
-                                        <span
-                                            onClick={() => window.location.href = `/jobs/${slug}`}
-                                            style={{
-                                                marginTop: '0.5rem',
-                                                fontSize: '85%',
-                                                paddingBottom: '0.5rem',
-                                                color: 'var(--red-primary)',
-                                                textDecorationLine: 'underline',
-                                                cursor: 'pointer'
-                                            }}
-                                        >
-                                            Mehr Infos
-                                        </span>
+                                    <span
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
+                                        style={{
+                                            marginTop: '0.5rem',
+                                            fontSize: '85%',
+                                            paddingBottom: '0.5rem',
+                                            color: 'var(--red-primary)',
+                                            textDecorationLine: 'underline',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                                    Mehr Infos
+                                                </span>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+
+            <div>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '2rem',
+                    padding: '1rem',
+                }}>
+                    <div className="grid grid-rows-2 md:grid-cols-2 gap-4"
+                         style={{
+                             width: '100%', // Ensure it uses full width available
+                         }}>
+                        <div style={{
+                            position: 'relative',
+                            display: 'inline-block',
+                            width: '100%', // Full width for stacking vertically
+                            marginBottom: '1rem'
+                        }}>
+                            <img
+                                src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733530199/d14a273e59a9f0c6352bb926e8946ca9_n8mtll.jpg"
+                                alt="Sample Image"
+                                style={{
+                                    borderRadius: '2rem',
+                                    filter: 'brightness(0.7)',
+                                    width: '100%',
+                                    objectFit: 'cover',
+                                    height: '200px' // Set height for uniformity
+                                }}
+                            />
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '10px',
+                                    left: '10px',
+                                    color: 'white',
+                                    fontSize: '1.5rem',
+                                    padding: '5px',
+                                    fontFamily: 'var(--font-berlin-type-bold)',
+                                    borderRadius: '5px',
+                                }}
+                            >
+                                Noch unsicher?<br/>
+                                Probiere es mit dem Quiz!
+                            </div>
+                            <button
+                                onClick={() => window.location.href = '/quiz'}
+                                style={{
+                                    position: 'absolute',
+                                    bottom: '15px',
+                                    transform: 'translateX(10%)',
+                                    backgroundColor: 'var(--red-primary)',
+                                    color: 'white',
+                                    padding: '0.5rem 1rem',
+                                    fontSize: '1.5rem',
+                                    border: 'none',
+                                    borderRadius: '2rem',
+                                    fontFamily: 'var(--font-berlin-type-bold)',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Starten!
+                            </button>
+                        </div>
+
+                        <div style={{
+                            position: 'relative',
+                            display: 'inline-block',
+                            width: '100%', // Full width for stacking vertically
+                            marginBottom: '1rem'
+                        }}>
+                            <img
+                                src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733531246/abb74d33b1680a5bcf5d732576107128_jxdtg5.png"
+                                alt="Sample Image"
+                                style={{
+                                    borderRadius: '2rem',
+                                    filter: 'brightness(0.4)',
+                                    width: '100%',
+                                    objectFit: 'cover',
+                                    height: '200px' // Set height for uniformity
+                                }}
+                            />
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '10px',
+                                    left: '10px',
+                                    color: 'white',
+                                    fontSize: '1.5rem',
+                                    padding: '5px',
+                                    fontFamily: 'var(--font-berlin-type-bold)',
+                                    borderRadius: '5px',
+                                }}
+                            >
+                                Stell dich der Gefahr und<br/>
+                                prüfe dein Können!
+                            </div>
+                            <button
+                                onClick={() => window.location.href = '/quiz'}
+                                style={{
+                                    position: 'absolute',
+                                    bottom: '15px',
+                                    transform: 'translateX(10%)',
+                                    backgroundColor: 'var(--red-primary)',
+                                    color: 'white',
+                                    padding: '0.5rem 1rem',
+                                    fontSize: '1.5rem',
+                                    border: 'none',
+                                    borderRadius: '2rem',
+                                    fontFamily: 'var(--font-berlin-type-bold)',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Starten!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 }
