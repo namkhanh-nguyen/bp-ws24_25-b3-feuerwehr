@@ -29,7 +29,7 @@
 .filterContainer {
     display: block;
     flex-shrink: 0;
-    max-width: 33%;
+    max-width: 25%;
     padding: 0.5rem 1rem;
     margin-top: 2rem;
     align-self: flex-start;
@@ -66,14 +66,19 @@
 }
 
 .jobName {
-    font-size: 1.5rem;
+    font-size: 2rem;
     line-height: 1.75rem;
     font-weight: bold;
     text-align: left;
     margin-top: 1rem;
     overflow-wrap: break-word;
     word-break: break-all;
+    padding-left: 1rem;
     padding-bottom: 1rem;
+}
+
+.jobShortDesc {
+    font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {
@@ -103,5 +108,9 @@
 
     .jobName {
         font-size: 1.25rem;
+    }
+
+    .jobShortDesc {
+        font-size: 0.9rem;
     }
 }

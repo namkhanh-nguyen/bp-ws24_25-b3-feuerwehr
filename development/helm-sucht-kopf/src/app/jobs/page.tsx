@@ -82,54 +82,6 @@ export default function JobsPage() {
                         Ergebnisse: {filteredJobs.length}
                     </div>
 
-                    {/*<div className="block p-2"*/}
-                    {/*>*/}
-                    {/*    <select*/}
-                    {/*        value={selectedFilters[0] || ""}*/}
-                    {/*        onChange={(e) => setSelectedFilters([e.target.value])}*/}
-                    {/*        className="p-2 mr-2 block w-full rounded-2xl border-black border"*/}
-                    {/*    >*/}
-                    {/*        <option value="" disabled>Stichwort</option>*/}
-                    {/*        {filters.map(({key, label}) => (*/}
-                    {/*            <option key={key} value={key} className="p-2">*/}
-                    {/*                {label}*/}
-                    {/*            </option>*/}
-                    {/*        ))}*/}
-                    {/*    </select>*/}
-                    {/*</div>*/}
-
-                    {/*<div className="block p-2"*/}
-                    {/*>*/}
-                    {/*    <select*/}
-                    {/*        value={selectedFilters[0] || ""}*/}
-                    {/*        onChange={(e) => setSelectedFilters([e.target.value])}*/}
-                    {/*        className="p-2 mr-2 block w-full rounded-2xl border-black border"*/}
-                    {/*    >*/}
-                    {/*        <option value="" disabled>Einstiegsmöglichkeiten</option>*/}
-                    {/*        {filters.map(({key, label}) => (*/}
-                    {/*            <option key={key} value={key} className="p-2">*/}
-                    {/*                {label}*/}
-                    {/*            </option>*/}
-                    {/*        ))}*/}
-                    {/*    </select>*/}
-                    {/*</div>*/}
-
-                    {/*<div className="block p-2"*/}
-                    {/*>*/}
-                    {/*    <select*/}
-                    {/*        value={selectedFilters[0] || ""}*/}
-                    {/*        onChange={(e) => setSelectedFilters([e.target.value])}*/}
-                    {/*        className="p-2 mr-2 block w-full rounded-2xl border-black border"*/}
-                    {/*    >*/}
-                    {/*        <option value="" disabled>Interessen</option>*/}
-                    {/*        {filters.map(({key, label}) => (*/}
-                    {/*            <option key={key} value={key} className="p-2">*/}
-                    {/*                {label}*/}
-                    {/*            </option>*/}
-                    {/*        ))}*/}
-                    {/*    </select>*/}
-                    {/*</div>*/}
-
                     <div className="block p-2">
                         <select
                             value={selectedFilters[0] || ""}
@@ -154,6 +106,7 @@ export default function JobsPage() {
                 </div>
 
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: '1'}}>
+
                     <div className="p-2 flex justify-between md:hidden">
                         <div
                             style={{
@@ -192,55 +145,10 @@ export default function JobsPage() {
                         >
                             Close
                         </button>
+
                     </div>
                     {isFiltersVisible && (
                         <div className="bg-white p-4 border rounded mb-4 md:hidden">
-
-                            {/*<div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>*/}
-                            {/*    <select*/}
-                            {/*        value={selectedFilters[0] || ""}*/}
-                            {/*        onChange={(e) => setSelectedFilters([e.target.value])}*/}
-                            {/*        className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"*/}
-                            {/*    >*/}
-                            {/*        <option value="" disabled>Stichwort</option>*/}
-                            {/*        {filters.map(({key, label}) => (*/}
-                            {/*            <option key={key} value={key} className="p-2">*/}
-                            {/*                {label}*/}
-                            {/*            </option>*/}
-                            {/*        ))}*/}
-                            {/*    </select>*/}
-                            {/*</div>*/}
-
-                            {/*<div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>*/}
-                            {/*    <select*/}
-                            {/*        value={selectedFilters[0] || ""}*/}
-                            {/*        onChange={(e) => setSelectedFilters([e.target.value])}*/}
-                            {/*        className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"*/}
-                            {/*    >*/}
-                            {/*        <option value="" disabled>Einstiegsmöglichkeiten</option>*/}
-                            {/*        {filters.map(({key, label}) => (*/}
-                            {/*            <option key={key} value={key} className="p-2">*/}
-                            {/*                {label}*/}
-                            {/*            </option>*/}
-                            {/*        ))}*/}
-                            {/*    </select>*/}
-                            {/*</div>*/}
-
-                            {/*<div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>*/}
-                            {/*    <select*/}
-                            {/*        value={selectedFilters[0] || ""}*/}
-                            {/*        onChange={(e) => setSelectedFilters([e.target.value])}*/}
-                            {/*        className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"*/}
-                            {/*    >*/}
-                            {/*        <option value="" disabled>Interessen</option>*/}
-                            {/*        {filters.map(({key, label}) => (*/}
-                            {/*            <option key={key} value={key} className="p-2">*/}
-                            {/*                {label}*/}
-                            {/*            </option>*/}
-                            {/*        ))}*/}
-                            {/*    </select>*/}
-                            {/*</div>*/}
-
                             <div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>
                                 <select
                                     value={selectedFilters[0] || ""}
@@ -287,21 +195,39 @@ export default function JobsPage() {
                             <div
                                 key={id}
                                 className="job-card flex flex-col md:flex-row md:items-center mt-8
-                                space-x-4 border rounded-lg relative hover:border-transparent"
+                                             border rounded-lg relative group"
                                 style={{
                                     flexDirection: 'column'
                                 }} // always in column
                             >
                                 <img
-                                    onClick={() => window.location.href = `/jobs/${slug}`}
                                     src={imageUrl}
                                     alt={name}
                                     className="job-image w-full rounded-t-lg rounded-bl-none"
+                                    onClick={() => window.location.href = `/jobs/${slug}`}
                                     style={{
                                         cursor: 'pointer',
-                                        alignSelf: 'center' // center image
+                                        alignSelf: 'center', // center image
                                     }}
                                 />
+
+                                <div className="absolute inset-0 bg-white bg-opacity-0 transition-opacity duration-300
+                                                group-hover:bg-opacity-70 flex flex-col justify-center items-center text-center hidden
+                                                group-hover:flex"
+                                >
+                                    <p className={styles.jobShortDesc}>{shortDesc}</p>
+                                    <span
+                                        className={styles.jobShortDesc}
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
+                                        style={{
+                                            color: 'var(--red-primary)',
+                                            textDecorationLine: 'underline',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        Mehr Infos
+                                    </span>
+                                </div>
 
                                 <div className="flex flex-col justify-between flex-grow relative">
                                     <h3 className={styles.jobName} style={{fontFamily: 'var(--font-berlin-type-bold)'}}>
@@ -328,39 +254,11 @@ export default function JobsPage() {
                                     </div>
                                 </div>
 
-                                {/*<div*/}
-                                {/*    className="hidden md:block opacity-0 hover:opacity-100 transition-opacity"*/}
-                                {/*    style={{*/}
-                                {/*        position: 'absolute',*/}
-                                {/*        top: '0px',*/}
-                                {/*        right: '50%',*/}
-                                {/*        width: '50%',*/}
-                                {/*        height: '85%',*/}
-                                {/*        padding: '1rem',*/}
-                                {/*        fontSize: '1.25rem',*/}
-                                {/*        lineHeight: '1.5rem',*/}
-                                {/*        backgroundColor: 'rgba(255, 255, 255, 0.9)' // Added slight transparency*/}
-                                {/*    }}*/}
-                                {/*>*/}
-                                {/*    <p>{shortDesc}</p>*/}
-                                {/*    <span*/}
-                                {/*        onClick={() => window.location.href = `/jobs/${slug}`}*/}
-                                {/*        style={{*/}
-                                {/*            marginTop: '0.5rem',*/}
-                                {/*            paddingBottom: '0.5rem',*/}
-                                {/*            color: 'var(--red-primary)',*/}
-                                {/*            textDecorationLine: 'underline',*/}
-                                {/*            cursor: 'pointer'*/}
-                                {/*        }}*/}
-                                {/*    >*/}
-                                {/*        Mehr Infos*/}
-                                {/*    </span>*/}
-                                {/*</div>*/}
-
                                 <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg"
                                      style={{
                                          width: '85%',
-                                         marginTop: '0.5rem',
+                                         marginLeft: '1rem',
+                                         marginBottom: '1rem',
                                      }}>
                                     <p style={{fontSize: '85%'}}>{shortDesc}</p>
                                     <span
@@ -402,7 +300,7 @@ export default function JobsPage() {
                         }}>
                             <img
                                 src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733530199/d14a273e59a9f0c6352bb926e8946ca9_n8mtll.jpg"
-                                alt="Sample Image"
+                                alt="Noch unsicher 1"
                                 style={{
                                     borderRadius: '2rem',
                                     filter: 'brightness(0.7)',
@@ -454,7 +352,7 @@ export default function JobsPage() {
                         }}>
                             <img
                                 src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733531246/abb74d33b1680a5bcf5d732576107128_jxdtg5.png"
-                                alt="Sample Image"
+                                alt="Noch unsicher 2"
                                 style={{
                                     borderRadius: '2rem',
                                     filter: 'brightness(0.4)',
