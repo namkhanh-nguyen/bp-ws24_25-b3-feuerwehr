@@ -3,6 +3,18 @@ const router = express.Router();
 
 const quizData = [
     {
+            id: 0,
+            question: "Welchen Abschluss hast du?",
+            options: [
+                { answer: "BBR" },
+                { answer: "MSA" },
+                { answer: "Abitur" },
+                { answer: "Bachelor/Master" },
+                { answer: "Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat" },
+                { answer: "Abgeschlossener Rettungsdienstberuf" }
+            ]
+        },
+    {
         id: 1,
         question: "Du siehst den Unfall und bemerkst, dass Personen noch im Fahrzeug sind. Dein Adrenalin steigt. Was ist dein erster Instinkt?\n",
         options: [
@@ -68,48 +80,147 @@ const quizData = [
         ]
     },
 ];
-router.post('/data', (req, res) => {
-    const receivedData = req.body.answers;
-    console.log('received answers:', receivedData);
-
-    const categoryCounts = {A:0, B:0, C:0};
-
-    receivedData.forEach(answer => {
-        if(answer.selectedOption === 'A'){
-            categoryCounts.A++;
-        } else if (answer.selectedOption === 'B'){
-            categoryCounts.B++;
-        }else {
-            categoryCounts.C++;
-        }
-    });
-    let majorityCategory;
-    if(categoryCounts.A > categoryCounts.B && categoryCounts.A > categoryCounts.C){
-        majorityCategory = 'A';
-    } else if (categoryCounts.B > categoryCounts.A && categoryCounts.B > categoryCounts.C){
-        majorityCategory = 'B';
-    } else{
-        majorityCategory = 'C';
-    }
-
-    let programs = [];
-
-    switch(majorityCategory){
-        case 'A':
-            programs = ['112 Medic', 'Notfallsanitäterausbildung', 'Medic Expert'];
-            break;
-        case 'B':
-            programs = ['112 Direkt', '112 Direkt Plus', 'Classic'];
-            break;
-        case 'C':
-            programs = ['Dual', 'Bachelor', 'Master'];
-            break;
-    }
-    res.status(200).json({
-        programs: programs,
-    });
-});
 router.get('/', (req, res) => {
     res.status(200).json(quizData);
 });
+
+router.post('/data', (req, res) => {
+    const receivedData = req.body.answers;
+
+    // Abschluss speichern
+    const graduationAnswer = receivedData.find(answer => answer.questionId === 0)?.selectedOption;
+
+    // Kategorieantworten zählen
+    const categoryCounts = { A: 0, B: 0, C: 0 };
+    receivedData.forEach(answer => {
+        if (answer.questionId === 0) return;
+
+        if (answer.selectedOption === 'A') {
+            categoryCounts.A++;
+        } else if (answer.selectedOption === 'B') {
+            categoryCounts.B++;
+        } else if (answer.selectedOption === 'C') {
+            categoryCounts.C++;
+        }
+    });
+
+    // Mehrheitliche Kategorie bestimmen
+    let majorityCategory;
+    if (categoryCounts.A > categoryCounts.B && categoryCounts.A > categoryCounts.C) {
+        majorityCategory = 'A';
+    } else if (categoryCounts.B > categoryCounts.A && categoryCounts.B > categoryCounts.C) {
+        majorityCategory = 'B';
+    } else {
+        majorityCategory = 'C';
+    }
+
+    // Ergebnisse basierend auf Kategorie und Abschluss generieren
+    let result = {};
+    if (majorityCategory === 'A') {
+        switch (graduationAnswer) {
+            case "BBR":
+                result = {
+                    direkt: [],
+                    zukünftig: ["Medic, Notfallsanitäterausbildung,Medic Expert"]
+                };
+                break;
+            case "MSA":
+                result = {
+                    direkt: ["Medic", "Notfallsanitäterausbildung"],
+                    zukünftig: ["Medic Expert"]
+                };
+                break;
+            case "Abitur":
+            case "Bachelor/Master":
+                result = {
+                    direkt: ["Medic", "Notfallsanitäterausbildung"],
+                    zukünftig: ["Medic Expert"]
+                };
+                break;
+            case "Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat":
+                result = {
+                    direkt: ["Medic", "Notfallsanitäterausbildung"],
+                    zukünftig: ["Medic Expert"]
+                };
+                break;
+            case "Abgeschlossener Rettungsdienstberuf":
+                result = {
+                    direkt: ["Medic Expert"],
+                    zukünftig: []
+                };
+                break;
+        }
+    } else if (majorityCategory === 'B') {
+        switch (graduationAnswer) {
+            case "BBR":
+                result = {
+                    direkt: ["Direkt Plus"],
+                    zukünftig: ["Classic", "Direkt"]
+                };
+                break;
+            case "MSA":
+                result = {
+                    direkt: ["Direkt"],
+                    zukünftig: ["Classic"]
+                };
+                break;
+            case "Abitur":
+                result = {
+                    direkt: ["Direkt"],
+                    zukünftig: ["Classic"]
+                };
+                break;
+            case "Bachelor/Master":
+                result = {
+                    direkt: ["Direkt", "Classic"],
+                    zukünftig: []
+                };
+                break;
+            case "Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat":
+                result = {
+                    direkt: ["Classic"],
+                    zukünftig: []
+                };
+                break;
+        }
+    } else if (majorityCategory === 'C') {
+        switch (graduationAnswer) {
+            case "BBR":
+                result = {
+                    direkt: [],
+                    zukünftig: ["Dual", "Bachelor", "Master"]
+                };
+                break;
+            case "MSA":
+                result = {
+                    direkt: [],
+                    zukünftig: ["Dual", "Bachelor", "Master"]
+                };
+                break;
+            case "Abitur":
+                result = {
+                    direkt: ["Dual"],
+                    zukünftig: ["Bachelor", "Master"]
+                }; break;
+                case "Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat":
+                   result = {
+                      direkt: [],
+                     zukünftig: []
+                 };
+                break;
+            case "Bachelor/Master":
+                result = {
+                    direkt: ["Bachelor", "Master"],
+                    zukünftig: []
+                };
+                break;
+        }
+    }
+      // Antwort senden
+        res.status(200).json({
+            graduation: graduationAnswer,
+            majorityCategory: majorityCategory,
+            result: result
+        });
+     });
 module.exports = router;
