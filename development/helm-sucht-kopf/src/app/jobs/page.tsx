@@ -2,6 +2,8 @@
 import React, {useEffect, useState} from 'react';
 import {fetchJobs} from '../services/fetchJobs';
 import {useRouter} from 'next/compat/router';
+import styles from './jobs.module.css';
+import Loading from "@/app/jobs/loading";
 
 const filters = [
     // Filter by qualification type
@@ -12,96 +14,109 @@ const filters = [
     {key: 'hsa2j', label: 'Hauptschulabschluss und 2 Jahre Berufsausbildung'},
     {key: 'aghr', label: 'Allgemeine Hochschulreife'},
     {key: 'arb', label: 'Abgeschlossener Rettungsdienstberuf'}
+
     // TODO: Filter by misc factors
 ];
 
-export default function jobsPage() {
+export default function JobsPage() {
     const [jobs, setJobs] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
+    useRouter();
     useEffect(() => {
         const getJobs = async () => {
             const data = await fetchJobs();
             setJobs(data);
+            setIsLoading(false);
         };
-        getJobs().then(r => console.log(r));
+        getJobs();
     }, []);
-    const handleFilterChange = (filter: string) => {
-        setSelectedFilters(prev =>
-            prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
-        );
-    };
+
+    if (isLoading) {
+        return <Loading/>;
+    }
+
     const handleReset = () => {
         setSelectedFilters([]);
     };
+
     const filteredJobs = jobs.filter((job: { tags: string[] }) =>
         selectedFilters.every(filter => job.tags.includes(filter))
     );
 
     return (
-        <div className="flex flex-col relative md:pt-[2vh] md:pr-[5vh] md:pb-[5vh] md:pl-[5vh]
-        font-[family-name:var(--font-berlin-type-regular)]">
+        <div className={styles.pageMasterDiv}
+             style={{fontFamily: 'var(--font-berlin-type-regular)'}}>
 
             <div style={{width: '100%', padding: '1.5rem'}}>
-                <h1 style={{
-                    maxWidth: '75%',
-                    fontSize: '2rem',
-                    fontWeight: 'bold',
-                    textAlign: 'left',
-                    fontFamily: 'var(--font-berlin-type-bold)'}}
-                >
-                    Dein Weg bei der Berliner Feuerwehr</h1>
-                <p style={{textAlign: 'left', marginTop: '1.5rem'}}>
+                <h1 className={styles.deinWeg} style={{fontFamily: 'var(--font-berlin-type-bold)'}}>
+                    Dein Weg bei der Berliner Feuerwehr
+                </h1>
+
+                <p style={{textAlign: 'left', marginTop: '0.5rem'}}>
                     Finde deinen idealen Karriereweg bei der Feuerwehr Berlin. Der Karriere Navigator zeigt dir
                     alle Optionen, Spezialisierungen und Aufstiegschancen – für eine erfolgreiche und spannende
                     Laufbahn.
                 </p>
+
                 <div style={{display: 'flex', justifyContent: 'center', marginTop: '2rem'}}>
-                    <button style={{
-                        padding: '0.5rem',
-                        backgroundColor: 'var(--red-primary)',
-                        color: 'white',
-                        borderRadius: '1.5rem',
-                        fontFamily: 'var(--font-berlin-type-bold)',
-                        fontSize: '1.2rem'
-                    }} className="w-full md:w-[20%]">
+                    <button
+                        onClick={() => window.location.href = '/quiz'}
+                        className={styles.zumNavigator}
+                        style={{fontFamily: 'var(--font-berlin-type-bold)'}}
+                    >
                         Zum Navigator
                     </button>
                 </div>
+
             </div>
 
-            <div className="flex md:flex-row flex-col">
-                <div style={{
-                    flexShrink: '0',
-                    padding: '20px',
-                    paddingTop: '0.5rem',
-                    paddingBottom: '0.5rem',
-                    paddingLeft: '1rem',
-                    paddingRight: '1rem',
-                    marginTop: '2rem',
-                    alignSelf: 'flex-start'}}
-                     className="md:w-1/4 md:border md:rounded-lg">
-                    <div className="hidden md:block">
-                        {filters.map(({key, label}) => (
-                            <label key={key} style={{padding: '2px', display: 'block'}}>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedFilters.includes(key)}
-                                    onChange={() => handleFilterChange(key)}
-                                    style={{padding: '2px', marginRight: '2px'}}
-                                />
-                                {label}
-                            </label>
-                        ))}
+            <div className={styles.jobSection}>
+                <div className={styles.filterContainer}>
+                    <div style={{
+                        fontSize: '1.2rem',
+                        fontFamily: 'var(--font-berlin-type-bold)',
+                        marginBottom: '1rem'
+                    }}>
+                        Ergebnisse: {filteredJobs.length}
                     </div>
+
+                    <div className="block p-2">
+                        <select
+                            value={selectedFilters[0] || ""}
+                            onChange={(e) => setSelectedFilters([e.target.value])}
+                            className={styles.filterDropdown}
+                        >
+                            <option value="" disabled>Schulabschluss</option>
+                            {filters.map(({key, label}) => (
+                                <option key={key} value={key} className="p-2">
+                                    {label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <button
+                        className={styles.resetButton}
+                        onClick={handleReset}
+                    >
+                        Reset
+                    </button>
                 </div>
+
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: '1'}}>
+
                     <div className="p-2 flex justify-between md:hidden">
                         <div
-                            style={{fontSize: '1.2rem', padding: '0.5rem', fontWeight: 'bold', fontFamily: 'var(--font-berlin-type-bold)'}}
+                            style={{
+                                fontSize: '1.2rem',
+                                padding: '0.5rem',
+                                fontWeight: 'bold',
+                                fontFamily: 'var(--font-berlin-type-bold)'
+                            }}
                         >
-                            {filteredJobs.length} Ergebnisse
+                            Ergebnisse: {filteredJobs.length}
                         </div>
                         <button
                             style={{
@@ -114,32 +129,41 @@ export default function jobsPage() {
                             }}
                             onClick={() => setIsFiltersVisible(true)}
                         >
-                            Filters
+                            Filtern
                         </button>
+                        <button
+                            style={{
+                                borderRadius: '1.5rem',
+                                border: '1px solid black',
+                                width: '30%',
+                                padding: '0.5rem',
+                                backgroundColor: '#E5E7EB',
+                                color: 'var(--red-primary)',
+                                display: isFiltersVisible ? 'block' : 'none'
+                            }}
+                            onClick={() => setIsFiltersVisible(false)}
+                        >
+                            Close
+                        </button>
+
                     </div>
                     {isFiltersVisible && (
-                        <div className="bg-white p-4 border rounded mb-4">
-                            <div className="flex justify-end mb-2">
-                                <button
-                                    className="p-2 bg-blue-500 text-white rounded"
-                                    onClick={() => setIsFiltersVisible(false)}
+                        <div className="bg-white p-4 border rounded mb-4 md:hidden">
+                            <div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>
+                                <select
+                                    value={selectedFilters[0] || ""}
+                                    onChange={(e) => setSelectedFilters([e.target.value])}
+                                    className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"
                                 >
-                                    Close
-                                </button>
+                                    <option value="" disabled>Schulabschluss</option>
+                                    {filters.map(({key, label}) => (
+                                        <option key={key} value={key} className="p-2">
+                                            {label}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
-                            <div>
-                                {filters.map(({key, label}) => (
-                                    <label key={key} className="block p-2">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedFilters.includes(key)}
-                                            onChange={() => handleFilterChange(key)}
-                                            className="p-2 mr-2"
-                                        />
-                                        {label}
-                                    </label>
-                                ))}
-                            </div>
+
                             <button
                                 style={{
                                     backgroundColor: 'var(--red-primary)',
@@ -158,39 +182,58 @@ export default function jobsPage() {
                             </button>
                         </div>
                     )}
+
                     <div className="job-list grid-cols-1 md:grid-cols-2"
-                        style={{
-                            display: 'grid',
-                            gap: '2rem',
-                            paddingLeft: '2.5rem',
-                            paddingRight: '2.5rem',
-                            flexGrow: '1'}}>
-                        {filteredJobs.map(({id, imageUrl, name, slug, description}) => (
+                         style={{
+                             display: 'grid',
+                             gap: '2rem',
+                             paddingLeft: '2.5rem',
+                             paddingRight: '2.5rem',
+                             flexGrow: '1'
+                         }}>
+                        {filteredJobs.map(({id, imageUrl, name, slug, shortDesc}) => (
                             <div
                                 key={id}
                                 className="job-card flex flex-col md:flex-row md:items-center mt-8
-                                space-x-4 cursor-pointer border rounded-lg relative"
-                                onClick={() => router?.push(`/jobs/${slug}`)}
+                                             border rounded-lg relative group"
+                                style={{
+                                    flexDirection: 'column'
+                                }} // always in column
                             >
                                 <img
                                     src={imageUrl}
                                     alt={name}
-                                    className="job-image w-full md:w-80 rounded-t-lg md:rounded-l-lg md:rounded-tr-none rounded-bl-none"
+                                    className="job-image w-full rounded-t-lg rounded-bl-none"
+                                    onClick={() => window.location.href = `/jobs/${slug}`}
+                                    style={{
+                                        cursor: 'pointer',
+                                        alignSelf: 'center', // center image
+                                    }}
                                 />
-                                <div className="flex flex-col justify-between flex-grow relative">
-                                    <h3
+
+                                <div className="absolute inset-0 bg-white bg-opacity-0 transition-opacity duration-300
+                                                group-hover:bg-opacity-70 flex flex-col justify-center items-center text-center hidden
+                                                group-hover:flex"
+                                >
+                                    <p className={styles.jobShortDesc}>{shortDesc}</p>
+                                    <span
+                                        className={styles.jobShortDesc}
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
                                         style={{
-                                            fontSize: '1.25rem',
-                                            fontFamily: 'var(--font-berlin-type-bold)',
-                                            lineHeight: '1.75rem',
-                                            fontWeight: 'bold',
-                                            textAlign: 'left',
-                                            marginTop: '1rem',
-                                            overflowWrap: 'break-word',
-                                            wordBreak: 'break-all',
-                                            paddingBottom: '1rem'}}
+                                            color: 'var(--red-primary)',
+                                            textDecorationLine: 'underline',
+                                            cursor: 'pointer'
+                                        }}
                                     >
-                                        {name}</h3>
+                                        Mehr Infos
+                                    </span>
+                                </div>
+
+                                <div className="flex flex-col justify-between flex-grow relative">
+                                    <h3 className={styles.jobName} style={{fontFamily: 'var(--font-berlin-type-bold)'}}>
+                                        {name}
+                                    </h3>
+
                                     <div className="md:hidden"
                                          style={{
                                              padding: '0.5rem',
@@ -210,32 +253,152 @@ export default function jobsPage() {
                                         </button>
                                     </div>
                                 </div>
-                                <div
-                                    className="hidden md:block absolute top-0 left-0 w-full h-full bg-white opacity-0 hover:opacity-100 transition-opacity rounded-lg p-4 text-sm">
-                                    <p>{description}</p>
-                                </div>
-                                <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg mt-2"
-                                     style={{width: '85%'}}>
-                                    <p style={{fontSize: '85%'}}>{description}</p>
+
+                                <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg"
+                                     style={{
+                                         width: '85%',
+                                         marginLeft: '1rem',
+                                         marginBottom: '1rem',
+                                     }}>
+                                    <p style={{fontSize: '85%'}}>{shortDesc}</p>
                                     <span
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
                                         style={{
-                                            marginTop: '0.5rem',
                                             fontSize: '85%',
-                                            paddingBottom: '0.5rem',
                                             color: 'var(--red-primary)',
                                             textDecorationLine: 'underline',
                                             cursor: 'pointer'
                                         }}
-                                        onClick={() => router?.push(`/jobs/${slug}`)}
                                     >
-                                    Mehr Infos
+                                        Mehr Infos
                                     </span>
                                 </div>
                             </div>
                         ))}
                     </div>
+
                 </div>
             </div>
+
+            <div>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '2rem',
+                    padding: '1rem',
+                }}>
+                    <div className="grid grid-rows-2 md:grid-cols-2 gap-4"
+                         style={{
+                             width: '100%', // Ensure it uses full width available
+                         }}>
+                        <div style={{
+                            position: 'relative',
+                            display: 'inline-block',
+                            width: '100%', // Full width for stacking vertically
+                            marginBottom: '1rem'
+                        }}>
+                            <img
+                                src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733530199/d14a273e59a9f0c6352bb926e8946ca9_n8mtll.jpg"
+                                alt="Noch unsicher 1"
+                                style={{
+                                    borderRadius: '2rem',
+                                    filter: 'brightness(0.7)',
+                                    width: '100%',
+                                    objectFit: 'cover',
+                                    height: '200px' // Set height for uniformity
+                                }}
+                            />
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '10px',
+                                    left: '10px',
+                                    color: 'white',
+                                    fontSize: '1.5rem',
+                                    padding: '5px',
+                                    fontFamily: 'var(--font-berlin-type-bold)',
+                                    borderRadius: '5px',
+                                }}
+                            >
+                                Noch unsicher?<br/>
+                                Probiere es mit dem Quiz!
+                            </div>
+                            <button
+                                onClick={() => window.location.href = '/quiz'}
+                                style={{
+                                    position: 'absolute',
+                                    bottom: '15px',
+                                    transform: 'translateX(10%)',
+                                    backgroundColor: 'var(--red-primary)',
+                                    color: 'white',
+                                    padding: '0.5rem 1rem',
+                                    fontSize: '1.5rem',
+                                    border: 'none',
+                                    borderRadius: '2rem',
+                                    fontFamily: 'var(--font-berlin-type-bold)',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Starten!
+                            </button>
+                        </div>
+
+                        <div style={{
+                            position: 'relative',
+                            display: 'inline-block',
+                            width: '100%', // Full width for stacking vertically
+                            marginBottom: '1rem'
+                        }}>
+                            <img
+                                src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733531246/abb74d33b1680a5bcf5d732576107128_jxdtg5.png"
+                                alt="Noch unsicher 2"
+                                style={{
+                                    borderRadius: '2rem',
+                                    filter: 'brightness(0.4)',
+                                    width: '100%',
+                                    objectFit: 'cover',
+                                    height: '200px' // Set height for uniformity
+                                }}
+                            />
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: '10px',
+                                    left: '10px',
+                                    color: 'white',
+                                    fontSize: '1.5rem',
+                                    padding: '5px',
+                                    fontFamily: 'var(--font-berlin-type-bold)',
+                                    borderRadius: '5px',
+                                }}
+                            >
+                                Stell dich der Gefahr und<br/>
+                                prüfe dein Können!
+                            </div>
+                            <button
+                                onClick={() => window.location.href = '/quiz'}
+                                style={{
+                                    position: 'absolute',
+                                    bottom: '15px',
+                                    transform: 'translateX(10%)',
+                                    backgroundColor: 'var(--red-primary)',
+                                    color: 'white',
+                                    padding: '0.5rem 1rem',
+                                    fontSize: '1.5rem',
+                                    border: 'none',
+                                    borderRadius: '2rem',
+                                    fontFamily: 'var(--font-berlin-type-bold)',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Starten!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 }

@@ -18,9 +18,12 @@ export async function fetchJobs() {
       id: job.id,
       name: job.name,
       slug: job.slug,
-      description: job.description,
+      requirements: job.requirements,
+      shortDesc: job.shortDesc,
+      longDesc: job.longDesc,
       tags: job.tags,
-      imageUrl: job.imageUrl
+      imageUrl: job.imageUrl,
+      jobUrl: job.jobUrl
     })) || []
   } catch (error) {
     console.error('Error fetching jobs:', error)
