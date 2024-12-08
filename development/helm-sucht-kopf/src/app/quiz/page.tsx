@@ -101,7 +101,7 @@ const Quiz = () => {
                 {/* Intro Screen */}
                 {currentScreen === 'intro' && (
                     <div className={styles.introContainer}>
-                        <img src="/B_Navi_7_P_1C_lupe.png" alt="Intro Image" className={styles.introImage}/>
+                        <img src="Lupe.png" alt="Intro Image" className={styles.introImage}/>
                         <h3>Welcher Job passt zu Dir?</h3>
                         <p>
                             Willkommen beim Karriere Navigator! Dieser Quiz hilft Dir dabei,
@@ -176,7 +176,7 @@ const Quiz = () => {
 
                 {currentScreen === 'intermediate' && (
                     <div className={styles.intermediateContainer}>
-                        <img src="/B_ICON_PEACE_P_1C_Zeichenfläche 1.png" alt="Intemediate Image" className={styles.intermediateImage}/>
+                        <img src="/Peace.png" alt="Intemediate Image" className={styles.intermediateImage}/>
                         <h3>Dein Hintergrund?</h3>
 
                         {/* Dropdown for education */}
@@ -221,7 +221,7 @@ const Quiz = () => {
                 {/* Story Screen */}
                 {currentScreen === 'story' && (
                     <div className={styles.storyContainer}>
-                        <img src="/BFW_Notfall_P_1c.png" alt="Story Image" className={styles.storyImage}/>
+                        <img src="/112_Notruf.png" alt="Story Image" className={styles.storyImage}/>
 
                         <h3>Eine kleine Geschichte...</h3>
                         <p>Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden unterwegs, als plotzlich ein lautes Krachen durch die Luft hallt. Ein Auto ist frontal in einen Baum gekracht und Rauch steigt aus der Motorhaube auf.</p>

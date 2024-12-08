@@ -29,8 +29,17 @@ export default function RootLayout({
       <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 
-
-      <header>
+      <header
+          style={{
+              position: "fixed",
+              top: 0,
+              width: "100%",
+              zIndex: 1000,
+              backgroundColor: "white",
+              boxShadow: "0 2px 3px rgba(0, 0, 0, 0.1)",
+              padding: "10px 0",
+          }}
+      >
           <a href="/" style={{display: "inline-block", verticalAlign: "middle"}}>
               <img
                   src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733327873/Berliner-Feuerwehr-Logo_wgpm1l.png"
@@ -56,7 +65,9 @@ export default function RootLayout({
             </span>
       </header>
 
-      {children}
+      <div style={{paddingTop: "90px"}}>
+          {children}
+      </div>
 
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
           <a
