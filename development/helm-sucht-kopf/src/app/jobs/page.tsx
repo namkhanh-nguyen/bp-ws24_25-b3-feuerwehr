@@ -211,9 +211,7 @@ export default function JobsPage() {
                                     }}
                                 />
 
-                                <div className="absolute inset-0 bg-white bg-opacity-0 transition-opacity duration-300
-                                                group-hover:bg-opacity-70 flex flex-col justify-center items-center text-center hidden
-                                                group-hover:flex"
+                                <div className={styles.jobHoverInfo}
                                 >
                                     <p className={styles.jobShortDesc}>{shortDesc}</p>
                                     <span
@@ -229,8 +227,12 @@ export default function JobsPage() {
                                     </span>
                                 </div>
 
-                                <div className="flex flex-col justify-between flex-grow relative">
-                                    <h3 className={styles.jobName} style={{fontFamily: 'var(--font-berlin-type-bold)'}}>
+                                <div className="flex flex-col justify-between flex-grow relative"
+
+                                >
+                                    <h3 className={styles.jobName} style={{fontFamily: 'var(--font-berlin-type-bold)'}}
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
+                                    >
                                         {name}
                                     </h3>
 

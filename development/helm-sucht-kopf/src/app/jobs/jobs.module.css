@@ -65,6 +65,23 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
+.jobHoverInfo {
+    position: absolute;
+    inset: 0;
+    background-color: white;
+    opacity: 0;
+    transition: opacity 300ms;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.jobHoverInfo:hover {
+    opacity: 0.7;
+}
+
 .jobName {
     font-size: 1.6rem;
     line-height: 1.75rem;
@@ -78,10 +95,11 @@
 }
 
 .jobShortDesc {
-    font-size: 1.2rem;
+    position: relative;
+    font-size: 1.25em;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
     .pageMasterDiv {
         padding: 0;
@@ -106,11 +124,30 @@
         grid-template-columns: 1fr;
     }
 
+    .jobHoverInfo {
+        display: none;
+    }
+
     .jobName {
         font-size: 1.25rem;
     }
 
     .jobShortDesc {
         font-size: 0.9rem;
+    }
+}
+
+/* Media query for smaller viewports (or when zoomed in) */
+@media (max-width: 1200px) {
+    .jobShortDesc {
+        bottom: 1.2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 998px) {
+    .jobShortDesc {
+        bottom: 1.6rem;
+        font-size: 0.7rem;
     }
 }
