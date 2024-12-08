@@ -1,0 +1,107 @@
+.pageMasterDiv {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 2vh 2vh 5vh;
+}
+
+.deinWeg {
+    max-width: 75%;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: left;
+}
+
+.zumNavigator {
+    padding: 0.5rem;
+    background-color: var(--red-primary);
+    color: white;
+    border-radius: 1.5rem;
+    font-size: 1.2rem;
+    width: 20%;
+}
+
+.jobSection {
+    display: flex;
+    flex-direction: row;
+}
+
+.filterContainer {
+    display: block;
+    flex-shrink: 0;
+    max-width: 33%;
+    padding: 0.5rem 1rem;
+    margin-top: 2rem;
+    align-self: flex-start;
+}
+
+.filterDropdown {
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    display: block;
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid black;
+}
+
+.resetButton {
+    background-color: var(--red-primary);
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    color: white;
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.jobsList {
+    display: grid;
+    gap: 2rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    flex-grow: 1;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.jobName {
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 1rem;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    padding-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+
+    .pageMasterDiv {
+        padding: 0;
+    }
+
+    .zumNavigator {
+        width: 100%;
+    }
+
+    .jobSection {
+        flex-direction: column;
+    }
+
+    .filterContainer {
+        display: none;
+        width: 25%; /* Equivalent to 1/4 */
+        border: 1px solid; /* Adjust the border thickness and color as needed */
+        border-radius: 0.5rem; /* Adjust the border-radius as needed */
+    }
+
+    .jobsList {
+        grid-template-columns: 1fr;
+    }
+
+    .jobName {
+        font-size: 1.25rem;
+    }
+}

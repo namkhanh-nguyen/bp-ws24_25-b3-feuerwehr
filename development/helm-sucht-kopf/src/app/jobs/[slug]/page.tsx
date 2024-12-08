@@ -18,6 +18,22 @@ export default async function JobPage({params}: JobProps) {
 
     return (
         <div style={{fontFamily: 'var(--font-berlin-type-regular)', padding: '2rem'}}>
+
+            <a href={'/jobs'}
+               style={{
+                   color: 'var(--red-primary)',
+                   fontSize: '1rem',
+                   marginBottom: '20px',
+                   display: 'flex',
+                   alignItems: 'center',
+                   cursor: 'pointer'
+               }}>
+                <span style={{marginRight: '10px'}}>←</span>
+                <h2 style={{textDecoration: 'underline'}}>
+                    Zurück zur Stellensuche
+                </h2>
+            </a>
+
             <h1 style={{
                 fontSize: '2rem',
                 fontFamily: 'var(--font-berlin-type-bold)',
