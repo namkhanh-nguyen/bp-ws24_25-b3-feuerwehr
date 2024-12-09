@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {fetchJobs} from '../services/fetchJobs';
 import {useRouter} from 'next/compat/router';
 import styles from './jobs.module.css';
-import Loading from "@/app/jobs/loading";
+import Loading from "@/app/components/Loading";
 
 const filters = [
     // Filter by qualification type
@@ -14,8 +14,6 @@ const filters = [
     {key: 'hsa2j', label: 'Hauptschulabschluss und 2 Jahre Berufsausbildung'},
     {key: 'aghr', label: 'Allgemeine Hochschulreife'},
     {key: 'arb', label: 'Abgeschlossener Rettungsdienstberuf'}
-
-    // TODO: Filter by misc factors
 ];
 
 export default function JobsPage() {
