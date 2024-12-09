@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/chatbot/ui/avatar"
 
+
 type Message = {
     id: string
     text: string
