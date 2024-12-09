@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import React from "react";
 import Image from "next/image";
+import Chatbot from '@/app/components/chatbot/chatbot'
 
 const berlinTypeWebRegular = localFont({
     src: "./fonts/BerlinTypeWeb-Regular.woff",
@@ -60,6 +61,8 @@ export default function RootLayout({
       </header>
 
       {children}
+
+        <Chatbot />
 
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
           <a
