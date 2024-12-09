@@ -83,7 +83,7 @@ export default function Chatbot() {
                 addMessage('Hier sind einige häufig gestellte Fragen:', 'bot', generalQuestions)
                 break
             case 'application':
-                window.location.href = '/application'
+                window.location.href = '/jobs'
                 break
             case 'training':
                 addMessage('Mit welcher Ausbildungskategorie sind Ihre Fragen verbunden?', 'bot', ausbildungCategories)
