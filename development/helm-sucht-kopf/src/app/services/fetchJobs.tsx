@@ -1,20 +1,16 @@
 /**
- * Endpoint to access job data from API
+ * Fetch job data from a local JSON file
  */
 
 export async function fetchJobs() {
   try {
-    const response = await fetch('http://localhost:4000/jobs')
+    // Import the jobData.json file dynamically
+    const response = await import('./jobData.json');
 
-    if (!response.ok) {
-      console.error(`HTTP error! Status: ${response.status}`)
-      return []
-    }
-
-    const data = await response.json()
+    const data = response.default || [];
 
     // Map data to include the correct structure for the table
-    return data.map((job: any) => ({
+    return data.map((job) => ({
       id: job.id,
       name: job.name,
       slug: job.slug,
@@ -24,9 +20,9 @@ export async function fetchJobs() {
       tags: job.tags,
       imageUrl: job.imageUrl,
       jobUrl: job.jobUrl
-    })) || []
+    })) || [];
   } catch (error) {
-    console.error('Error fetching jobs:', error)
-    return []
+    console.error('Error fetching jobs:', error);
+    return [];
   }
 }
