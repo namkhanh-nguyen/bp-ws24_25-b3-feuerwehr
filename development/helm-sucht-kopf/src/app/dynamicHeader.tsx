@@ -1,10 +1,13 @@
-// Header.tsx (Client-Side)
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./dynamicHeader.module.css";
 
-const Header: React.FC = () => {
+const dynamicHeader: React.FC = () => {
     const [isShrunk, setIsShrunk] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement | null>(null);
+    const toggleRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -17,51 +20,81 @@ const Header: React.FC = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node) &&
+                toggleRef.current &&
+                !toggleRef.current.contains(event.target as Node)
+            ) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        if (isMenuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isMenuOpen]);
+
+    const toggleMenu = () => {
+        setIsMenuOpen((prevState) => !prevState);
+    };
+
     return (
-        <header
-            style={{
-                position: "fixed",
-                top: 0,
-                width: "100%",
-                zIndex: 1000,
-                backgroundColor: "white",
-                boxShadow: "0 2px 3px rgba(0, 0, 0, 0.1)",
-                padding: isShrunk ? "5px 0" : "10px 0",
-                height: isShrunk ? "50px" : "80px",
-                display: "flex",
-                alignItems: "center",
-                transition: "all 0.3s ease",
-            }}
-        >
-            <a href="/" style={{ display: "inline-block", verticalAlign: "middle" }}>
+        <header className={`${styles.header} ${isShrunk ? styles.shrunk : ""}`}>
+            <a href="/" className={`${styles.logo} ${isShrunk ? styles.shrunk : styles.large}`}>
                 <img
                     src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733327873/Berliner-Feuerwehr-Logo_wgpm1l.png"
                     alt="Berliner Feuerwehr Logo"
-                    style={{
-                        width: isShrunk ? "80px" : "100px",
-                        height: "auto",
-                        padding: "15px",
-                        verticalAlign: "middle",
-                        transition: "width 0.3s ease",
-                    }}
                 />
             </a>
-            <span
-                style={{
-                    color: "red",
-                    marginLeft: "0px",
-                    fontSize: isShrunk ? "150%" : "200%",
-                    padding: "5px 10px",
-                    verticalAlign: "middle",
-                    fontWeight: "bold",
-                    fontFamily: "Inter, sans-serif",
-                    transition: "font-size 0.3s ease",
-                }}
-            >
-        Karriere
-      </span>
+            <span className={`${styles.title} ${isShrunk ? styles.shrunk : ""}`}>
+                Karriere
+            </span>
+            <nav className={styles.nav}>
+                <div
+                    ref={toggleRef}
+                    onClick={toggleMenu}
+                    className={styles["menu-toggle"]}
+                >
+                    ☰
+                </div>
+
+                <div
+                    ref={menuRef}
+                    className={`${styles.menu} ${isMenuOpen ? styles.open : ""}`}
+                >
+                    <ul className={styles["menu-item"]}>
+                        {[
+                            { href: "https://www.berliner-feuerwehr.de/aktuelles/", text: "Aktuelles" },
+                            { href: "https://www.berliner-feuerwehr.de/ihre-sicherheit/", text: "Ihre Sicherheit" },
+                            { href: "https://www.berliner-feuerwehr.de/ueber-uns", text: "Über Uns" },
+                            { href: "https://www.berliner-feuerwehr.de/technik", text: "Technik" },
+                            { href: "https://www.berliner-feuerwehr.de/forschung", text: "Forschung" },
+                            { href: "https://www.berliner-feuerwehr.de/service", text: "Service" },
+                        ].map((item, index) => (
+                            <li key={index}>
+                                <a
+                                    href={item.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {item.text}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </nav>
         </header>
     );
 };
 
-export default Header;
+export default dynamicHeader;
