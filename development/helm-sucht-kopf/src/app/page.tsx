@@ -1,12 +1,13 @@
 "use client";
 
-import Hero from "./components/Hero";
-import Counter from "./components/Counter";
-import SliderAusbildungen from "./components/SliderCareerOpportunities";
-import SliderBewerbung from "./components/SliderApplicationProcess";
-import FAQSection from "./components/FAQSection";
+import Hero from "./components/homepage/Hero";
+import Counter from "./components/homepage/Counter";
+import SliderAusbildungen from "./components/homepage/SliderCareerOpportunities";
+import SliderBewerbung from "./components/homepage/SliderApplicationProcess";
+import FAQSection from "./components/homepage/FAQSection";
 
 export default function Home() {
+  /* TODO: Change to be UseState*/
   const stats = [
     { number: 8826, title: "großartige Teamitglieder" },
     { number: 514866, title: "Einsatzalamierungen" },
