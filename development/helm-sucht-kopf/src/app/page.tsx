@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <div>
-      <Hero />
+      <Hero/>
 
       <section className="">
         <div className="numbers">
@@ -35,7 +35,7 @@ export default function Home() {
           bis zum Quereinstieg nach einer abgeschlossenen Berufsausbildung oder
           nach einem Studium.
         </p>
-        <SliderAusbildungen />
+        <SliderAusbildungen/>
       </section>
 
       <section className="">

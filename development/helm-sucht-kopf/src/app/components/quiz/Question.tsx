@@ -2,9 +2,9 @@
 'use client';  // Add this line to mark this file as a Client Component
 
 import { FC } from 'react';
-import QuestionOption from './questionOption';
-import QuestionImageOption from './questionImageOption';
-import QuestionScaleOption from './questionScaleOption';
+import QuestionOption from './QuestionOption';
+import QuestionImageOption from './QuestionImageOption';
+import QuestionScaleOption from './QuestionScaleOption';
 
 
 type QuestionProps = {

@@ -23,7 +23,7 @@
 .dropdown label {
     display: block;
     margin-top: 30px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     font-size: 16px;
     font-weight: 650;
     color: #333;
@@ -44,7 +44,7 @@
 
 .introContainer,
 .intermediateContainer,
-.storyContainer, .resultsContainer {
+.storyContainer {
     text-align: center;
     padding: 2rem;
 }
@@ -323,8 +323,6 @@
 
 /* Result Screen Styles */
 .resultsContainer {
-    text-align: center;
-    padding: 2rem;
     margin: 20px auto;
     width: 100%;
     max-width: 700px;
@@ -380,7 +378,6 @@
 .jobList {
     display: grid;
     gap: 2rem;
-    padding: 0 2.5rem;
     flex-grow: 1;
     grid-template-columns: 1fr; /* Standard für mobile Ansicht */
 }
@@ -428,7 +425,7 @@
 }
 
 .jobName {
-    font-family: var(--font-berlin-type-bold);
+    font-family: var(--font-berlin-type-bold), sans-serif;
     font-size: 1.2rem;
     margin: 1rem;
     cursor: pointer;

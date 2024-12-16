@@ -38,6 +38,22 @@
     align-self: flex-start;
 }
 
+.mobileFilterButton {
+    display: none;
+    padding: 0.5rem; /* Equivalent to p-2 */
+    justify-content: space-between; /* Equivalent to justify-between */
+}
+
+.mobileFilterContainer {
+    display: none;
+    background-color: white;
+    padding: 1rem;
+    border: 1px solid;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    margin-left: 50%;
+}
+
 .filterDropdown {
     padding: 0.5rem;
     margin-right: 0.5rem;
@@ -61,11 +77,11 @@
 
 .jobsList {
     display: grid;
-    gap: 2rem;
+    gap: 1rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     flex-grow: 1;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr))
 }
 
 .jobHoverInfo {
@@ -164,13 +180,21 @@
 
     .filterContainer {
         display: none;
-        width: 25%; /* Equivalent to 1/4 */
-        border: 1px solid; /* Adjust the border thickness and color as needed */
-        border-radius: 0.5rem; /* Adjust the border-radius as needed */
+        width: 25%;
+        border: 1px solid;
+        border-radius: 0.5rem;
+    }
+
+    .mobileFilterContainer {
+        display: block;
+        margin-left: 1rem;
+        margin-right: 1rem;
     }
 
     .jobsList {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     .jobHoverInfo {
@@ -178,7 +202,7 @@
     }
 
     .jobName {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
     }
 
     .jobShortDesc {
@@ -191,5 +215,24 @@
     .jobShortDesc {
         bottom: 1.2rem;
         font-size: 1rem;
+    }
+
+    .filterContainer {
+        display: none;
+        width: 25%; /* Equivalent to 1/4 */
+        border: 1px solid; /* Adjust the border thickness and color as needed */
+        border-radius: 0.5rem; /* Adjust the border-radius as needed */
+    }
+
+    .mobileFilterButton {
+        display: flex;
+    }
+
+    .mobileFilterContainer {
+        display: block;
+    }
+
+    .jobHoverInfo {
+        display: none;
     }
 }

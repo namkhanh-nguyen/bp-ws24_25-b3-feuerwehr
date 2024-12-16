@@ -35,7 +35,7 @@ export default async function JobPage({params}: JobProps) {
                    }}>
                     <h3 style={{marginRight: '10px'}}>←</h3>
                     <h3 style={{textDecoration: 'underline'}}>
-                        Zurück zur Stellensuche
+                        Zurück zu Stellen
                     </h3>
                 </a>
 

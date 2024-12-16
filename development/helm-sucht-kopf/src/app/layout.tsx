@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./styles/globals.css";
 import React from "react";
-import Chatbot from '@/app/components/chatbot/chatbot'
+import Chatbot from '@/app/components/chatbot/Chatbot'
 import Header from "./components/navigation/Header";
 import DynamicHeader from "./components/DynamicHeader";
 import Footer from "./components/navigation/Footer";
@@ -44,10 +44,10 @@ export default function RootLayout({
 
       {/*<Header/>*/}
       <DynamicHeader/>
+      <Chatbot/>
       <div style={{paddingTop: "90px"}}>
           {children}
       </div>
-      <Chatbot/>
       <Footer/>
 
       </body>
