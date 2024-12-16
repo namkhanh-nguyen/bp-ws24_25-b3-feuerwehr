@@ -98,9 +98,54 @@
     padding-bottom: 1rem;
 }
 
-.jobShortDesc {
-    position: relative;
-    font-size: 1.25em;
+.jobImage {
+    width: 100%;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: 0;
+    cursor: pointer;
+    align-self: center; /* centers the element when used in a flex container */
+}
+
+.startButton {
+    position: absolute;
+    bottom: 15px;
+    transform: translateX(10%);
+    background-color: var(--red-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 2rem;
+    font-family: var(--font-berlin-type-bold), sans-serif;
+    cursor: pointer;
+}
+
+.undecidedDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.undecidedText {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 1rem;
+    padding: 5px;
+    font-family: var(--font-berlin-type-bold), sans-serif;
+    border-radius: 5px;
+}
+
+.undecidedImage {
+    border-radius: 2rem;
+    filter: brightness(0.7);
+    width: 100%;
+    object-fit: cover;
+    height: 200px;
 }
 
 @media (max-width: 767px) {
@@ -146,12 +191,5 @@
     .jobShortDesc {
         bottom: 1.2rem;
         font-size: 1rem;
-    }
-}
-
-@media (max-width: 998px) {
-    .jobShortDesc {
-        bottom: 1.6rem;
-        font-size: 0.7rem;
     }
 }

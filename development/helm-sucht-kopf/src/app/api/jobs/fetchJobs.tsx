@@ -9,21 +9,17 @@ interface Job {
   shortDesc: string;
   longDesc: string;
   tags: string[];
-  imageUrl: string;
   jobUrl: string;
 }
 
 /**
- * Fetch job data from a local JSON file with reorganized structure
+ * Fetch job data from jobData.json as a dictionary
  */
 export async function fetchJobs(): Promise<Record<string, Job>> {
   try {
-    // Import the jobData.json file dynamically
     const response = await import('./jobData.json');
-    const data: Record<string, Job> = response.default || {};
-
     // Return the data as a dictionary
-    return data;
+    return response.default || {};
   } catch (error) {
     console.error('Error fetching jobs:', error);
     return {};

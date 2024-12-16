@@ -21,7 +21,6 @@ export default function JobsPage() {
         [key: string]: {
             tags: string[],
             id: string,
-            imageUrl: string,
             name: string,
             slug: string,
             shortDesc: string
@@ -78,14 +77,9 @@ export default function JobsPage() {
 
             <div className={styles.jobSection}>
                 <div className={styles.filterContainer}>
-                    <div style={{
-                        fontSize: '1.2rem',
-                        fontFamily: 'var(--font-berlin-type-bold)',
-                        marginBottom: '1rem'
-                    }}>
+                    <h2>
                         Ergebnisse: {filteredJobs.length}
-                    </div>
-
+                    </h2>
                     <div className="block p-2">
                         <select
                             value={selectedFilters[0] || ""}
@@ -112,16 +106,9 @@ export default function JobsPage() {
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: '1'}}>
 
                     <div className="p-2 flex justify-between md:hidden">
-                        <div
-                            style={{
-                                fontSize: '1.2rem',
-                                padding: '0.5rem',
-                                fontWeight: 'bold',
-                                fontFamily: 'var(--font-berlin-type-bold)'
-                            }}
-                        >
+                        <h3 className="p-2">
                             Ergebnisse: {filteredJobs.length}
-                        </div>
+                        </h3>
                         <button
                             style={{
                                 borderRadius: '1.5rem',
@@ -168,18 +155,7 @@ export default function JobsPage() {
                                 </select>
                             </div>
 
-                            <button
-                                style={{
-                                    backgroundColor: 'var(--red-primary)',
-                                    marginTop: '1rem',
-                                    padding: '0.5rem',
-                                    borderRadius: '1rem',
-                                    color: 'white',
-                                    width: '50%',
-                                    display: 'block',
-                                    marginLeft: 'auto',
-                                    marginRight: 'auto',
-                                }}
+                            <button className={styles.resetButton}
                                 onClick={handleReset}
                             >
                                 Reset
@@ -195,24 +171,24 @@ export default function JobsPage() {
                              paddingRight: '2.5rem',
                              flexGrow: '1'
                          }}>
-                        {filteredJobs.map(({id, imageUrl, name, slug, shortDesc}) => (
+                        {filteredJobs.map(({id, name, slug, shortDesc}) => (
                             <div
                                 key={id}
                                 className="job-card flex flex-col md:flex-row md:items-center mt-8
-                                             border rounded-lg relative group"
+                                             group"
                                 style={{
-                                    flexDirection: 'column'
+                                    marginTop: '2rem',
+                                    flexDirection: 'column',
+                                    borderWidth: '1px',
+                                    borderRadius: '1rem',
+                                    position: 'relative'
                                 }} // always in column
                             >
                                 <img
-                                    src={`./assets/jobs/${slug}.jpg`}
+                                    src={`./assets/jobs/${slug}.png`}
                                     alt={name}
-                                    className="job-image w-full rounded-t-lg rounded-bl-none"
+                                    className={styles.jobImage}
                                     onClick={() => window.location.href = `/jobs/${slug}`}
-                                    style={{
-                                        cursor: 'pointer',
-                                        alignSelf: 'center', // center image
-                                    }}
                                 />
 
                                 <div className={styles.jobHoverInfo}
@@ -232,7 +208,6 @@ export default function JobsPage() {
                                 </div>
 
                                 <div className="flex flex-col justify-between flex-grow relative"
-
                                 >
                                     <h3 className={styles.jobName}
                                         onClick={() => window.location.href = `/jobs/${slug}`}>
@@ -259,17 +234,17 @@ export default function JobsPage() {
                                     </div>
                                 </div>
 
-                                <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg"
+                                <div id={`desc-${id}`} className="hidden transition-all rounded-lg"
                                      style={{
                                          width: '85%',
                                          marginLeft: '1rem',
                                          marginBottom: '1rem',
                                      }}>
-                                    <p style={{fontSize: '85%'}}>{shortDesc}</p>
+                                    <p className={styles.jobShortDesc}>{shortDesc}</p>
                                     <span
+                                        className={styles.jobShortDesc}
                                         onClick={() => window.location.href = `/jobs/${slug}`}
                                         style={{
-                                            fontSize: '85%',
                                             color: 'var(--red-primary)',
                                             textDecorationLine: 'underline',
                                             cursor: 'pointer'
@@ -286,15 +261,12 @@ export default function JobsPage() {
             </div>
 
             <div>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: '2rem',
-                    padding: '1rem',
-                }}>
-                    <div className="grid grid-rows-2 md:grid-cols-2 gap-4"
+                <div className={styles.undecidedDiv}>
+                    <div className="md:grid-cols-2"
                          style={{
+                             display: 'grid',
+                             gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
+                             gap: '1rem',
                              width: '100%', // Ensure it uses full width available
                          }}>
                         <div style={{
@@ -304,46 +276,17 @@ export default function JobsPage() {
                             marginBottom: '1rem'
                         }}>
                             <img
-                                src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733530199/d14a273e59a9f0c6352bb926e8946ca9_n8mtll.jpg"
+                                src={`./assets/jobs/undecided-1.png`}
                                 alt="Noch unsicher 1"
-                                style={{
-                                    borderRadius: '2rem',
-                                    filter: 'brightness(0.7)',
-                                    width: '100%',
-                                    objectFit: 'cover',
-                                    height: '200px' // Set height for uniformity
-                                }}
+                                className={styles.undecidedImage}
                             />
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    top: '10px',
-                                    left: '10px',
-                                    color: 'white',
-                                    fontSize: '1rem',
-                                    padding: '5px',
-                                    fontFamily: 'var(--font-berlin-type-bold)',
-                                    borderRadius: '5px',
-                                }}
-                            >
+                            <div className={styles.undecidedText}>
                                 Noch unsicher?<br/>
                                 Probiere es mit dem Quiz!
                             </div>
                             <button
                                 onClick={() => window.location.href = '/quiz'}
-                                style={{
-                                    position: 'absolute',
-                                    bottom: '15px',
-                                    transform: 'translateX(10%)',
-                                    backgroundColor: 'var(--red-primary)',
-                                    color: 'white',
-                                    padding: '0.5rem 1rem',
-                                    fontSize: '1.2rem',
-                                    border: 'none',
-                                    borderRadius: '2rem',
-                                    fontFamily: 'var(--font-berlin-type-bold)',
-                                    cursor: 'pointer'
-                                }}
+                                className={styles.startButton}
                             >
                                 Starten!
                             </button>
@@ -356,46 +299,17 @@ export default function JobsPage() {
                             marginBottom: '1rem'
                         }}>
                             <img
-                                src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733531246/abb74d33b1680a5bcf5d732576107128_jxdtg5.png"
+                                src={`./assets/jobs/undecided-2.png`}
                                 alt="Noch unsicher 2"
-                                style={{
-                                    borderRadius: '2rem',
-                                    filter: 'brightness(0.4)',
-                                    width: '100%',
-                                    objectFit: 'cover',
-                                    height: '200px' // Set height for uniformity
-                                }}
+                                className={styles.undecidedImage}
                             />
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    top: '10px',
-                                    left: '10px',
-                                    color: 'white',
-                                    fontSize: '1rem',
-                                    padding: '5px',
-                                    fontFamily: 'var(--font-berlin-type-bold)',
-                                    borderRadius: '5px',
-                                }}
-                            >
+                            <div className={styles.undecidedText}>
                                 Stell dich der Gefahr und<br/>
                                 prüfe dein Können!
                             </div>
                             <button
                                 onClick={() => window.location.href = '/quiz'}
-                                style={{
-                                    position: 'absolute',
-                                    bottom: '15px',
-                                    transform: 'translateX(10%)',
-                                    backgroundColor: 'var(--red-primary)',
-                                    color: 'white',
-                                    padding: '0.5rem 1rem',
-                                    fontSize: '1.2rem',
-                                    border: 'none',
-                                    borderRadius: '2rem',
-                                    fontFamily: 'var(--font-berlin-type-bold)',
-                                    cursor: 'pointer'
-                                }}
+                                className={styles.startButton}
                             >
                                 Starten!
                             </button>

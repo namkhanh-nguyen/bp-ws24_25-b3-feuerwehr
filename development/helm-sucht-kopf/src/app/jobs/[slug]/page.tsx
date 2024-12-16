@@ -29,42 +29,30 @@ export default async function JobPage({params}: JobProps) {
                 <a href={'/jobs'}
                    style={{
                        color: 'var(--red-primary)',
-                       fontSize: '1rem',
                        marginBottom: '20px',
                        display: 'flex',
-                       alignItems: 'center',
                        cursor: 'pointer'
                    }}>
-                    <span style={{marginRight: '10px'}}>←</span>
-                    <h2 style={{textDecoration: 'underline'}}>
+                    <h3 style={{marginRight: '10px'}}>←</h3>
+                    <h3 style={{textDecoration: 'underline'}}>
                         Zurück zur Stellensuche
-                    </h2>
+                    </h3>
                 </a>
 
                 <h1 style={{
-                    fontSize: '2rem',
                     fontFamily: 'var(--font-berlin-type-bold)',
                     marginBottom: '20px'
                 }}>{job.name}</h1>
-                <img src={job.imageUrl} alt={job.name}
+                <img src={`/assets/jobs/${slug}.png`} alt={job.name}
                      style={{
                          marginBottom: '20px',
                          borderRadius: '1.5rem',
                          width: '100%'
                      }}
                 />
-                <p style={{
-                    fontSize: '1rem',
-                    fontFamily: 'var(--font-berlin-type-bold)',
-                    marginBottom: '20px'
-                }}>Das bringen Sie mit: </p>
+                <h2>Das bringen Sie mit:</h2>
                 <p style={{marginBottom: '20px', whiteSpace: 'pre-line'}}>{job.requirements}</p>
-                <p style={{
-                    fontSize: '1rem',
-                    fontFamily: 'var(--font-berlin-type-bold)',
-                    marginBottom: '20px'
-                }}>Das bieten wir Ihnen:
-                </p>
+                <h2>Das bieten wir Ihnen:</h2>
                 <p style={{marginBottom: '20px', whiteSpace: 'pre-line'}}>{job.longDesc}</p>
                 {job.jobUrl ? (
                     <a href={job.jobUrl}>

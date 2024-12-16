@@ -223,13 +223,13 @@ const Quiz = () => {
                         <h3 className={styles.centeredHeader}>Aktuelle Möglichkeiten:</h3>
                         <p className={styles.centeredText}>Diese Ausbildungen kannst Du direkt mit Deinem aktuellen Abschluss beginnen:</p>
                         <div className={`${styles.jobList} md:grid-cols-2`}>
-                            {getRecommendedJobs('direkt').map(({id, imageUrl, name, slug, shortDesc}) => (
+                            {getRecommendedJobs('direkt').map(({id, name, slug, shortDesc}) => (
                                 <div
                                     key={id}
                                     className={styles.jobCard}>
                                     {/* Job Image */}
                                     <img
-                                        src={imageUrl}
+                                        src={`./assets/jobs/${slug}.png`}
                                         alt={name}
                                         className={styles.jobImage}
                                         onClick={() => window.location.href = `/jobs/${slug}`}
@@ -292,14 +292,14 @@ const Quiz = () => {
                         <h3 className={styles.centeredHeader}>Zukünftige Möglichkeiten:</h3>
                         <p className={styles.centeredText}>Diese Ausbildungen kannst Du nach weiteren Qualifikationen oder Abschlüssen beginnen:</p>
                         <div className={`${styles.jobList} md:grid-cols-2`}>
-                            {getRecommendedJobs('zukünftig').map(({id, imageUrl, name, slug, shortDesc}) => (
+                            {getRecommendedJobs('zukünftig').map(({id, name, slug, shortDesc}) => (
                                 <div
                                     key={id}
                                     className={styles.jobCard}
                                 >
                                     {/* Job Image */}
                                     <img
-                                        src={imageUrl}
+                                        src={`./assets/jobs/${slug}.png`}
                                         alt={name}
                                         className={styles.jobImage}
                                         onClick={() => window.location.href = `/jobs/${slug}`}
