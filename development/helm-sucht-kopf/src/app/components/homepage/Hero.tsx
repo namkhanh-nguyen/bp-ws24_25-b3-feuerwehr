@@ -10,7 +10,7 @@ function Hero() {
             Bist du bereit für Action, Teamgeist und einen Job, der wirklich
             etwas bewegt? Dann bist du bei der Berliner Feuerwehr genau richtig!
           </p>
-          <Link href="/" className="hero-button">
+          <Link href="/jobs" className="hero-button">
             Zum Navigator
           </Link>
         </div>
