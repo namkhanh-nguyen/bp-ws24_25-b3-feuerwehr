@@ -25,7 +25,7 @@ export default function JobsPage() {
     useEffect(() => {
         const getJobs = async () => {
             const data = await fetchJobs();
-            setJobs(data);
+            setJobs(data as any);
             setIsLoading(false);
         };
         getJobs();
@@ -37,6 +37,7 @@ export default function JobsPage() {
 
     const handleReset = () => {
         setSelectedFilters([]);
+        
     };
 
     const filteredJobs = jobs.filter((job: { tags: string[] }) =>
