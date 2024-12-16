@@ -1,38 +1,73 @@
-import Image from "next/image";
+"use client";
+
+import Hero from "./components/homepage/Hero";
+import Counter from "./components/homepage/Counter";
+import SliderAusbildungen from "./components/homepage/SliderCareerOpportunities";
+import SliderBewerbung from "./components/homepage/SliderApplicationProcess";
+import FAQSection from "./components/homepage/FAQSection";
 
 export default function Home() {
+  /* TODO: Change to be UseState*/
+  const stats = [
+    { number: 8826, title: "großartige Teamitglieder" },
+    { number: 514866, title: "Einsatzalamierungen" },
+    { number: 57, title: "Nationen vereint in einem Team" },
+    { number: 1330, title: "Fahrzeuge" },
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-berlin-type-regular)]">
+    <>
+      <Hero />
 
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-center">
-
-        <Image
-              src="/header/Helmsuchtkopf-1920x1080.jpg"
-              alt="Banner"
-              width={960}
-              height={480}
-              priority
-        />
-
-        <h1 className="text-4xl sm:text-5xl font-bold justify-center text-center">
-          Bewirb dich jetzt!
-        </h1>
-
-        <div className="flex gap-4 items-center flex-col">
-          <a
-              className="rounded-full border border-solid border-transparent transition-colors
-            flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] 
-            text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-              href="/jobs"
-              // target="_blank"
-              // rel="noopener noreferrer"
-          >
-            Zu Stellen
-          </a>
+      <section className="">
+        <div className="numbers">
+          {stats.map((stat, index) => (
+            <Counter key={index} number={stat.number} title={stat.title} />
+          ))}
         </div>
+      </section>
 
-      </main>
+      <section className="sec">
+        <h2>Viele Wege führen zur Berliner Feuerwehr</h2>
+        <p>
+          Wir bieten eine Vielzahl von Einstiegswegen in eine Feuerwehrlaufbahn
+          – von der Ausbildung oder dem dualen Studium direkt nach der Schule
+          bis zum Quereinstieg nach einer abgeschlossenen Berufsausbildung oder
+          nach einem Studium.
+        </p>
+        <SliderAusbildungen />
+      </section>
 
-    </div>
+      <section className="">
+        <div className="shape-top">
+          <img src="./assets/shapes/curve-top.svg" alt="Obere Kurve" />
+        </div>
+        <div className="sec red">
+          <img src="/assets/home/video.png" alt="Placeholder" />
+          <h2>Mehr als ein Job, eine Mission!</h2>
+          <p>
+            Bei uns wird Teamgeist großgeschrieben. Action, Verantwortung und
+            echte Kameradschaft erwarten dich. Werde Teil der Feuerwehr – der
+            beste Job der Welt, bei dem du Leben rettest, Brände bekämpfst und
+            echte Heldenmomente erlebst. Gemeinsam für mehr Sicherheit und eine
+            starke Gemeinschaft!
+          </p>
+        </div>
+        <div className="shape-bottom">
+          <img src="./assets/shapes/curve-bottom.svg" alt="Untere Kurve" />
+        </div>
+      </section>
+
+      <section className="sec">
+        <h2>Bewerbungsprozess</h2>
+        <p>
+          Der Bewerbungsprozess für die Berliner Feuerwehr ist in mehrere
+          Schritte unterteilt. Hier erfährst du, wie du dich bewerben kannst und
+          welche Voraussetzungen du erfüllen musst.
+        </p>
+        <SliderBewerbung />
+      </section>
+      <FAQSection />
+    </>
   );
 }
