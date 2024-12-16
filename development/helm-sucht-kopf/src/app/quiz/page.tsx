@@ -23,7 +23,7 @@ const Quiz = () => {
     useEffect(() => {
         const loadJobs = async () => {
             const jobsData = await fetchJobs();
-            setJobs(jobsData);
+            setJobs(jobsData as any);
         };
         loadJobs();
     }, []);
@@ -105,7 +105,7 @@ const Quiz = () => {
     const getRecommendedJobs = (type: 'direkt' | 'zukünftig') => {
         if (!quizResult) return [];
         const recommendedJobs = quizResult.result[type];
-        return jobs.filter(job => recommendedJobs.includes(job.name));
+        return Object.values(jobs).filter(job => recommendedJobs.includes(job.name));
     };
 
     return (
