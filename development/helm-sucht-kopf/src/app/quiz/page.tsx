@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styles from '../styles/quiz.module.css';
 import stylesJob from '../styles/jobs.module.css'
 import { quizData } from '../components/quiz/quizData';
-import { fetchJobs } from '../services/jobs/fetchJobs';
+import { fetchJobs } from '@/app/api/jobs/fetchJobs';
 
 const Quiz = () => {
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'results'>('intro');
