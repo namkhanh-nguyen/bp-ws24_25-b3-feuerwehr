@@ -1,12 +1,9 @@
 'use client'
 
 import { useState, useRef, useEffect } from "react"
-import { Button } from "@/app/components/chatbot/ui/button"
-import { Card } from "@/app/components/chatbot/ui/card"
+import { Button } from "@/app/components/chatbot/ui/Button"
+import { Card } from "@/app/components/chatbot/ui/Card"
 import { MessageCircle, X, ChevronRight } from 'lucide-react'
-import Image from "next/image"
-
-
 
 type Message = {
     id: string
@@ -89,7 +86,7 @@ const answers: Record<string, string> = {
     'ausbildung_fragen': 'Bitte wählen Sie eine spezifische Ausbildungskategorie aus, um detaillierte Informationen zu erhalten.',
 }
 
-export default function ChatBot() {
+export default function Chatbot() {
     const [isOpen, setIsOpen] = useState(false)
     const [messages, setMessages] = useState<Message[]>([])
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -232,7 +229,7 @@ export default function ChatBot() {
                 </div>
             )}
 
-            <div className="fixed bottom-4 right-4">
+            <div className="fixed z-10 bottom-4 right-4">
                 <Button
                     size="icon"
                     className="w-12 h-12 rounded-full bg-red-600 hover:bg-red-700 shadow-lg"

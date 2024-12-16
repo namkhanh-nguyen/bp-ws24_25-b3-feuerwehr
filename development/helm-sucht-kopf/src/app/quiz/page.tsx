@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/quiz.module.css';
 import stylesJob from '../styles/jobs.module.css'
-import { quizData } from '../components/quiz/quizData';
+import { quizData } from '../components/quiz/QuizData';
 import { fetchJobs } from '@/app/api/jobs/fetchJobs';
+import JobCard from "@/app/components/jobs/JobCard";
 
 const Quiz = () => {
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'results'>('intro');
@@ -126,7 +127,7 @@ const Quiz = () => {
                 )}
 
                 {/* Intermediate Screen */}
-                {currentScreen === 'intermediate' &&  (
+                {currentScreen === 'intermediate' && (
                     <div className={styles.intermediateContainer}>
                         <img src="/Peace.png" alt="Intermediate Image" className={styles.intermediateImage}/>
                         <h3>Dein Hintergrund?</h3>
@@ -143,8 +144,13 @@ const Quiz = () => {
                                 <option value="Abitur">Abitur</option>
                                 <option value="Bachelor">Bachelor</option>
                                 <option value="Master">Master</option>
-                                <option value="Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat">Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat</option>
-                                <option value="Abgeschlossener Rettungsdienstberuf">Abgeschlossener Rettungsdienstberuf</option>
+                                <option
+                                    value="Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat">Hauptschulabschluss
+                                    mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat
+                                </option>
+                                <option value="Abgeschlossener Rettungsdienstberuf">Abgeschlossener
+                                    Rettungsdienstberuf
+                                </option>
                             </select>
                         </div>
                         <button className={styles.continueButton} onClick={goNext} disabled={!education}>
@@ -158,7 +164,9 @@ const Quiz = () => {
                     <div className={styles.storyContainer}>
                         <img src="/112_Notruf.png" alt="Story Image" className={styles.storyImage}/>
                         <h3>Eine kleine Geschichte...</h3>
-                        <p>Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden unterwegs, als plötzlich ein lautes Krachen durch die Luft hallt. Ein Auto ist frontal in einen Baum gekracht und Rauch steigt aus der Motorhaube auf.</p>
+                        <p>Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden unterwegs, als plötzlich
+                            ein lautes Krachen durch die Luft hallt. Ein Auto ist frontal in einen Baum gekracht und
+                            Rauch steigt aus der Motorhaube auf.</p>
                         <button onClick={goNext} className={styles.continueButton}>
                             Weiter
                         </button>
@@ -166,7 +174,7 @@ const Quiz = () => {
                 )}
 
                 {/* Quiz Screen */}
-                {currentScreen === 'quiz' &&(
+                {currentScreen === 'quiz' && (
                     <>
                         <div className={styles.progressBarContainer}>
                             <div
@@ -219,141 +227,35 @@ const Quiz = () => {
 
                 {/* Result Screen */}
                 {currentScreen === 'results' && (
-                    <div className={stylesJob.resultsContainer}>
+                    <div className={styles.resultsContainer}>
                         <h3 className={styles.centeredHeader}>Aktuelle Möglichkeiten:</h3>
-                        <p className={styles.centeredText}>Diese Ausbildungen kannst Du direkt mit Deinem aktuellen Abschluss beginnen:</p>
+                        <p className={styles.centeredText}>Diese Ausbildungen kannst Du direkt mit Deinem aktuellen
+                            Abschluss beginnen:</p>
                         <div className={`${styles.jobList} md:grid-cols-2`}>
                             {getRecommendedJobs('direkt').map(({id, name, slug, shortDesc}) => (
-                                <div
-                                    key={id}
-                                    className={styles.jobCard}>
-                                    {/* Job Image */}
-                                    <img
-                                        src={`./assets/jobs/${slug}.png`}
-                                        alt={name}
-                                        className={styles.jobImage}
-                                        onClick={() => window.location.href = `/jobs/${slug}`}
+                                <div key={slug}>
+                                    <JobCard
+                                        id={id}
+                                        slug={slug}
+                                        name={name}
+                                        shortDesc={shortDesc}
                                     />
-
-                                    {/* Job Name and Description */}
-                                    <div className="flex flex-col justify-between flex-grow relative">
-                                        <h3 className={styles.jobName}
-                                            style={{fontFamily: 'var(--font-berlin-type-bold)'}}
-                                            onClick={() => window.location.href = `/jobs/${slug}`}
-                                        >
-                                            {name}
-                                        </h3>
-
-                                        {/* Toggle Description Button (Mobile) */}
-                                        <div className="md:hidden"
-                                             style={{
-                                                 padding: '0.5rem',
-                                                 paddingBottom: '1rem',
-                                                 position: 'absolute',
-                                                 top: '0px',
-                                                 right: '0px'
-                                             }}>
-                                            <button
-                                                style={{padding: '0.5rem'}}
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    document.getElementById(`desc-${id}`)?.classList.toggle('hidden');
-                                                }}
-                                            >
-                                                ▼
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {/* Job Short Description (Mobile Toggle) */}
-                                    <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg"
-                                         style={{
-                                             width: '85%',
-                                             marginLeft: '1rem',
-                                             marginBottom: '1rem',
-                                         }}>
-                                        <p style={{fontSize: '85%'}}>{shortDesc}</p>
-                                        <span
-                                            onClick={() => window.location.href = `/jobs/${slug}`}
-                                            style={{
-                                                fontSize: '85%',
-                                                color: 'var(--red-primary)',
-                                                textDecorationLine: 'underline',
-                                                cursor: 'pointer'
-                                            }}
-                                        >
-                    Mehr Infos
-                </span>
-                                    </div>
                                 </div>
                             ))}
                         </div>
 
                         <h3 className={styles.centeredHeader}>Zukünftige Möglichkeiten:</h3>
-                        <p className={styles.centeredText}>Diese Ausbildungen kannst Du nach weiteren Qualifikationen oder Abschlüssen beginnen:</p>
+                        <p className={styles.centeredText}>Diese Ausbildungen kannst Du nach weiteren Qualifikationen
+                            oder Abschlüssen beginnen:</p>
                         <div className={`${styles.jobList} md:grid-cols-2`}>
                             {getRecommendedJobs('zukünftig').map(({id, name, slug, shortDesc}) => (
-                                <div
-                                    key={id}
-                                    className={styles.jobCard}
-                                >
-                                    {/* Job Image */}
-                                    <img
-                                        src={`./assets/jobs/${slug}.png`}
-                                        alt={name}
-                                        className={styles.jobImage}
-                                        onClick={() => window.location.href = `/jobs/${slug}`}
+                                <div key={slug}>
+                                    <JobCard
+                                        id={id}
+                                        slug={slug}
+                                        name={name}
+                                        shortDesc={shortDesc}
                                     />
-
-                                    {/* Job Name and Description */}
-                                    <div className="flex flex-col justify-between flex-grow relative">
-                                        <h3 className={styles.jobName}
-                                            onClick={() => window.location.href = `/jobs/${slug}`}
-                                        >
-                                            {name}
-                                        </h3>
-
-                                        {/* Toggle Description Button (Mobile) */}
-                                        <div className="md:hidden"
-                                             style={{
-                                                 padding: '0.5rem',
-                                                 paddingBottom: '1rem',
-                                                 position: 'absolute',
-                                                 top: '0px',
-                                                 right: '0px'
-                                             }}>
-                                            <button
-                                                style={{padding: '0.5rem'}}
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    document.getElementById(`desc-${id}`)?.classList.toggle('hidden');
-                                                }}
-                                            >
-                                                ▼
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {/* Job Short Description (Mobile Toggle) */}
-                                    <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg"
-                                         style={{
-                                             width: '85%',
-                                             marginLeft: '1rem',
-                                             marginBottom: '1rem',
-                                         }}>
-                                        <p style={{fontSize: '85%'}}>{shortDesc}</p>
-                                        <span
-                                            onClick={() => window.location.href = `/jobs/${slug}`}
-                                            style={{
-                                                fontSize: '85%',
-                                                color: 'var(--red-primary)',
-                                                textDecorationLine: 'underline',
-                                                cursor: 'pointer'
-                                            }}
-                                        >
-                    Mehr Infos
-                </span>
-                                    </div>
                                 </div>
                             ))}
                         </div>
