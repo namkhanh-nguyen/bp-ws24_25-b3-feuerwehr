@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import styles from './quiz.module.css';
-import stylesJob from '../jobs/jobs.module.css'
-import { quizData } from './quizData';
-import { fetchJobs } from '../services/fetchJobs';
-import Loading from "@/app/components/Loading";
+import styles from '../styles/quiz.module.css';
+import stylesJob from '../styles/jobs.module.css'
+import { quizData } from '../components/quiz/quizData';
+import { fetchJobs } from '../services/jobs/fetchJobs';
 
 const Quiz = () => {
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'results'>('intro');
@@ -15,7 +14,6 @@ const Quiz = () => {
     const [quizResult, setQuizResult] = useState<any>(null);
     const [jobs, setJobs] = useState<any[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
 
     const currentQuestion = quizData[currentQuestionIndex];
     const totalQuestions = quizData.length;

@@ -1,8 +1,8 @@
 'use client';
 import React, {useEffect, useState} from 'react';
-import {fetchJobs} from '../services/fetchJobs';
+import {fetchJobs} from '../services/jobs/fetchJobs';
 import {useRouter} from 'next/compat/router';
-import styles from './jobs.module.css';
+import styles from '../styles/jobs.module.css';
 import Loading from "@/app/components/Loading";
 
 const filters = [

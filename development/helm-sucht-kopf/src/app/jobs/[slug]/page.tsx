@@ -1,4 +1,4 @@
-import {fetchJobs} from '../../services/fetchJobs';
+import {fetchJobs} from '../../services/jobs/fetchJobs';
 
 type JobProps = {
     params: {
