@@ -6,10 +6,11 @@ const quizData = [
             id: 0,
             question: "Welchen Abschluss hast du?",
             options: [
-                { answer: "BBR" },
+                { answer: "Berufsbildungsreife" },
                 { answer: "MSA" },
                 { answer: "Abitur" },
-                { answer: "Bachelor/Master" },
+                { answer: "Bachelor" },
+                { answer: "Master" },
                 { answer: "Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat" },
                 { answer: "Abgeschlossener Rettungsdienstberuf" }
             ]
@@ -118,10 +119,10 @@ router.post('/data', (req, res) => {
     let result = {};
     if (majorityCategory === 'A') {
         switch (graduationAnswer) {
-            case "BBR":
+            case "Berufsbildungsreife":
                 result = {
                     direkt: [],
-                    zukünftig: ["Medic, Notfallsanitäterausbildung,Medic Expert"]
+                    zukünftig: ["112 Medic, Notfallsanitäterausbildung, Medic Expert"]
                 };
                 break;
             case "MSA":
@@ -131,7 +132,8 @@ router.post('/data', (req, res) => {
                 };
                 break;
             case "Abitur":
-            case "Bachelor/Master":
+            case "Bachelor":
+            case "Master":
                 result = {
                     direkt: ["Medic", "Notfallsanitäterausbildung"],
                     zukünftig: ["Medic Expert"]
@@ -152,7 +154,7 @@ router.post('/data', (req, res) => {
         }
     } else if (majorityCategory === 'B') {
         switch (graduationAnswer) {
-            case "BBR":
+            case "Berufsbildungsreife":
                 result = {
                     direkt: ["Direkt Plus"],
                     zukünftig: ["Classic", "Direkt"]
@@ -170,7 +172,8 @@ router.post('/data', (req, res) => {
                     zukünftig: ["Classic"]
                 };
                 break;
-            case "Bachelor/Master":
+            case "Bachelor":
+            case "Master":
                 result = {
                     direkt: ["Direkt", "Classic"],
                     zukünftig: []
@@ -185,7 +188,7 @@ router.post('/data', (req, res) => {
         }
     } else if (majorityCategory === 'C') {
         switch (graduationAnswer) {
-            case "BBR":
+            case "Berufsbildungsreife":
                 result = {
                     direkt: [],
                     zukünftig: ["Dual", "Bachelor", "Master"]
@@ -208,7 +211,13 @@ router.post('/data', (req, res) => {
                      zukünftig: []
                  };
                 break;
-            case "Bachelor/Master":
+            case "Bachelor":
+                result = {
+                    direkt: ["Bachelor"],
+                    zukünftig: []
+                };
+                break;
+            case "Master":
                 result = {
                     direkt: ["Bachelor", "Master"],
                     zukünftig: []

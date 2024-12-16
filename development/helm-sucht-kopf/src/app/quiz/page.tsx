@@ -1,52 +1,45 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './quiz.module.css';
+import stylesJob from '../jobs/jobs.module.css'
 import { quizData } from './quizData';
 import { fetchJobs } from '../services/fetchJobs';
+import Loading from "@/app/components/Loading";
 
 const Quiz = () => {
-
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'results'>('intro');
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState<any[]>([]);
-    const [sliderValue, setSliderValue] = useState<number | string>('');
-    const [education, setEducation] = useState<string>(''); // State for first dropdown
-    const [careerGoal, setCareerGoal] = useState<string>(''); // State for second dropdown
-
-    const [jobs, setJobs] = useState<any[]>([]); // Fetched jobs
-    const [filteredJobs, setFilteredJobs] = useState<any[]>([]); // Jobs matching the user's results
+    const [answers, setAnswers] = useState<{questionId: number, selectedOption: string, fullText: string}[]>([]);
+    const [education, setEducation] = useState<string>('');
+    const [quizResult, setQuizResult] = useState<any>(null);
+    const [jobs, setJobs] = useState<any[]>([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const currentQuestion = quizData[currentQuestionIndex];
     const totalQuestions = quizData.length;
 
     useEffect(() => {
-        const getJobs = async () => {
-            const data = await fetchJobs();
-            setJobs(data);
-            return data; // Return data for further chaining if needed
+        const loadJobs = async () => {
+            const jobsData = await fetchJobs();
+            setJobs(jobsData);
         };
-
-        getJobs()
-            .then((result) => console.log('Fetched Jobs:', result)) // Properly handle the Promise
-            .catch((error) => console.error('Error fetching jobs:', error));
+        loadJobs();
     }, []);
-
-
 
     const goNext = () => {
         if (currentScreen === 'intro') {
             setCurrentScreen('intermediate');
-        }else if (currentScreen === 'intermediate') {
-                setCurrentScreen('story');
+        } else if (currentScreen === 'intermediate') {
+            setCurrentScreen('story');
         } else if (currentScreen === 'story') {
             setCurrentScreen('quiz');
         } else if (currentQuestionIndex < quizData.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
-            setSliderValue(''); // Reset slider value after moving to the next question
-        } else {
-            filterJobs(); // Filter jobs based on results
-            setCurrentScreen('results');
+        }
+        else {
+            submitQuiz();
         }
     };
 
@@ -62,46 +55,66 @@ const Quiz = () => {
         }
     };
 
-    const selectAnswer = (answer: any) => {
+    const selectAnswer = (category: string, text: string) => {
         setAnswers((prev) => {
             const updatedAnswers = [...prev];
-            updatedAnswers[currentQuestionIndex] = answer;
+            updatedAnswers[currentQuestionIndex] = {
+                questionId: currentQuestion.id,
+                selectedOption: category,
+                fullText: text
+            };
             return updatedAnswers;
         });
         goNext();
     };
 
-    const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSliderValue(Number(e.target.value)); // Update the slider value
-    };
+    const submitQuiz = async () => {
+        setIsSubmitting(true);
+        try {
+            const response = await fetch('/api/quiz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    answers: [
+                        { questionId: 0, selectedOption: education },
+                        ...answers.map(answer => ({
+                            questionId: answer.questionId,
+                            selectedOption: answer.selectedOption
+                        }))
+                    ]
+                }),
+            });
 
-    const handleSliderBlur = () => {
-        // Save the slider value as an answer when the slider interaction finishes
-        if (sliderValue !== '') {
-            selectAnswer(`Value: ${sliderValue}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            setQuizResult(result);
+            setCurrentScreen('results');
+        } catch (error) {
+            console.error('Error submitting quiz:', error);
+            alert('There was an error submitting the quiz. Please try again.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
-    const filterJobs = () => {
-        // Example: match tags from answers with job tags
-        const relevantTags = answers.map((answer: any) => answer.toLowerCase());
-
-        const matchedJobs = jobs.filter((job) =>
-            relevantTags.some((tag) => job.tags?.includes(tag))
-        );
-
-        setFilteredJobs(matchedJobs);
+    const getRecommendedJobs = (type: 'direkt' | 'zukünftig') => {
+        if (!quizResult) return [];
+        const recommendedJobs = quizResult.result[type];
+        return jobs.filter(job => recommendedJobs.includes(job.name));
     };
 
     return (
         <div className={styles.quizContainer}>
             <div className={styles.quizWrapper}>
-                {/* <h2 className={styles.quizTitle}>Karriere Navigator</h2> */}
-
                 {/* Intro Screen */}
                 {currentScreen === 'intro' && (
                     <div className={styles.introContainer}>
-                        <img src="Lupe.png" alt="Intro Image" className={styles.introImage}/>
+                        <img src="/Lupe.png" alt="Intro Image" className={styles.introImage}/>
                         <h3>Welcher Job passt zu Dir?</h3>
                         <p>
                             Willkommen beim Karriere Navigator! Dieser Quiz hilft Dir dabei,
@@ -114,72 +127,11 @@ const Quiz = () => {
                     </div>
                 )}
 
-                {/* Result Screen */}
-                {currentScreen === 'results' && (
-                    <div className={styles.resultsContainer}>
-                        <h2>Deine Ergebnisse</h2>
-                        <p>Basierend auf Deinen Antworten sind diese Berufe für Dich am besten geeignet:</p>
-                        {filteredJobs.length > 0 ? (
-                            <ul className={styles.jobsList}>
-                                {filteredJobs.map((job) => (
-                                    <li
-                                        key={job.id}
-                                        className={styles.jobCard}
-                                        onClick={() => (window.location.href = `/jobs/${job.slug}`)}
-                                    >
-                                        <img
-                                            src={job.imageUrl}
-                                            alt={job.name}
-                                            className={styles.jobImage}
-                                        />
-                                        <h3>{job.name}</h3>
-                                        <p>{job.description}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <>
-                            <p>Schaue Dir auch die anderen Ausbildungen, die wie bieten:</p>
-                                <ul className={styles.jobsList}>
-                                    {jobs.map((job) => (
-                                        <li
-                                            key={job.id}
-                                            className={styles.jobCard}
-                                            onClick={() => (window.location.href = `/jobs/${job.slug}`)}
-                                        >
-                                            <img
-                                                src={job.imageUrl}
-                                                alt={job.name}
-                                                className={styles.jobImage}
-                                            />
-                                            <h3>{job.name}</h3>
-                                            <p>{job.description}</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </>
-                        )}
-                        <button
-                            className={styles.restartButton}
-                            onClick={() => {
-                                setCurrentScreen('intro');
-                                setCurrentQuestionIndex(0);
-                                setAnswers([]);
-                                setFilteredJobs([]);
-                            }}
-                        >
-                            Quiz erneut starten
-                        </button>
-                    </div>
-                )}
-
-
-                {currentScreen === 'intermediate' && (
+                {/* Intermediate Screen */}
+                {currentScreen === 'intermediate' &&  (
                     <div className={styles.intermediateContainer}>
-                        <img src="/Peace.png" alt="Intemediate Image" className={styles.intermediateImage}/>
+                        <img src="/Peace.png" alt="Intermediate Image" className={styles.intermediateImage}/>
                         <h3>Dein Hintergrund?</h3>
-
-                        {/* Dropdown for education */}
                         <div className={`${styles.dropdown} ${education ? styles.selected : ''}`}>
                             <label htmlFor="education">Mein Abschluss:</label>
                             <select
@@ -188,31 +140,16 @@ const Quiz = () => {
                                 onChange={(e) => setEducation(e.target.value)}
                             >
                                 <option value="">Bitte auswählen</option>
-                                <option value="bbr/ebbr">BBR/EBBR</option>
-                                <option value="msa">MSA</option>
-                                <option value="abitur">Abitur</option>
-                                <option value="bachelor">Bachelor</option>
-                                <option value="master">Master</option>
+                                <option value="Berufsbildungsreife">Berufsbildungsreife</option>
+                                <option value="MSA">MSA</option>
+                                <option value="Abitur">Abitur</option>
+                                <option value="Bachelor">Bachelor</option>
+                                <option value="Master">Master</option>
+                                <option value="Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat">Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat</option>
+                                <option value="Abgeschlossener Rettungsdienstberuf">Abgeschlossener Rettungsdienstberuf</option>
                             </select>
                         </div>
-
-                        {/* Dropdown for career goals */}
-                        <div className={`${styles.dropdown} ${careerGoal ? styles.selected : ''}`}>
-                            <label htmlFor="careerGoal">Ich suche nach:</label>
-                            <select
-                                id="careerGoal"
-                                value={careerGoal}
-                                onChange={(e) => setCareerGoal(e.target.value)}
-                            >
-                                <option value="">Bitte auswählen</option>
-                                <option value="ausbildung">Ausbildung</option>
-                                <option value="freiwilligen">Freiwilligen</option>
-                                <option value="praktikum">Praktikum</option>
-                                <option value="quereinstieg">Quereinstieg</option>
-                            </select>
-                        </div>
-
-                        <button className={styles.continueButton} onClick={goNext}>
+                        <button className={styles.continueButton} onClick={goNext} disabled={!education}>
                             Weiter
                         </button>
                     </div>
@@ -222,27 +159,17 @@ const Quiz = () => {
                 {currentScreen === 'story' && (
                     <div className={styles.storyContainer}>
                         <img src="/112_Notruf.png" alt="Story Image" className={styles.storyImage}/>
-
                         <h3>Eine kleine Geschichte...</h3>
-                        <p>Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden unterwegs, als plotzlich ein lautes Krachen durch die Luft hallt. Ein Auto ist frontal in einen Baum gekracht und Rauch steigt aus der Motorhaube auf.</p>
+                        <p>Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden unterwegs, als plötzlich ein lautes Krachen durch die Luft hallt. Ein Auto ist frontal in einen Baum gekracht und Rauch steigt aus der Motorhaube auf.</p>
                         <button onClick={goNext} className={styles.continueButton}>
                             Weiter
                         </button>
                     </div>
                 )}
 
-
                 {/* Quiz Screen */}
-                {currentScreen === 'quiz' && (
+                {currentScreen === 'quiz' &&(
                     <>
-                        {/* Progress text */}
-                        {/*
-                        <div className={styles.progressText}>
-                            Frage {currentQuestionIndex + 1} von {totalQuestions}
-                        </div>
-                        */}
-
-                        {/* Progress bar */}
                         <div className={styles.progressBarContainer}>
                             <div
                                 className={styles.progressBar}
@@ -251,24 +178,18 @@ const Quiz = () => {
                                 }}
                             />
                         </div>
-
-                        {/* Display the question number at the top-left */}
                         <div className={styles.questionNumber}>
                             Frage {currentQuestionIndex + 1}
                         </div>
-
-
                         <div className={styles.questionTitle}>{currentQuestion.title}</div>
-
-                        {/* Render Options */}
                         {currentQuestion.type === 'options' && currentQuestion.options && (
                             <div className={styles.optionsContainer}>
                                 {currentQuestion.options.map(
-                                    (option: { prefix: string; text: string }, index: number) => (
+                                    (option, index) => (
                                         <button
                                             key={index}
-                                            className={`${styles.optionButton} ${answers[currentQuestionIndex] === option.text ? styles.selectedOption : ''}`}
-                                            onClick={() => selectAnswer(option.text)} // Save only the text as the answer
+                                            className={`${styles.optionButton} ${answers[currentQuestionIndex]?.selectedOption === option.category ? styles.selectedOption : ''}`}
+                                            onClick={() => selectAnswer(option.category, option.text)}
                                         >
                                             <span className={styles.optionPrefix}>{option.prefix}</span>
                                             <span className={styles.optionText}>{option.text}</span>
@@ -277,43 +198,6 @@ const Quiz = () => {
                                 )}
                             </div>
                         )}
-
-                        {currentQuestion.type === 'imageOptions' && currentQuestion.images && (
-                            <div className={styles.imageOptionsContainer}>
-                                {currentQuestion.images.map((image: any, index: number) => (
-                                    <div
-                                        key={index}
-                                        className={`${styles.imageOption} ${answers[currentQuestionIndex] === image.label ? styles.selectedImage : ''}`}
-                                        onClick={() => selectAnswer(image.label)}
-                                    >
-                                        <img src={image.src} alt={image.label} className={styles.image} />
-                                        <div className={styles.imageLabel}>{image.label}</div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-
-                        {currentQuestion.type === 'scale' && (
-                            <div className={styles.scaleContainer}>
-                                <div className={styles.scaleLabels}>
-                                    <span>{currentQuestion.minLabel}</span>
-                                    <span>{currentQuestion.maxLabel}</span>
-                                </div>
-                                <input
-                                    type="range"
-                                    min={currentQuestion.minValue}
-                                    max={currentQuestion.maxValue}
-                                    value={sliderValue}
-                                    onChange={handleSliderChange}
-                                    onBlur={handleSliderBlur} // Save the value when the slider loses focus
-                                    className={styles.scaleSlider}
-
-                                />
-                            </div>
-                        )}
-
-
-                        {/* Navigation Buttons */}
                         <div className={styles.navButtons}>
                             <button
                                 className={styles.backButton}
@@ -325,16 +209,177 @@ const Quiz = () => {
                             <button
                                 className={styles.nextButton}
                                 onClick={goNext}
-                                disabled={answers[currentQuestionIndex] === undefined}
+                                disabled={!answers[currentQuestionIndex] || isSubmitting}
                             >
-                                Weiter
+                                {currentQuestionIndex === quizData.length - 1
+                                    ? (isSubmitting ? 'Wird geladen...' : 'Ergebnisse')
+                                    : 'Weiter'}
                             </button>
                         </div>
                     </>
-                  )}
+                )}
+
+                {/* Result Screen */}
+                {currentScreen === 'results' && (
+                    <div className={stylesJob.resultsContainer}>
+                        <h3 className={styles.centeredHeader}>Aktuelle Möglichkeiten:</h3>
+                        <p className={styles.centeredText}>Diese Ausbildungen kannst Du direkt mit Deinem aktuellen Abschluss beginnen:</p>
+                        <div className={`${styles.jobList} md:grid-cols-2`}>
+                            {getRecommendedJobs('direkt').map(({id, imageUrl, name, slug, shortDesc}) => (
+                                <div
+                                    key={id}
+                                    className={styles.jobCard}>
+                                    {/* Job Image */}
+                                    <img
+                                        src={imageUrl}
+                                        alt={name}
+                                        className={styles.jobImage}
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
+                                    />
+
+                                    {/* Job Name and Description */}
+                                    <div className="flex flex-col justify-between flex-grow relative">
+                                        <h3 className={styles.jobName}
+                                            style={{fontFamily: 'var(--font-berlin-type-bold)'}}
+                                            onClick={() => window.location.href = `/jobs/${slug}`}
+                                        >
+                                            {name}
+                                        </h3>
+
+                                        {/* Toggle Description Button (Mobile) */}
+                                        <div className="md:hidden"
+                                             style={{
+                                                 padding: '0.5rem',
+                                                 paddingBottom: '1rem',
+                                                 position: 'absolute',
+                                                 top: '0px',
+                                                 right: '0px'
+                                             }}>
+                                            <button
+                                                style={{padding: '0.5rem'}}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    document.getElementById(`desc-${id}`)?.classList.toggle('hidden');
+                                                }}
+                                            >
+                                                ▼
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Job Short Description (Mobile Toggle) */}
+                                    <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg"
+                                         style={{
+                                             width: '85%',
+                                             marginLeft: '1rem',
+                                             marginBottom: '1rem',
+                                         }}>
+                                        <p style={{fontSize: '85%'}}>{shortDesc}</p>
+                                        <span
+                                            onClick={() => window.location.href = `/jobs/${slug}`}
+                                            style={{
+                                                fontSize: '85%',
+                                                color: 'var(--red-primary)',
+                                                textDecorationLine: 'underline',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                    Mehr Infos
+                </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <h3 className={styles.centeredHeader}>Zukünftige Möglichkeiten:</h3>
+                        <p className={styles.centeredText}>Diese Ausbildungen kannst Du nach weiteren Qualifikationen oder Abschlüssen beginnen:</p>
+                        <div className={`${styles.jobList} md:grid-cols-2`}>
+                            {getRecommendedJobs('zukünftig').map(({id, imageUrl, name, slug, shortDesc}) => (
+                                <div
+                                    key={id}
+                                    className={styles.jobCard}
+                                >
+                                    {/* Job Image */}
+                                    <img
+                                        src={imageUrl}
+                                        alt={name}
+                                        className={styles.jobImage}
+                                        onClick={() => window.location.href = `/jobs/${slug}`}
+                                    />
+
+                                    {/* Job Name and Description */}
+                                    <div className="flex flex-col justify-between flex-grow relative">
+                                        <h3 className={styles.jobName}
+                                            onClick={() => window.location.href = `/jobs/${slug}`}
+                                        >
+                                            {name}
+                                        </h3>
+
+                                        {/* Toggle Description Button (Mobile) */}
+                                        <div className="md:hidden"
+                                             style={{
+                                                 padding: '0.5rem',
+                                                 paddingBottom: '1rem',
+                                                 position: 'absolute',
+                                                 top: '0px',
+                                                 right: '0px'
+                                             }}>
+                                            <button
+                                                style={{padding: '0.5rem'}}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    document.getElementById(`desc-${id}`)?.classList.toggle('hidden');
+                                                }}
+                                            >
+                                                ▼
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Job Short Description (Mobile Toggle) */}
+                                    <div id={`desc-${id}`} className="hidden md:hidden transition-all rounded-lg"
+                                         style={{
+                                             width: '85%',
+                                             marginLeft: '1rem',
+                                             marginBottom: '1rem',
+                                         }}>
+                                        <p style={{fontSize: '85%'}}>{shortDesc}</p>
+                                        <span
+                                            onClick={() => window.location.href = `/jobs/${slug}`}
+                                            style={{
+                                                fontSize: '85%',
+                                                color: 'var(--red-primary)',
+                                                textDecorationLine: 'underline',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                    Mehr Infos
+                </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className={styles.buttonContainer}>
+                            <button
+                                className={styles.restartButton}
+                                onClick={() => {
+                                    setCurrentScreen('intro');
+                                    setCurrentQuestionIndex(0);
+                                    setAnswers([]);
+                                    setEducation('');
+                                    setQuizResult(null);
+                                }}
+                            >
+                                Quiz erneut starten
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
-    )
+    );
 };
 
 export default Quiz;
+
