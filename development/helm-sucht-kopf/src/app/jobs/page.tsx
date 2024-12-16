@@ -53,11 +53,9 @@ export default function JobsPage() {
     );
 
     return (
-        <div className={styles.pageMasterDiv}
-             style={{fontFamily: 'var(--font-berlin-type-regular)'}}>
-
+        <div className={styles.pageMasterDiv}>
             <div style={{width: '100%', padding: '1.5rem'}}>
-                <h1 className={styles.deinWeg} style={{fontFamily: 'var(--font-berlin-type-bold)'}}>
+                <h1 className={styles.deinWeg}>
                     Dein Weg bei der Berliner Feuerwehr
                 </h1>
 
@@ -71,7 +69,6 @@ export default function JobsPage() {
                     <button
                         onClick={() => window.location.href = '/quiz'}
                         className={styles.zumNavigator}
-                        style={{fontFamily: 'var(--font-berlin-type-bold)'}}
                     >
                         Zum Navigator
                     </button>
@@ -208,7 +205,7 @@ export default function JobsPage() {
                                 }} // always in column
                             >
                                 <img
-                                    src={imageUrl}
+                                    src={`./assets/jobs/${slug}.jpg`}
                                     alt={name}
                                     className="job-image w-full rounded-t-lg rounded-bl-none"
                                     onClick={() => window.location.href = `/jobs/${slug}`}
@@ -237,9 +234,8 @@ export default function JobsPage() {
                                 <div className="flex flex-col justify-between flex-grow relative"
 
                                 >
-                                    <h3 className={styles.jobName} style={{fontFamily: 'var(--font-berlin-type-bold)'}}
-                                        onClick={() => window.location.href = `/jobs/${slug}`}
-                                    >
+                                    <h3 className={styles.jobName}
+                                        onClick={() => window.location.href = `/jobs/${slug}`}>
                                         {name}
                                     </h3>
 
@@ -324,7 +320,7 @@ export default function JobsPage() {
                                     top: '10px',
                                     left: '10px',
                                     color: 'white',
-                                    fontSize: '1.5rem',
+                                    fontSize: '1rem',
                                     padding: '5px',
                                     fontFamily: 'var(--font-berlin-type-bold)',
                                     borderRadius: '5px',
@@ -342,7 +338,7 @@ export default function JobsPage() {
                                     backgroundColor: 'var(--red-primary)',
                                     color: 'white',
                                     padding: '0.5rem 1rem',
-                                    fontSize: '1.5rem',
+                                    fontSize: '1.2rem',
                                     border: 'none',
                                     borderRadius: '2rem',
                                     fontFamily: 'var(--font-berlin-type-bold)',
@@ -376,7 +372,7 @@ export default function JobsPage() {
                                     top: '10px',
                                     left: '10px',
                                     color: 'white',
-                                    fontSize: '1.5rem',
+                                    fontSize: '1rem',
                                     padding: '5px',
                                     fontFamily: 'var(--font-berlin-type-bold)',
                                     borderRadius: '5px',
@@ -394,7 +390,7 @@ export default function JobsPage() {
                                     backgroundColor: 'var(--red-primary)',
                                     color: 'white',
                                     padding: '0.5rem 1rem',
-                                    fontSize: '1.5rem',
+                                    fontSize: '1.2rem',
                                     border: 'none',
                                     borderRadius: '2rem',
                                     fontFamily: 'var(--font-berlin-type-bold)',
