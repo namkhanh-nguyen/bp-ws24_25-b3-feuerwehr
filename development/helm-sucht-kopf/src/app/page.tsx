@@ -16,7 +16,7 @@ export default function Home() {
   ];
 
   return (
-    <>
+    <div>
       <Hero />
 
       <section className="">
@@ -68,6 +68,6 @@ export default function Home() {
         <SliderBewerbung />
       </section>
       <FAQSection />
-    </>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./dynamicHeader.module.css";
+import styles from "../styles/dynamicHeader.module.css";
 
 const dynamicHeader: React.FC = () => {
     const [isShrunk, setIsShrunk] = useState(false);
@@ -55,9 +55,9 @@ const dynamicHeader: React.FC = () => {
                     alt="Berliner Feuerwehr Logo"
                 />
             </a>
-            <span className={`${styles.title} ${isShrunk ? styles.shrunk : ""}`}>
+            <a href="/" className={`${styles.title} ${isShrunk ? styles.shrunk : ""}`}>
                 Karriere
-            </span>
+            </a>
             <nav className={styles.nav}>
                 <div
                     ref={toggleRef}

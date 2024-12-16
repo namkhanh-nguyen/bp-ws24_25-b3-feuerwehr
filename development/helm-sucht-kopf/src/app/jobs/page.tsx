@@ -1,6 +1,6 @@
 'use client';
 import React, {useEffect, useState} from 'react';
-import {fetchJobs} from '../services/jobs/fetchJobs';
+import {fetchJobs} from '@/app/api/jobs/fetchJobs';
 import {useRouter} from 'next/compat/router';
 import styles from '../styles/jobs.module.css';
 import Loading from "@/app/components/Loading";

@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-function Hero() {
+export default function Hero() {
   return (
-    <>
+    <div>
       <section className="homepage-hero">
         <div className="hero-content">
           <h1 className="hero-title">Lust auf den besten Job der Welt?</h1>
@@ -15,7 +15,6 @@ function Hero() {
           </Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }
-export default Hero;
