@@ -1,28 +1,31 @@
 /**
- * Fetch job data from a local JSON file
+ * Define the structure of each job
  */
+interface Job {
+  id: number;
+  name: string;
+  slug: string;
+  requirements: string;
+  shortDesc: string;
+  longDesc: string;
+  tags: string[];
+  imageUrl: string;
+  jobUrl: string;
+}
 
-export async function fetchJobs() {
+/**
+ * Fetch job data from a local JSON file with reorganized structure
+ */
+export async function fetchJobs(): Promise<Record<string, Job>> {
   try {
     // Import the jobData.json file dynamically
     const response = await import('./jobData.json');
+    const data: Record<string, Job> = response.default || {};
 
-    const data = response.default || [];
-
-    // Map data to include the correct structure for the table
-    return data.map((job) => ({
-      id: job.id,
-      name: job.name,
-      slug: job.slug,
-      requirements: job.requirements,
-      shortDesc: job.shortDesc,
-      longDesc: job.longDesc,
-      tags: job.tags,
-      imageUrl: job.imageUrl,
-      jobUrl: job.jobUrl
-    })) || [];
+    // Return the data as a dictionary
+    return data;
   } catch (error) {
     console.error('Error fetching jobs:', error);
-    return [];
+    return {};
   }
 }

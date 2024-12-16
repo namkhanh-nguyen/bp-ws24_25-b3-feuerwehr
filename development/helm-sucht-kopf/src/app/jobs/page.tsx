@@ -17,7 +17,16 @@ const filters = [
 ];
 
 export default function JobsPage() {
-    const [jobs, setJobs] = useState([]);
+    const [jobs, setJobs] = useState<{
+        [key: string]: {
+            tags: string[],
+            id: string,
+            imageUrl: string,
+            name: string,
+            slug: string,
+            shortDesc: string
+        }
+    }>({});
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +34,7 @@ export default function JobsPage() {
     useEffect(() => {
         const getJobs = async () => {
             const data = await fetchJobs();
-            setJobs(data as any);
+            setJobs(data as { [key: string]: any });
             setIsLoading(false);
         };
         getJobs();
@@ -37,10 +46,9 @@ export default function JobsPage() {
 
     const handleReset = () => {
         setSelectedFilters([]);
-        
     };
 
-    const filteredJobs = jobs.filter((job: { tags: string[] }) =>
+    const filteredJobs = Object.values(jobs).filter((job) =>
         selectedFilters.every(filter => job.tags.includes(filter))
     );
 
