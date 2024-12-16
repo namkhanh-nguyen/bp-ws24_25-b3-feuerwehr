@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Header from "./components/navigation/Header"; // Import the client-side header
-import "./globals.css";
+import "./styles/globals.css";
 import React from "react";
-import Image from "next/image";
 import Chatbot from '@/app/components/chatbot/chatbot'
+import Header from "./components/navigation/Header";
+import DynamicHeader from "./components/DynamicHeader";
 import Footer from "./components/navigation/Footer";
 
 // Load custom fonts
@@ -21,7 +21,7 @@ const berlinTypeWebBold = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Helm sucht Kopf",
+  title: "Berliner Feuerwehr: Karriere",
   description: "Karriereseite der Berliner Feuerwehr",
 };
 
@@ -31,17 +31,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="de"
-      className={`${berlinTypeWebRegular.variable} ${berlinTypeWebBold.variable}`}
-    >
-      <body className="antialiased">
-        <Header />
-        <main>
+      <html lang="en">
+      <head>
+          <title>Berliner Feuerwehr: Karriere</title>
+          <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96"/>
+          <link rel="icon" type="image/svg+xml" href="/icon/favicon.svg"/>
+          <link rel="shortcut icon" href="/icon/.ico"/>
+          <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-touch-icon.png"/>
+          <link rel="manifest" href="/icon/site.webmanifest"/>
+      </head>
+      <body className={`${berlinTypeWebRegular.variable} ${berlinTypeWebBold.variable} antialiased`}>
+
+      {/*<Header/>*/}
+      <DynamicHeader/>
+      <div style={{paddingTop: "90px"}}>
           {children}
-        <Chatbot />
-        </main>
-        <Footer />
+      </div>
+      <Chatbot/>
+      <Footer/>
+
       </body>
       </html>
   );
