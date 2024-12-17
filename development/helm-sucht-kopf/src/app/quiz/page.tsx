@@ -109,6 +109,22 @@ const Quiz = () => {
     return (
         <div className={styles.quizContainer}>
             <div className={styles.quizWrapper}>
+
+                <a href={'/jobs'}
+                   style={{
+                       alignItems: 'center',
+                       justifyContent: 'flex-start',
+                       color: 'var(--red-primary)',
+                       marginBottom: '20px',
+                       display: 'flex',
+                       cursor: 'pointer'
+                   }}>
+                    <h3 style={{marginRight: '10px'}}>←</h3>
+                    <h3 style={{textDecoration: 'underline'}}>
+                        Zurück
+                    </h3>
+                </a>
+
                 {/* Intro Screen */}
                 {currentScreen === 'intro' && (
                     <div className={styles.introContainer}>
