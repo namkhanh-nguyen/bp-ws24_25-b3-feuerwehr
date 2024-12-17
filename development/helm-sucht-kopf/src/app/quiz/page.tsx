@@ -126,7 +126,7 @@ const Quiz = () => {
                 )}
 
                 {/* Intermediate Screen */}
-                {currentScreen === 'intermediate' &&  (
+                {currentScreen === 'intermediate' && (
                     <div className={styles.intermediateContainer}>
                         <img src="/Peace.png" alt="Intermediate Image" className={styles.intermediateImage}/>
                         <h3>Dein Hintergrund?</h3>
