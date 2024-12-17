@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/quiz.module.css';
+import stylesJob from '../styles/jobs.module.css'
 import { quizData } from '../components/quiz/QuizData';
 import { fetchJobs } from '@/app/api/jobs/fetchJobs';
 import JobCard from "@/app/components/jobs/JobCard";
@@ -126,7 +127,7 @@ const Quiz = () => {
                 )}
 
                 {/* Intermediate Screen */}
-                {currentScreen === 'intermediate' && (
+                {currentScreen === 'intermediate' &&  (
                     <div className={styles.intermediateContainer}>
                         <img src="/Peace.png" alt="Intermediate Image" className={styles.intermediateImage}/>
                         <h3>Dein Hintergrund?</h3>
