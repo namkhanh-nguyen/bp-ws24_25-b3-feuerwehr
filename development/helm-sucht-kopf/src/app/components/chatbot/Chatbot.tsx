@@ -162,7 +162,7 @@ export default function Chatbot() {
                         <div className="p-3 border-b bg-red-600 text-white flex items-center justify-between rounded-t-lg">
                             <div className="flex items-center gap-2">
                                 <img
-                                    src="https://res.cloudinary.com/dymrmcgey/image/upload/v1734362318/gztefgfor0srbezzhafq.png"
+                                    src={`./assets/chatbot/chatbot-avatar.png`}
                                     alt="Chatbot Avatar"
                                     className="w-8 h-8 rounded-full"
                                 />
@@ -185,7 +185,7 @@ export default function Chatbot() {
                                 >
                                     {message.sender === 'bot' && (
                                         <img
-                                            src="https://res.cloudinary.com/dymrmcgey/image/upload/v1734362318/gztefgfor0srbezzhafq.png"
+                                            src={`./assets/chatbot/chatbot-avatar.png`}
                                             alt="Bot Avatar"
                                             className="w-6 h-6 rounded-full mr-2"
                                         />
@@ -217,7 +217,7 @@ export default function Chatbot() {
                                     </div>
                                     {message.sender === 'user' && (
                                         <img
-                                            src="https://res.cloudinary.com/dymrmcgey/image/upload/v1734358460/wemywqjjpgbop2ejoxfa.gif"
+                                            src={`./assets/chatbot/user-avatar.gif`}
                                             alt="User Avatar"
                                             className="w-6 h-6 rounded-full ml-2"
                                         />
