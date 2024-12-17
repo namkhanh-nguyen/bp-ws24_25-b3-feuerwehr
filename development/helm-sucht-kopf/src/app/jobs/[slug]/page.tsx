@@ -41,7 +41,8 @@ export default async function JobPage({params}: JobProps) {
 
                 <h1 style={{
                     fontFamily: 'var(--font-berlin-type-bold)',
-                    marginBottom: '20px'
+                    marginBottom: '20px',
+                    wordBreak: 'break-word'
                 }}>{job.name}</h1>
                 <img src={`/assets/jobs/${slug}.png`} alt={job.name}
                      style={{
