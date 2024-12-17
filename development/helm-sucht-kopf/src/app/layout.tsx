@@ -6,6 +6,7 @@ import Chatbot from '@/app/components/chatbot/Chatbot'
 import Header from "./components/navigation/Header";
 import DynamicHeader from "./components/DynamicHeader";
 import Footer from "./components/navigation/Footer";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 // Load custom fonts
 const berlinTypeWebRegular = localFont({
@@ -42,13 +43,14 @@ export default function RootLayout({
       </head>
       <body className={`${berlinTypeWebRegular.variable} ${berlinTypeWebBold.variable} antialiased`}>
 
-      {/*<Header/>*/}
-      <DynamicHeader/>
-      <Chatbot/>
+      {/*<Header />*/}
+      <DynamicHeader />
+      <Chatbot />
       <div style={{paddingTop: "90px"}}>
           {children}
+          <SpeedInsights />
       </div>
-      <Footer/>
+      <Footer />
 
       </body>
       </html>
