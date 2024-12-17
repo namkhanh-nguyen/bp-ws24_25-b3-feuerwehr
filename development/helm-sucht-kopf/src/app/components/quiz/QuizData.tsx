@@ -83,10 +83,10 @@ export const quizData: Question[] = [
         type: 'options',
         options: [
             {prefix: 'A', text: 'Ich fühle mich überwältigt und emotional stark betroffen', category: 'A'},
-            {prefix: 'A', text: 'Ich bin emotional, aber ich kann mich einigermaßen gut beruhigen', category: 'A'},
-            {prefix: 'B', text: 'Ich fühle eine Mischung aus Betroffenheit und einem Bedürfnis, das Erlebte zu erarbeiten', category: 'B'},
-            {prefix: 'B', text: 'Ich bin nach dem Vorfall zwar bewegt, aber auch motiviert, mich zu verbessern.', category: 'B'},
-            {prefix: 'C', text: 'Ich fühle mich motiviert und voller Tatendrang, um meine Fähigkeiten zu erweitern und in Zukunft noch besser zu reagieren', category: 'C'}
+            {prefix: 'B', text: 'Ich bin emotional, aber ich kann mich einigermaßen gut beruhigen', category: 'A'},
+            {prefix: 'C', text: 'Ich fühle eine Mischung aus Betroffenheit und einem Bedürfnis, das Erlebte zu erarbeiten', category: 'B'},
+            {prefix: 'D', text: 'Ich bin nach dem Vorfall zwar bewegt, aber auch motiviert, mich zu verbessern.', category: 'B'},
+            {prefix: 'E', text: 'Ich fühle mich motiviert und voller Tatendrang, um meine Fähigkeiten zu erweitern und in Zukunft noch besser zu reagieren', category: 'C'}
         ],
     },
 ];
