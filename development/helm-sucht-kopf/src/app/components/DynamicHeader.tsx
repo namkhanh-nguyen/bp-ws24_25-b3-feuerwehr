@@ -51,7 +51,7 @@ const dynamicHeader: React.FC = () => {
         <header className={`${styles.header} ${isShrunk ? styles.shrunk : ""}`}>
             <a href="/" className={`${styles.logo} ${isShrunk ? styles.shrunk : styles.large}`}>
                 <img
-                    src={`./assets/commons/Berliner-Feuerwehr-Logo.png`}
+                    src="https://res.cloudinary.com/dassgyrzu/image/upload/v1733327873/Berliner-Feuerwehr-Logo_wgpm1l.png"
                     alt="Berliner Feuerwehr Logo"
                 />
             </a>

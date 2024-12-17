@@ -1,9 +1,9 @@
 import {fetchJobs} from '@/app/api/jobs/fetchJobs';
 
 type JobProps = {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 };
 
 export default async function JobPage({params}: JobProps) {
