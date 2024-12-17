@@ -100,7 +100,7 @@ export default function JobsPage() {
                         className={styles.resetButton}
                         onClick={handleReset}
                     >
-                        Reset
+                        Zurücksetzen
                     </button>
                 </div>
 
@@ -135,7 +135,7 @@ export default function JobsPage() {
                             }}
                             onClick={() => setIsFiltersVisible(false)}
                         >
-                            Close
+                            Schließen
                         </button>
 
                     </div>
@@ -159,7 +159,7 @@ export default function JobsPage() {
                             <button className={styles.resetButton}
                                 onClick={handleReset}
                             >
-                                Reset
+                                Zurücksetzen
                             </button>
                         </div>
                     )}
