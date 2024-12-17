@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@next/font": "^14.2.15",
-    "react-countup": "^6.5.3",
-    "swiper": "^11.1.15"
-  }
-}
