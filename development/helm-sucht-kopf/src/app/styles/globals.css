@@ -171,14 +171,29 @@ body {
 
 /* Hero Section */
 .homepage-hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
-    url("/assets/home/hero-image.jpg") center/cover no-repeat;
-
+    position: relative;
     height: calc(100dvh - 80px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden; /* Ensures the image doesn't overflow the section */
+}
+
+.hero-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire container */
+    z-index: -1; /* Sends the image behind the content */
+    filter: brightness(60%); /* Optional: to achieve the "dark overlay" effect */
+}
+
+.hero-content {
+    position: relative; /* Ensures the content stays above */
+    z-index: 1; /* Keeps content above the image */
 }
 
 .hero-content {
