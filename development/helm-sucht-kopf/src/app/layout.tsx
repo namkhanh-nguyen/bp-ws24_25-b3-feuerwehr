@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./styles/globals.css";
 import React from "react";
-import Chatbot from '@/app/components/chatbot/Chatbot'
+import Chatbot from "@/app/components/chatbot/Chatbot";
 import Header from "./components/navigation/Header";
 import DynamicHeader from "./components/DynamicHeader";
 import Footer from "./components/navigation/Footer";
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Load custom fonts
 const berlinTypeWebRegular = localFont({
@@ -32,27 +32,36 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-      <html lang="en">
+    <html lang="en">
       <head>
-          <title>Berliner Feuerwehr: Karriere</title>
-          <link rel="icon" type="image/png" href="/icon/favicon-96x96.png" sizes="96x96"/>
-          <link rel="icon" type="image/svg+xml" href="/icon/favicon.svg"/>
-          <link rel="shortcut icon" href="/icon/.ico"/>
-          <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-touch-icon.png"/>
-          <link rel="manifest" href="/icon/site.webmanifest"/>
+        <title>Berliner Feuerwehr: Karriere</title>
+        <link
+          rel="icon"
+          type="image/png"
+          href="/icon/favicon-96x96.png"
+          sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/icon/favicon.svg" />
+        <link rel="shortcut icon" href="/icon/.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/icon/apple-touch-icon.png"
+        />
+        <link rel="manifest" href="/icon/site.webmanifest" />
       </head>
-      <body className={`${berlinTypeWebRegular.variable} ${berlinTypeWebBold.variable} antialiased`}>
-
-      {/*<Header />*/}
-      <DynamicHeader />
-      <Chatbot />
-      <div style={{paddingTop: "90px"}}>
+      <body
+        className={`${berlinTypeWebRegular.variable} ${berlinTypeWebBold.variable} antialiased`}
+      >
+        {/*<Header />*/}
+        <DynamicHeader />
+        <Chatbot />
+        <div style={{ paddingTop: "80px" }}>
           {children}
           <SpeedInsights />
-      </div>
-      <Footer />
-
+        </div>
+        <Footer />
       </body>
-      </html>
+    </html>
   );
 }
