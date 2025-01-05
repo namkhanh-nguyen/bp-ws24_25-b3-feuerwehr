@@ -17,9 +17,9 @@ export default function Home() {
 
   return (
     <div>
-      <Hero/>
+      <Hero />
 
-      <section className="">
+      <section className="sec container">
         <div className="numbers">
           {stats.map((stat, index) => (
             <Counter key={index} number={stat.number} title={stat.title} />
@@ -27,7 +27,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="sec">
+      <section className="sec container">
         <h2>Viele Wege führen zur Berliner Feuerwehr</h2>
         <p>
           Wir bieten eine Vielzahl von Einstiegswegen in eine Feuerwehrlaufbahn
@@ -35,30 +35,44 @@ export default function Home() {
           bis zum Quereinstieg nach einer abgeschlossenen Berufsausbildung oder
           nach einem Studium.
         </p>
-        <SliderAusbildungen/>
+        <SliderAusbildungen />
       </section>
 
-      <section className="">
-        <div className="shape-top">
+      <section className="section-video">
+        {/* <div className="shape-top">
           <img src="./assets/shapes/curve-top.svg" alt="Obere Kurve" />
-        </div>
+        </div> */}
         <div className="sec red">
-          <img src="/assets/home/video.png" alt="Placeholder" />
-          <h2>Mehr als ein Job, eine Mission!</h2>
-          <p>
-            Bei uns wird Teamgeist großgeschrieben. Action, Verantwortung und
-            echte Kameradschaft erwarten dich. Werde Teil der Feuerwehr – der
-            beste Job der Welt, bei dem du Leben rettest, Brände bekämpfst und
-            echte Heldenmomente erlebst. Gemeinsam für mehr Sicherheit und eine
-            starke Gemeinschaft!
-          </p>
+          <div className="container">
+            <div className="video-container">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube-nocookie.com/embed/Y7CIIu9kPzY"
+                title="Berliner Feuerwehr Karriere Video"
+                loading="lazy"
+                style={{ border: "none" }}
+                allow="autoplay; encrypted-media;"
+                allowFullScreen
+              ></iframe>
+            </div>
+
+            <h2>Mehr als ein Job, eine Mission!</h2>
+            <p>
+              Bei uns wird Teamgeist großgeschrieben. Action, Verantwortung und
+              echte Kameradschaft erwarten dich. Werde Teil der Feuerwehr – der
+              beste Job der Welt, bei dem du Leben rettest, Brände bekämpfst und
+              echte Heldenmomente erlebst. Gemeinsam für mehr Sicherheit und
+              eine starke Gemeinschaft!
+            </p>
+          </div>
         </div>
-        <div className="shape-bottom">
+        {/* <div className="shape-bottom">
           <img src="./assets/shapes/curve-bottom.svg" alt="Untere Kurve" />
-        </div>
+        </div> */}
       </section>
 
-      <section className="sec">
+      <section className="sec container">
         <h2>Bewerbungsprozess</h2>
         <p>
           Der Bewerbungsprozess für die Berliner Feuerwehr ist in mehrere
