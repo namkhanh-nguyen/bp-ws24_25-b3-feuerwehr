@@ -7,9 +7,10 @@ type Option = {
 type Question = {
     id: number,
     title: string;
-    type: 'options' | 'scale' | 'imageOptions';
+    type: 'options' | 'scale' | 'imageOptions'| 'input'| 'slider'| 'timer'|'illustration' | 'fitness';
     options?: Option[];
-    images?: { src: string; label: string }[];
+    questions?: { label: string; options: string[] }[];
+    images?: { src: string; category: string }[];
     minLabel?: string;
     maxLabel?: string;
     minValue?: number;
@@ -19,6 +20,66 @@ type Question = {
 export const quizData: Question[] = [
     {
         id: 1,
+        title: 'Wie würdest Du dein Deutsches Sprachniveau einschätzen?',
+        type: 'options',
+        options: [
+            { prefix: 'A', text: '„Ich kann mich gut verständigen, aber mein Niveau liegt unter C1."', category: 'A' },
+            { prefix: 'B', text: '„Mein Sprachniveau ist C1 oder höher – ich fühle mich sicher in komplexen Gesprächen und Texten."', category: 'B' },
+        ],
+    },
+    {
+        id: 2,
+        title: 'Wie groß bist Du?',
+        type: 'input',
+        minValue: 150, // Minimum height
+        maxValue: 210, // Maximum height
+    },
+    {
+        id: 3,
+        title: 'Ich interessiere mich für: ',
+        type: 'imageOptions',
+        images: [
+            {src: '/assets/quiz/sani.jpg', category: 'A'},
+            { src: '/assets/quiz/auto.jpg',  category: 'A' },
+            { src: '/assets/quiz/feuerwehrauto.jpg', category: 'A' },
+            { src: '/assets/quiz/brand.jpg',  category: 'A' },
+            { src: '/assets/quiz/handwerk.jpg',  category: 'A' },
+            { src: '/assets/quiz/schutz.jpg',  category: 'A' },
+        ],
+    },
+    {
+        id: 4,
+        title: 'Wie sicher fühlst Du dich im Umgang mit Blut und medizinischen Notfällen?',
+        type: 'slider',
+        minLabel: 'Unwohl', // Label for the minimum value
+        maxLabel: 'Sehr sicher', // Label for the maximum value
+        minValue: 0, // Minimum value
+        maxValue: 100, // Maximum value
+    },
+
+    {
+        id: 5,
+        title: 'Fitnesstest - Bist du bereit für eine Challenge?',
+        type: 'options',
+        questions: [
+            {
+                label: 'Wie viele Liegestütze schaffst du in 60 sek?',
+                options: ['Unter 10', '10 - 20', '20 - 30', '30 - 40', '+40'],
+            },
+            {
+                label: 'Wie viele Sit ups schaffst du in 60 sek?',
+                options: ['Unter 10', '10 - 20', '20 - 30', '30 - 40', '+40'],
+            },
+        ],
+    },
+
+    {
+        id: 6,
+        title: 'Wie lange kannst Du deinen Atem anhalten?  ',
+        type: 'timer',
+    },
+    {
+        id: 7,
         title: 'Du siehst den Unfall und bemerkst, dass Personen noch im Fahrzeug sind. Dein Adrenalin steigt. Was ist Dein erster Instinkt?',
         type: 'options',
         options: [
@@ -28,7 +89,7 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 2,
+        id: 8,
         title: 'Als Du Dich dem Auto näherst, siehst Du, dass der Fahrer bei Bewusstsein ist, aber schwer verletzt wirkt. Der Beifahrer scheint bewusstlos zu sein. Wie gehst du vor?',
         type: 'options',
         options: [
@@ -38,7 +99,7 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 3,
+        id: 9,
         title: 'Der Motorraum beginnt gefährlich zu qualmen, und Du spürst die Hitze des Autos. Was machst Du?',
         type: 'options',
         options: [
@@ -48,7 +109,7 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 4,
+        id: 10,
         title: 'Ein anderer Passant kommt hinzu und bietet seine Hilfe an. Was ist Deine Reaktion?',
         type: 'options',
         options: [
@@ -58,7 +119,7 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 5,
+        id: 11,
         title: 'Während Du auf den Rettungsdienst wartest, fängt jemand an, Fotos und Videos des Unfalls zu machen. Wie reagierst Du?',
         type: 'options',
         options: [
@@ -68,7 +129,7 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 6,
+        id: 12,
         title: 'Die Rettungskräfte treffen endlich ein und übernehmen die Situation. Was machst Du jetzt?',
         type: 'options',
         options: [
@@ -78,7 +139,7 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 7,
+        id: 13,
         title: "Nach dem Unfall sind deine Freunde aufgewühlt, und die Ereignisse gehen dir nicht aus dem Kopf. Wie gehst du damit um?",
         type: 'options',
         options: [
