@@ -14,6 +14,197 @@
     margin-right: auto;
     margin-bottom: 20px;
 }
+.label{
+    font-size:6px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+    text-align: left;
+}
+
+.select {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    background-color: #f9f9f9;
+    color: #333;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+/*Input for CM Question*/
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.inputField {
+    width: 80%;
+    max-width: 300px;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    text-align: center;
+    margin-bottom: 20px; /* Adds space specifically between input and buttons */
+}
+
+.inputField:focus {
+    border-color: #E40422;
+    outline: none;
+    box-shadow: 0 0 5px rgba(228, 4, 34, 0.5);
+}
+
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.customSvg {
+    width: 250px;
+    height: 300px; /* Match height to width */
+    fill: #ED462F; /* Red color */
+    display: block; /* Ensure the SVG aligns properly */
+    margin: 0 auto; /* Center the SVG */
+}
+
+/* Image Options Container */
+
+.imageOptionsContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-items: center;
+    margin: 20px 0;
+}
+
+.imageOption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #ffffff; /* Background color for contrast */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.imageOption:hover {
+    transform: scale(1.03); /* Slight zoom effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    border-color: #E40422;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+.fitnessDropdownContainer {
+    margin-bottom: 20px; /* Add margin between dropdowns */
+    text-align: left; /* Align text to the left */
+}
+
+.fitnessLabel {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px; /* Space between label and dropdown */
+    display: block;
+    text-align: left;
+}
+
+.fitnessDropdown {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Sharper corners */
+    background-color: #fff;
+    color: #333;
+    margin: 0 auto 20px; /* Centers dropdown and adds spacing below */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.fitnessDropdown:focus {
+    border-color: #6c63ff; /* Purple border on focus */
+    outline: none;
+    box-shadow: 0 0 8px rgba(108, 99, 255, 0.5); /* Purple glow */
+}
+
+/* Slider Labels */
+.sliderLabels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Slider Input */
+.slider {
+    width: 100%;
+    -webkit-appearance: none; /* Remove default styles */
+    appearance: none;
+    height: 10px;
+    background: #ddd ;
+    border-radius: 5px;
+    outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #E40422;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Slider Value Display */
+.sliderValue {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.dropdownContainer {
+    margin-bottom: 20px;
+}
+
+.dropdown:focus {
+    border-color: #E40422;
+    outline: none;
+    box-shadow: 0 0 5px rgba(228, 4, 34, 0.5);
+}
 
 .dropdown {
     margin-top: 20px;
@@ -29,7 +220,31 @@
     color: #333;
 }
 
+/*timer*/
+.timerDisplay {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #E40422;
+  margin: 20px 0;
+  text-align: center;
+}
+.timerButton {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
 
+.timerButton.start {
+    background-color: #4CAF50;
+}
+
+.timerButton.stop {
+    background-color: #E40422;
+}
 .dropdown select {
     width: 100%;
     padding: 12px 20px;
@@ -41,12 +256,42 @@
     box-sizing: border-box;
 }
 
+/*Id 8 quiz img*/
+.staticImageContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.staticImageContainer img {
+  width: 300px;
+  height: auto;
+  margin: 20px auto;
+}
+
+.resultContainer h2 {
+  font-size: 1.5rem;
+  color: #E40422;
+  margin-bottom: 10px;
+}
+
+.resultContainer p {
+  font-size: 1rem;
+  margin: 0;
+  color: #555;
+}
+
+.resultContainer .highlight {
+  font-weight: bold;
+  color: #E40422;
+}
 
 .introContainer,
 .intermediateContainer,
 .storyContainer {
     text-align: center;
     padding: 2rem;
+        background-color: transparent; /* Ensure no background is applied */
+
 }
 
 .intermediateContainer div {
@@ -429,5 +674,14 @@
     font-size: 1.2rem;
     margin: 1rem;
     cursor: pointer;
+}
+
+.imageContainer {
+    color: cyan; /* Set the desired SVG color */
+}
+
+.customSvg {
+    width: 155px; /* Adjust size */
+    height: 155px; /* Keep aspect ratio */
 }
 
