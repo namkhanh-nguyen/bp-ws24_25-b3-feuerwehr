@@ -5,6 +5,11 @@ import styles from '../styles/quiz.module.css';
 import { quizData } from '../components/quiz/QuizData';
 import { fetchJobs } from '@/app/api/jobs/fetchJobs';
 import JobCard from "@/app/components/jobs/JobCard";
+import InputQuestion from '../components/quiz/InputQuestion';
+import QuestionImageOptions from '../components/quiz/QuestionImageOption';
+import QuestionSlider from '../components/quiz/QuestionSlider';
+import QuestionTimer from '../components/quiz/QuestionTimer';
+
 
 const Quiz = () => {
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'results'>('intro');
@@ -14,6 +19,8 @@ const Quiz = () => {
     const [quizResult, setQuizResult] = useState<any>(null);
     const [jobs, setJobs] = useState<any[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [pushUpsValue, setPushUpsValue] = useState('');
+    const [sitUpsValue, setSitUpsValue] = useState('');
 
     const currentQuestion = quizData[currentQuestionIndex];
     const totalQuestions = quizData.length;
@@ -29,11 +36,11 @@ const Quiz = () => {
     const goNext = () => {
         if (currentScreen === 'intro') {
             setCurrentScreen('intermediate');
-        } else if (currentScreen === 'intermediate') {
+        } else if (currentScreen === 'intermediate' && education) {
             setCurrentScreen('story');
         } else if (currentScreen === 'story') {
             setCurrentScreen('quiz');
-        } else if (currentQuestionIndex < quizData.length - 1) {
+        } else if (currentQuestionIndex < totalQuestions - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         }
         else {
@@ -86,7 +93,7 @@ const Quiz = () => {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error('HTTP error! status: ${response.status}');
             }
 
             const result = await response.json();
@@ -203,6 +210,8 @@ const Quiz = () => {
                             Frage {currentQuestionIndex + 1}
                         </div>
                         <div className={styles.questionTitle}>{currentQuestion.title}</div>
+                        {/* Fitness Screen*/}
+
                         {currentQuestion.type === 'options' && currentQuestion.options && (
                             <div className={styles.optionsContainer}>
                                 {currentQuestion.options.map(
@@ -219,6 +228,146 @@ const Quiz = () => {
                                 )}
                             </div>
                         )}
+
+                        {currentQuestion.type === 'input' && (
+                            <div className={styles.inputContainer}>
+                                {/* Conditional rendering for SVG image */}
+                                {currentQuestion.id === 2 && (
+                                    <div className={styles.imageContainer}>
+                                        <img
+                                            src="/assets/quiz/schulung.svg" // Path to your SVG
+                                            alt="Icon for height question"
+                                            className={styles.customSvg}
+                                        />
+                                    </div>
+                                )}
+                                <InputQuestion
+                                    question={currentQuestion}
+                                    value={answers[currentQuestionIndex]?.fullText || ''}
+                                    onChange={(value: any) => {
+                                        setAnswers((prev) => {
+                                            const updatedAnswers = [...prev];
+                                            updatedAnswers[currentQuestionIndex] = {
+                                                questionId: currentQuestion.id,
+                                                selectedOption: 'input',
+                                                fullText: value,
+                                            };
+                                            return updatedAnswers;
+                                        });
+                                    }}
+                                />
+                            </div>
+                        )}
+
+                        {currentQuestion.type === 'imageOptions' && currentQuestion.images && (
+                                    <QuestionImageOptions
+                                        images={currentQuestion.images}
+                                        onSelectionChange={(selectedImages) => {
+                                            setAnswers((prev) => {
+                                                const updatedAnswers = [...prev];
+                                                updatedAnswers[currentQuestionIndex] = {
+                                                    questionId: currentQuestion.id,
+                                                    selectedOption: selectedImages.map((image: { category: any; }) => image.category).join(', '),
+                                                    fullText: selectedImages.map((image: { src: any; }) => image.src).join(', '),
+                                                };
+                                                return updatedAnswers;
+                                            });
+                                        }}
+                                    />
+                                )}
+                        {currentQuestion.type === 'slider' && (
+                            <QuestionSlider
+                                question={currentQuestion}
+                                value={parseInt(answers[currentQuestionIndex]?.fullText || '50')}
+                                onChange={(value: { toString: () => any; }) => {
+                                    setAnswers((prev) => {
+                                        const updatedAnswers = [...prev];
+                                        updatedAnswers[currentQuestionIndex] = {
+                                            questionId: currentQuestion.id,
+                                            selectedOption: 'slider',
+                                            fullText: value.toString(),
+                                        };
+                                        return updatedAnswers;
+                                    });
+                                }}
+                            />
+                        )}
+                        {currentQuestion.id === 4 && (
+                            <div>
+                                <div className={styles.fitnessDropdownContainer}>
+                                    {/* Push ups */}
+                                    <label htmlFor="fitnessPushUps" className={styles.fitnessLabel}>
+                                        Wie viele Liegestütze schaffst du in 60 sek?
+                                    </label>
+                                    <select
+                                        id="fitnessPushUps"
+                                        className={styles.fitnessDropdown}
+                                        value={pushUpsValue}
+                                        onChange={(e) => setPushUpsValue(e.target.value)}
+                                    >
+                                        <option value="">Anzahl auswählen</option>
+                                        <option value="under10">Unter 10</option>
+                                        <option value="10-20">10 - 20</option>
+                                        <option value="20-30">20 - 30</option>
+                                        <option value="30-40">30 - 40</option>
+                                        <option value="40plus">+40</option>
+                                    </select>
+                                </div>
+
+                                <div className={styles.fitnessDropdownContainer}>
+                                    {/* Sit ups */}
+                                    <label htmlFor="fitnessSitUps" className={styles.fitnessLabel}>
+                                        Wie viele Sit ups schaffst du in 60 sek?
+                                    </label>
+                                    <select
+                                        id="fitnessSitUps"
+                                        className={styles.fitnessDropdown}
+                                        value={sitUpsValue}
+                                        onChange={(e) => setSitUpsValue(e.target.value)}
+                                    >
+                                        <option value="">Anzahl auswählen</option>
+                                        <option value="under10">Unter 10</option>
+                                        <option value="10-20">10 - 20</option>
+                                        <option value="20-30">20 - 30</option>
+                                        <option value="30-40">30 - 40</option>
+                                        <option value="40plus">+40</option>
+                                    </select>
+                                </div>
+                            </div>
+                        )}
+                        {currentQuestion.type === 'timer' && (
+                            <QuestionTimer
+                                onTimerComplete={(time: { toString: () => any; }) => {
+                                    setAnswers((prev) => {
+                                        const updatedAnswers = [...prev];
+                                        updatedAnswers[currentQuestionIndex] = {
+                                            questionId: currentQuestion.id,
+                                            selectedOption: 'timer',
+                                            fullText: time.toString(),
+                                        };
+                                        return updatedAnswers;
+                                    });
+                                }}
+                            />
+                        )}
+
+                        {currentQuestion.type === 'illustration' && currentQuestion.images && (
+                            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                                {currentQuestion.images.map((image, index) => (
+                                <img
+                                    key={index}
+                                    src={image.src}
+                                    alt={`Illustration ${index + 1}`}
+                                    style={{ width: '300px', height: 'auto', margin: '20px auto' }}
+                                />
+                                    ))}
+                                <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '20px' }}>
+                                    {currentQuestion.title}
+                                </p>
+                            </div>
+                        )}
+
+                        {/* Navigation Buttons */}
                         <div className={styles.navButtons}>
                             <button
                                 className={styles.backButton}
@@ -232,7 +381,7 @@ const Quiz = () => {
                                 onClick={goNext}
                                 disabled={!answers[currentQuestionIndex] || isSubmitting}
                             >
-                                {currentQuestionIndex === quizData.length - 1
+                                {currentQuestionIndex === totalQuestions - 1
                                     ? (isSubmitting ? 'Wird geladen...' : 'Ergebnisse')
                                     : 'Weiter'}
                             </button>
