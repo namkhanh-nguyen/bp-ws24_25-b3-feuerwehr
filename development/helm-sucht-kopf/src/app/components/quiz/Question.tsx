@@ -52,6 +52,16 @@ const Question: FC<QuestionProps> = ({ question, onNext, onBack }) => {
         );
     }
 
+    if (question.type === 'slider') {
+        return (
+            <div>
+                <QuestionScaleOption
+                    onSelect={onNext}
+                />
+            </div>
+        );
+    }
+
     return (
         <div>
             <button onClick={onBack}>Back</button>
