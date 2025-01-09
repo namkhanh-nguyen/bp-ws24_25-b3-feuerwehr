@@ -22,7 +22,7 @@ h6 {
 }
 h2,
 h3,
-p {
+p:not(:last-child) {
   margin-bottom: 1em;
 }
 
@@ -440,7 +440,6 @@ img {
 
 .faq-section {
   padding: 50px 20px;
-  background-color: #f5f5f5;
   border-radius: 8px;
 }
 
