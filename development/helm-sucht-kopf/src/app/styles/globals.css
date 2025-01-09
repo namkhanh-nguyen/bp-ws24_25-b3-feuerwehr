@@ -256,6 +256,7 @@ body {
 
 .section-video {
   display: block;
+  padding: 50px 0;
 }
 
 /* Bilder */
@@ -350,7 +351,8 @@ img {
   border-radius: 0.5rem;
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   overflow: hidden;
-  margin: 50px 0;
+  margin-bottom: 50px;
+  margin-top: 1em;
   height: 100%;
   display: flex;
   flex-grow: 1;
@@ -495,6 +497,7 @@ img {
 }
 
 footer {
+  margin-top: 50px;
   padding: 50px 20px;
   background-color: #e3e3e3;
 }
