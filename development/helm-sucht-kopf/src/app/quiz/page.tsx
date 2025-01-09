@@ -110,7 +110,7 @@ const Quiz = () => {
         <div className={styles.quizContainer}>
             <div className={styles.quizWrapper}>
 
-                <a href={'/jobs'}
+                <a href={'/ausbildungen'}
                    style={{
                        alignItems: 'center',
                        justifyContent: 'flex-start',

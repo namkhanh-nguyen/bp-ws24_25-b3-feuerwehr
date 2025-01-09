@@ -30,7 +30,7 @@ const Header = () => {
         <Link href="/" className="nav-link">
           Startseite
         </Link>
-        <Link href="/jobs" className="nav-link">
+        <Link href="/ausbildungen" className="nav-link">
           Jobs
         </Link>
         <Link href="/kontakt" className="nav-link">

@@ -26,7 +26,7 @@ export default async function JobPage({params}: JobProps) {
         }}>
 
             <div style={{width: '100%', maxWidth: '600px'}}>
-                <a href={'/jobs'}
+                <a href={'/ausbildungen'}
                    style={{
                        color: 'var(--red-primary)',
                        marginBottom: '20px',

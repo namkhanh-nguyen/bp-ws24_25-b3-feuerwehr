@@ -44,14 +44,14 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
                 src={`./assets/jobs/${slug}.png`}
                 alt={name}
                 className={styles.jobImage}
-                onClick={() => (window.location.href = `/jobs/${slug}`)}
+                onClick={() => (window.location.href = `/ausbildungen/${slug}`)}
             />
 
             <div className={styles.jobHoverInfo}>
                 <p className={styles.jobShortDesc}>{shortDesc}</p>
                 <span
                     className={styles.jobShortDesc}
-                    onClick={() => (window.location.href = `/jobs/${slug}`)}
+                    onClick={() => (window.location.href = `/ausbildungen/${slug}`)}
                     style={{
                         color: "var(--red-primary)",
                         textDecorationLine: "underline",
@@ -65,7 +65,7 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
             <div className="flex flex-col justify-between flex-grow relative">
                 <h3
                     className={styles.jobName}
-                    onClick={() => (window.location.href = `/jobs/${slug}`)}
+                    onClick={() => (window.location.href = `/ausbildungen/${slug}`)}
                 >
                     {name}
                 </h3>
@@ -106,7 +106,7 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
                 <p className={styles.jobShortDesc}>{shortDesc}</p>
                 <span
                     className={styles.jobShortDesc}
-                    onClick={() => (window.location.href = `/jobs/${slug}`)}
+                    onClick={() => (window.location.href = `/ausbildungen/${slug}`)}
                     style={{
                         color: "var(--red-primary)",
                         textDecorationLine: "underline",
