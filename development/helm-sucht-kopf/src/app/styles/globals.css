@@ -200,6 +200,7 @@ body {
   object-fit: cover;
   z-index: -1;
   filter: brightness(50%);
+  transition: all 0.5s ease-in-out;
 }
 
 .hero-content {
@@ -225,6 +226,7 @@ body {
 }
 
 .hero-button {
+  max-width: 40em;
   color: white;
   background-color: var(--red-primary);
   padding: 10px;
@@ -239,6 +241,7 @@ body {
 @media (min-width: 1200px) {
   .hero-background-image {
     position: relative;
+    filter: brightness(80%);
   }
 
   .homepage-hero {
@@ -383,6 +386,7 @@ img {
   font-weight: bold;
   margin-top: 1rem;
   cursor: pointer;
+  font-size: 18px;
 }
 
 .card .arrow {
@@ -410,6 +414,7 @@ img {
   color: var(--red-primary);
   font-size: 14px;
   font-weight: bold;
+  margin-bottom: 0.5em;
 }
 
 .card-career .card-title {

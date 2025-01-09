@@ -25,7 +25,7 @@ export default function SliderBase({
       breakpoints={{
         640: { slidesPerView: 1 },
         768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 },
+        1200: { slidesPerView: 4 },
       }}
     >
       {data.map((item, index) => (

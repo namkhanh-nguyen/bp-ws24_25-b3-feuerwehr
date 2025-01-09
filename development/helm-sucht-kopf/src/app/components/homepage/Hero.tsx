@@ -18,7 +18,7 @@ export default function Hero() {
               richtig!
             </p>
             <Link href="/jobs" className="hero-button">
-              Zum Navigator
+              Finde deinen Weg
             </Link>
           </div>
         </div>
