@@ -1,6 +1,7 @@
 "use client";
 
 import Hero from "./components/homepage/Hero";
+import Video from "./components/video/Video";
 import Counter from "./components/homepage/Counter";
 import SliderAusbildungen from "./components/homepage/SliderCareerOpportunities";
 import SliderBewerbung from "./components/homepage/SliderApplicationProcess";
@@ -43,7 +44,7 @@ export default function Home() {
           <img src="./assets/shapes/curve-top.svg" alt="Obere Kurve" />
         </div>
         <div className="sec red">
-          <img src="/assets/home/video.png" alt="Placeholder" />
+          <Video/>
           <h2>Mehr als ein Job, eine Mission!</h2>
           <p>
             Bei uns wird Teamgeist großgeschrieben. Action, Verantwortung und
