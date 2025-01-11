@@ -89,7 +89,7 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
             {/* Congratulation text */}
             {finalTime && (
                 <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                    <h3 style={{ color: '#E40422', fontSize: '1.5rem', margin: '0' }}>Wow!!</h3>
+                    <h3 style={{ color: '#E40422', fontSize: '1.5rem', margin: '0' }}>Super!!</h3>
                     <p style={{ fontSize: '1.2rem', color: '#333' }}>
                         Du hast deinen Atem{' '}
                         <span style={{ fontWeight: 'bold', color: '#E40422' }}>{finalTime}</span> Sekunden
