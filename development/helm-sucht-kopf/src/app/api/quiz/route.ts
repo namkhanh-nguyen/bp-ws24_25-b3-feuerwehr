@@ -14,11 +14,17 @@ export async function POST(request: Request) {
         // Abschluss speichern
         const graduationAnswer = receivedData.find((answer: any) => answer.questionId === 0)?.selectedOption;
 
+        const languageLevelAnswer = receivedData.find((answer: any) => answer.questionId === 1)?.selectedOption;
+
         // Kategorieantworten zählen
         const categoryCounts = { A: 0, B: 0, C: 0 };
         receivedData.forEach((answer: any) => {
+            if (!answer || typeof answer.questionId === 'undefined' || !answer.selectedOption) {
+                console.error('Invalid answer format:', answer);
+                return; // Skip invalid entries
+            }
             if (answer.questionId === 0) return;
-            if (answer.selectedOption === 'A' || answer.selectedOption === 'B' || answer.selectedOption === 'C') {
+            if (['A', 'B', 'C'].includes(answer.selectedOption)) {
                 categoryCounts[answer.selectedOption as keyof typeof categoryCounts]++;
             }
         });
