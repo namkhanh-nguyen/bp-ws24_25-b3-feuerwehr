@@ -15,43 +15,50 @@ type Question = {
     maxLabel?: string;
     minValue?: number;
     maxValue?: number;
+    story?: string;
+    image?: string;
+    required: boolean;
 };
 
 export const quizData: Question[] = [
     {
         id: 1,
+        required: false,
         title: 'Wie würdest Du dein Deutsches Sprachniveau einschätzen?',
         type: 'options',
         options: [
-            { prefix: 'A', text: '„Ich kann mich gut verständigen, aber mein Niveau liegt unter C1."', category: 'A' },
-            { prefix: 'B', text: '„Mein Sprachniveau ist C1 oder höher – ich fühle mich sicher in komplexen Gesprächen und Texten."', category: 'B' },
+            { prefix: 'A', text: '„Ich kann mich gut verständigen, aber mein Niveau liegt unter C1."', category: 'D' },
+            { prefix: 'B', text: '„Mein Sprachniveau ist C1 oder höher – ich fühle mich sicher in komplexen Gesprächen und Texten."', category: 'E' },
         ],
     },
     {
         id: 2,
+        required: false,
         title: 'Wie groß bist Du?',
         type: 'input',
-        minValue: 150, // Minimum height
-        maxValue: 210, // Maximum height
+        minValue: 165,
+        maxValue: 195
     },
     {
         id: 3,
+        required: false,
         title: 'Ich interessiere mich für: ',
         type: 'imageOptions',
         images: [
             {src: '/assets/quiz/sani.jpg', category: 'A'},
-            { src: '/assets/quiz/auto.jpg',  category: 'A' },
-            { src: '/assets/quiz/feuerwehrauto.jpg', category: 'A' },
-            { src: '/assets/quiz/brand.jpg',  category: 'A' },
-            { src: '/assets/quiz/handwerk.jpg',  category: 'A' },
+            { src: '/assets/quiz/auto.jpg',  category: 'B' },
+            { src: '/assets/quiz/feuerwehrauto.jpg', category: 'B' },
+            { src: '/assets/quiz/brand.jpg',  category: 'C' },
+            { src: '/assets/quiz/handwerk.jpg',  category: 'C' },
             { src: '/assets/quiz/schutz.jpg',  category: 'A' },
         ],
     },
     {
         id: 4,
-        title: 'Wie sicher fühlst Du dich im Umgang mit Blut und medizinischen Notfällen?',
+        required: false,
+        title: 'Wie wohl fühlst Du Dich im Umgang mit Blut und medizinischen Notfällen?',
         type: 'slider',
-        minLabel: 'Unwohl', // Label for the minimum value
+        minLabel: 'Sehr unwohl', // Label for the minimum value
         maxLabel: 'Sehr sicher', // Label for the maximum value
         minValue: 0, // Minimum value
         maxValue: 100, // Maximum value
@@ -59,27 +66,29 @@ export const quizData: Question[] = [
 
     {
         id: 5,
-        title: 'Fitnesstest - Bist du bereit für eine Challenge?',
-        type: 'options',
+        required: false,
+        title: 'Fitnesstest - Bist Du bereit für eine Challenge?',
+        type: 'fitness',
         questions: [
             {
-                label: 'Wie viele Liegestütze schaffst du in 60 sek?',
-                options: ['Unter 10', '10 - 20', '20 - 30', '30 - 40', '+40'],
+                label: 'Wie viele Liegestütze schaffst Du am Stück?',
+                options: ['Weniger als 10', '10 - 20', '20 - 30', '30 - 40', 'Über 40'],
             },
             {
-                label: 'Wie viele Sit ups schaffst du in 60 sek?',
-                options: ['Unter 10', '10 - 20', '20 - 30', '30 - 40', '+40'],
+                label: 'Wie viele Sit ups schaffst Du am Stück?',
+                options: ['Weniger als 10', '10 - 20', '20 - 30', '30 - 40', 'Über 40'],
             },
         ],
     },
-
     {
         id: 6,
-        title: 'Wie lange kannst Du deinen Atem anhalten?  ',
+        required: false,
+        title: 'Ausdauertest – Wie lange kannst Du Deinen Atem anhalten?',
         type: 'timer',
     },
     {
         id: 7,
+        required: false,
         title: 'Du siehst den Unfall und bemerkst, dass Personen noch im Fahrzeug sind. Dein Adrenalin steigt. Was ist Dein erster Instinkt?',
         type: 'options',
         options: [
@@ -90,6 +99,7 @@ export const quizData: Question[] = [
     },
     {
         id: 8,
+        required: true,
         title: 'Als Du Dich dem Auto näherst, siehst Du, dass der Fahrer bei Bewusstsein ist, aber schwer verletzt wirkt. Der Beifahrer scheint bewusstlos zu sein. Wie gehst du vor?',
         type: 'options',
         options: [
@@ -99,7 +109,8 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 9,
+        id:9,
+        required: false,
         title: 'Der Motorraum beginnt gefährlich zu qualmen, und Du spürst die Hitze des Autos. Was machst Du?',
         type: 'options',
         options: [
@@ -110,6 +121,7 @@ export const quizData: Question[] = [
     },
     {
         id: 10,
+        required: false,
         title: 'Ein anderer Passant kommt hinzu und bietet seine Hilfe an. Was ist Deine Reaktion?',
         type: 'options',
         options: [
@@ -120,6 +132,7 @@ export const quizData: Question[] = [
     },
     {
         id: 11,
+        required: false,
         title: 'Während Du auf den Rettungsdienst wartest, fängt jemand an, Fotos und Videos des Unfalls zu machen. Wie reagierst Du?',
         type: 'options',
         options: [
@@ -130,6 +143,7 @@ export const quizData: Question[] = [
     },
     {
         id: 12,
+        required: false,
         title: 'Die Rettungskräfte treffen endlich ein und übernehmen die Situation. Was machst Du jetzt?',
         type: 'options',
         options: [
@@ -140,6 +154,7 @@ export const quizData: Question[] = [
     },
     {
         id: 13,
+        required: false,
         title: "Nach dem Unfall sind deine Freunde aufgewühlt, und die Ereignisse gehen dir nicht aus dem Kopf. Wie gehst du damit um?",
         type: 'options',
         options: [
