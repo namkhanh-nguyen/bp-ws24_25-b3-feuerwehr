@@ -9,10 +9,10 @@ import InputQuestion from '../components/quiz/InputQuestion';
 import QuestionImageOptions from '../components/quiz/QuestionImageOption';
 import QuestionSlider from '../components/quiz/QuestionSlider';
 import QuestionTimer from '../components/quiz/QuestionTimer';
-
+import { useRouter } from 'next/navigation';
 
 const Quiz = () => {
-    const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'results'>('intro');
+    const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'illustration01'| 'illustration02'| 'results'>('intro')  ;
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<{questionId: number, selectedOption: string, fullText: string}[]>([]);
     const [education, setEducation] = useState<string>('');
@@ -21,6 +21,7 @@ const Quiz = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [pushUpsValue, setPushUpsValue] = useState('');
     const [sitUpsValue, setSitUpsValue] = useState('');
+    const router = useRouter();
 
     const currentQuestion = quizData[currentQuestionIndex];
     const totalQuestions = quizData.length;
@@ -37,32 +38,46 @@ const Quiz = () => {
         if (currentScreen === 'intro') {
             setCurrentScreen('intermediate');
         } else if (currentScreen === 'intermediate' && education) {
-            setCurrentScreen('story');
-        } else if (currentScreen === 'story') {
             setCurrentScreen('quiz');
-        } else if (currentQuestionIndex < totalQuestions - 1) {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
-        }
-        else {
-            submitQuiz();
+        } else if (currentScreen === 'quiz') {
+            if (currentQuestionIndex === 5) { // After General Questions
+                setCurrentScreen('illustration01');
+            } else if (currentQuestionIndex === quizData.length - 1) { // End of Main Quiz
+                submitQuiz();
+            } else {
+                setCurrentQuestionIndex(currentQuestionIndex + 1);
+            }
+        } else if (currentScreen === 'illustration01') {
+            setCurrentScreen('illustration02');
+        } else if (currentScreen === 'illustration02') {
+            setCurrentScreen('quiz');
+            setCurrentQuestionIndex(6); // Start from question 7
         }
     };
 
     const goBack = () => {
-        if (currentScreen === 'story') {
+        if (currentScreen === 'intermediate') {
             setCurrentScreen('intro');
         } else if (currentScreen === 'quiz') {
             if (currentQuestionIndex === 0) {
-                setCurrentScreen('story');
+                setCurrentScreen('intermediate');
             } else {
                 setCurrentQuestionIndex(currentQuestionIndex - 1);
             }
+        } else if (currentScreen === 'illustration01') {
+            setCurrentScreen('quiz');
+            setCurrentQuestionIndex(5); // Go back to last general question
+        } else if (currentScreen === 'illustration02') {
+            setCurrentScreen('illustration01');
         }
     };
 
     const selectAnswer = (category: string, text: string) => {
+        if (currentQuestion.id === 1 && category === 'D') {
+            alert("Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-SpSprachniveau erreichen.");
+        }
         setAnswers((prev) => {
-            const updatedAnswers = [...prev];
+        const updatedAnswers = [...prev];
             updatedAnswers[currentQuestionIndex] = {
                 questionId: currentQuestion.id,
                 selectedOption: category,
@@ -72,10 +87,10 @@ const Quiz = () => {
         });
         goNext();
     };
-
-    const submitQuiz = async () => {
-        setIsSubmitting(true);
-        try {
+const submitQuiz = async () => {
+    setIsSubmitting(true);
+    try {
+        console.log("Answers:", answers);
             const response = await fetch('/api/quiz', {
                 method: 'POST',
                 headers: {
@@ -98,7 +113,8 @@ const Quiz = () => {
 
             const result = await response.json();
             setQuizResult(result);
-            setCurrentScreen('results');
+        localStorage.setItem('quizResult', JSON.stringify(result));
+        router.push('/results');
         } catch (error) {
             console.error('Error submitting quiz:', error);
             alert('There was an error submitting the quiz. Please try again.');
@@ -107,42 +123,21 @@ const Quiz = () => {
         }
     };
 
-    const getRecommendedJobs = (type: 'direkt' | 'zukünftig') => {
-        if (!quizResult) return [];
-        const recommendedJobs = quizResult.result[type];
-        return Object.values(jobs).filter(job => recommendedJobs.includes(job.name));
-    };
-
     return (
         <div className={styles.quizContainer}>
             <div className={styles.quizWrapper}>
-
-                <a href={'/jobs'}
-                   style={{
-                       alignItems: 'center',
-                       justifyContent: 'flex-start',
-                       color: 'var(--red-primary)',
-                       marginBottom: '20px',
-                       display: 'flex',
-                       cursor: 'pointer'
-                   }}>
-                    <h3 style={{marginRight: '10px'}}>←</h3>
-                    <h3 style={{textDecoration: 'underline'}}>
-                        Zurück
-                    </h3>
-                </a>
 
                 {/* Intro Screen */}
                 {currentScreen === 'intro' && (
                     <div className={styles.introContainer}>
                         <img src="/Lupe.png" alt="Intro Image" className={styles.introImage}/>
-                        <h3>Welcher Job passt zu Dir?</h3>
+                        <h3>Finde den Job, der zu Dir passt!</h3>
                         <p>
-                            Willkommen beim Karriere Navigator! Dieser Quiz hilft Dir dabei,
-                            herauszufinden, welcher Beruf bei der Berliner Feuerwehr am besten
-                            zu Dir passt.
+                            Willkommen beim Karriere-Navigator! Mit diesem Quiz findest Du heraus, welche Ausbildungsmöglichkeiten
+                            bei der <span style={{ fontWeight: 'bold', color: 'red' }}>Berliner Feuerwehr</span> perfekt
+                            zu Dir und Deinen Stärken passen.
                         </p>
-                        <button onClick={goNext} className={styles.startButton}>
+                        <button onClick={goNext} className={styles.continueButton}>
                             Start
                         </button>
                     </div>
@@ -151,10 +146,9 @@ const Quiz = () => {
                 {/* Intermediate Screen */}
                 {currentScreen === 'intermediate' && (
                     <div className={styles.intermediateContainer}>
-                        <img src="/Peace.png" alt="Intermediate Image" className={styles.intermediateImage}/>
-                        <h3>Dein Hintergrund?</h3>
+                        <img src="/Peace.png" alt="Intermediate Image" className={styles.introImage}/>
+                        <h3>Bitte wähle Deinen höchsten Abschluss aus der Liste aus.</h3>
                         <div className={`${styles.dropdown} ${education ? styles.selected : ''}`}>
-                            <label htmlFor="education">Mein Abschluss:</label>
                             <select
                                 id="education"
                                 value={education}
@@ -162,16 +156,16 @@ const Quiz = () => {
                             >
                                 <option value="">Bitte auswählen</option>
                                 <option value="Berufsbildungsreife">Berufsbildungsreife</option>
-                                <option value="MSA">MSA</option>
+                                <option value="MSA">MSA (Mittlerer Schulabschluss)</option>
                                 <option value="Abitur">Abitur</option>
                                 <option value="Bachelor">Bachelor</option>
                                 <option value="Master">Master</option>
                                 <option
-                                    value="Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat">Hauptschulabschluss
-                                    mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat
+                                    value="Hauptschulabschluss mit 2 Jahre Berufsausbildung/Fachabitur/mindestens 4-jährige Soldat">
+                                    Hauptschulabschluss mit 2-jähriger Berufsausbildung/Fachabitur/mindestens 4-jährige Soldatenlaufbahn
                                 </option>
-                                <option value="Abgeschlossener Rettungsdienstberuf">Abgeschlossener
-                                    Rettungsdienstberuf
+                                <option value="Abgeschlossener Rettungsdienstberuf">
+                                    Abgeschlossener Rettungsdienstberuf
                                 </option>
                             </select>
                         </div>
@@ -181,19 +175,6 @@ const Quiz = () => {
                     </div>
                 )}
 
-                {/* Story Screen */}
-                {currentScreen === 'story' && (
-                    <div className={styles.storyContainer}>
-                        <img src="/112_Notruf.png" alt="Story Image" className={styles.storyImage}/>
-                        <h3>Eine kleine Geschichte...</h3>
-                        <p>Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden unterwegs, als plötzlich
-                            ein lautes Krachen durch die Luft hallt. Ein Auto ist frontal in einen Baum gekracht und
-                            Rauch steigt aus der Motorhaube auf.</p>
-                        <button onClick={goNext} className={styles.continueButton}>
-                            Weiter
-                        </button>
-                    </div>
-                )}
 
                 {/* Quiz Screen */}
                 {currentScreen === 'quiz' && (
@@ -202,7 +183,7 @@ const Quiz = () => {
                             <div
                                 className={styles.progressBar}
                                 style={{
-                                    width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`,
+                                    width: `${(((currentQuestionIndex as number) + 1) / (totalQuestions as number)) * 100}%`,
                                 }}
                             />
                         </div>
@@ -210,17 +191,28 @@ const Quiz = () => {
                             Frage {currentQuestionIndex + 1}
                         </div>
                         <div className={styles.questionTitle}>{currentQuestion.title}</div>
-                        {/* Fitness Screen*/}
 
                         {currentQuestion.type === 'options' && currentQuestion.options && (
                             <div className={styles.optionsContainer}>
-                                {currentQuestion.options.map(
-                                    (option, index) => (
-                                        <button
-                                            key={index}
-                                            className={`${styles.optionButton} ${answers[currentQuestionIndex]?.selectedOption === option.category ? styles.selectedOption : ''}`}
-                                            onClick={() => selectAnswer(option.category, option.text)}
-                                        >
+                                {currentQuestion.options.map((option, index) => (
+                                    <button
+                                        key={index}
+                                        className={`${styles.optionButton} ${answers[currentQuestionIndex]?.selectedOption === option.category ? styles.selectedOption : ''}`}
+                                        onClick={() => {
+                                            if (currentQuestion.id === 1 && option.category === 'D') {
+                                                alert("Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-Sprachniveau erreichen.");
+                                            }
+                                            setAnswers((prev) => {
+                                                const updatedAnswers = [...prev];
+                                                updatedAnswers[currentQuestionIndex] = {
+                                                    questionId: currentQuestion.id,
+                                                    selectedOption: option.category,
+                                                    fullText: option.text,
+                                                };
+                                                return updatedAnswers;
+                                            });
+                                        }}
+                                    >
                                             <span className={styles.optionPrefix}>{option.prefix}</span>
                                             <span className={styles.optionText}>{option.text}</span>
                                         </button>
@@ -231,20 +223,18 @@ const Quiz = () => {
 
                         {currentQuestion.type === 'input' && (
                             <div className={styles.inputContainer}>
-                                {/* Conditional rendering for SVG image */}
-                                {currentQuestion.id === 2 && (
                                     <div className={styles.imageContainer}>
                                         <img
-                                            src="/assets/quiz/schulung.svg" // Path to your SVG
+                                            src="/assets/quiz/growSW.svg"
                                             alt="Icon for height question"
                                             className={styles.customSvg}
                                         />
                                     </div>
-                                )}
                                 <InputQuestion
                                     question={currentQuestion}
                                     value={answers[currentQuestionIndex]?.fullText || ''}
                                     onChange={(value: any) => {
+                                        // Eingabe speichern
                                         setAnswers((prev) => {
                                             const updatedAnswers = [...prev];
                                             updatedAnswers[currentQuestionIndex] = {
@@ -255,6 +245,17 @@ const Quiz = () => {
                                             return updatedAnswers;
                                         });
                                     }}
+                                    onBlur={() => {
+                                        const heightValue = parseFloat(answers[currentQuestionIndex]?.fullText || '');
+                                        if (!isNaN(heightValue)) {
+                                            if (heightValue < currentQuestion.minValue!) {
+                                                alert(`Für die Verbeamtung bei der Berliner Feuerwehr ist eine Mindestgröße von ${currentQuestion.minValue} cm erforderlich. Du kannst jedoch ohne Verbeamtung einsteigen.`);
+                                            } else if (heightValue > currentQuestion.maxValue!) {
+                                                alert(`Für die Verbeamtung bei der Berliner Feuerwehr darf die Größe ${currentQuestion.maxValue} cm nicht überschreiten. Du kannst jedoch ohne Verbeamtung einsteigen.`);
+                                            }
+                                        }
+                                    }
+                                    }
                                 />
                             </div>
                         )}
@@ -265,16 +266,29 @@ const Quiz = () => {
                                         onSelectionChange={(selectedImages) => {
                                             setAnswers((prev) => {
                                                 const updatedAnswers = [...prev];
+                                                const currentAnswer = updatedAnswers[currentQuestionIndex];
+                                                // Check if the selected option already exists in the current answer
+                                                const selectedCategories = selectedImages.map((image) => image.category).join(', ');
+                                                const selectedSrc = selectedImages.map((image) => image.src).join(',');
+                                                if (
+                                                    currentAnswer &&
+                                                    currentAnswer.selectedOption === selectedCategories &&
+                                                    currentAnswer.fullText === selectedSrc
+                                                ) {
+                                                    return prev; // Return previous state if no changes
+                                                }
                                                 updatedAnswers[currentQuestionIndex] = {
                                                     questionId: currentQuestion.id,
-                                                    selectedOption: selectedImages.map((image: { category: any; }) => image.category).join(', '),
-                                                    fullText: selectedImages.map((image: { src: any; }) => image.src).join(', '),
+                                                    selectedOption: selectedCategories,
+                                                    fullText: selectedSrc,
                                                 };
                                                 return updatedAnswers;
                                             });
+
                                         }}
                                     />
                                 )}
+
                         {currentQuestion.type === 'slider' && (
                             <QuestionSlider
                                 question={currentQuestion}
@@ -292,49 +306,55 @@ const Quiz = () => {
                                 }}
                             />
                         )}
-                        {currentQuestion.id === 4 && (
-                            <div>
-                                <div className={styles.fitnessDropdownContainer}>
-                                    {/* Push ups */}
-                                    <label htmlFor="fitnessPushUps" className={styles.fitnessLabel}>
-                                        Wie viele Liegestütze schaffst du in 60 sek?
-                                    </label>
-                                    <select
-                                        id="fitnessPushUps"
-                                        className={styles.fitnessDropdown}
-                                        value={pushUpsValue}
-                                        onChange={(e) => setPushUpsValue(e.target.value)}
-                                    >
-                                        <option value="">Anzahl auswählen</option>
-                                        <option value="under10">Unter 10</option>
-                                        <option value="10-20">10 - 20</option>
-                                        <option value="20-30">20 - 30</option>
-                                        <option value="30-40">30 - 40</option>
-                                        <option value="40plus">+40</option>
-                                    </select>
-                                </div>
 
-                                <div className={styles.fitnessDropdownContainer}>
-                                    {/* Sit ups */}
-                                    <label htmlFor="fitnessSitUps" className={styles.fitnessLabel}>
-                                        Wie viele Sit ups schaffst du in 60 sek?
-                                    </label>
-                                    <select
-                                        id="fitnessSitUps"
-                                        className={styles.fitnessDropdown}
-                                        value={sitUpsValue}
-                                        onChange={(e) => setSitUpsValue(e.target.value)}
-                                    >
-                                        <option value="">Anzahl auswählen</option>
-                                        <option value="under10">Unter 10</option>
-                                        <option value="10-20">10 - 20</option>
-                                        <option value="20-30">20 - 30</option>
-                                        <option value="30-40">30 - 40</option>
-                                        <option value="40plus">+40</option>
-                                    </select>
-                                </div>
+                        {currentQuestion.type === 'fitness' && (
+                            <div className={styles.fitnessContainer}>
+                                {currentQuestion.questions?.map((subQuestion, index) => (
+                                    <div key={index} className={styles.fitnessQuestion}>
+                                        <label htmlFor={`fitness-${index}`} className={styles.fitnessLabel}>
+                                            {subQuestion.label}
+                                        </label>
+                                        <select
+                                            id={`fitness-${index}`}
+                                            className={styles.fitnessDropdown}
+                                            value={
+                                                index === 0 ? pushUpsValue : sitUpsValue
+                                            }
+                                            onChange={(e) => {
+                                                const selectedValue = e.target.value;
+
+                                                // Check if the selected value is "Weniger als 10" and show an alert
+                                                if (selectedValue === 'Weniger als 10') {
+                                                    alert("Die Berliner Feuerwehr benötigt sportliche Personen. Bitte arbeite an deiner Fitness!");
+                                                }
+                                                if (index === 0) {
+                                                    setPushUpsValue(e.target.value);
+                                                } else {
+                                                    setSitUpsValue(e.target.value);
+                                                }
+                                                setAnswers((prev) => {
+                                                    const updatedAnswers = [...prev];
+                                                    updatedAnswers[currentQuestionIndex] = {
+                                                        questionId: currentQuestion.id,
+                                                        selectedOption: `${pushUpsValue},${sitUpsValue}`,
+                                                        fullText: `Push-ups: ${pushUpsValue}, Sit-ups: ${sitUpsValue}`,
+                                                    };
+                                                    return updatedAnswers;
+                                                });
+                                            }}
+                                        >
+                                            <option value="">Anzahl auswählen</option>
+                                            {subQuestion.options.map((option, idx) => (
+                                                <option key={idx} value={option}>
+                                                    {option}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
                             </div>
                         )}
+
                         {currentQuestion.type === 'timer' && (
                             <QuestionTimer
                                 onTimerComplete={(time: { toString: () => any; }) => {
@@ -351,35 +371,18 @@ const Quiz = () => {
                             />
                         )}
 
-                        {currentQuestion.type === 'illustration' && currentQuestion.images && (
-                            <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                                {currentQuestion.images.map((image, index) => (
-                                <img
-                                    key={index}
-                                    src={image.src}
-                                    alt={`Illustration ${index + 1}`}
-                                    style={{ width: '300px', height: 'auto', margin: '20px auto' }}
-                                />
-                                    ))}
-                                <p style={{ fontSize: '1.2rem', color: '#666', marginTop: '20px' }}>
-                                    {currentQuestion.title}
-                                </p>
-                            </div>
-                        )}
-
                         {/* Navigation Buttons */}
                         <div className={styles.navButtons}>
                             <button
                                 className={styles.backButton}
                                 onClick={goBack}
-                                disabled={currentQuestionIndex === 0}
                             >
                                 Zurück
                             </button>
                             <button
                                 className={styles.nextButton}
                                 onClick={goNext}
-                                disabled={!answers[currentQuestionIndex] || isSubmitting}
+                                disabled={!answers[currentQuestionIndex]?.selectedOption}
                             >
                                 {currentQuestionIndex === totalQuestions - 1
                                     ? (isSubmitting ? 'Wird geladen...' : 'Ergebnisse')
@@ -389,55 +392,39 @@ const Quiz = () => {
                     </>
                 )}
 
-                {/* Result Screen */}
-                {currentScreen === 'results' && (
-                    <div className={styles.resultsContainer}>
-                        <h3 className={styles.centeredHeader}>Aktuelle Möglichkeiten:</h3>
-                        <p className={styles.centeredText}>Diese Ausbildungen kannst Du direkt mit Deinem aktuellen
-                            Abschluss beginnen:</p>
-                        <div className={`${styles.jobList} md:grid-cols-2`}>
-                            {getRecommendedJobs('direkt').map(({id, name, slug, shortDesc}) => (
-                                <div key={slug}>
-                                    <JobCard
-                                        id={id}
-                                        slug={slug}
-                                        name={name}
-                                        shortDesc={shortDesc}
-                                    />
-                                </div>
-                            ))}
-                        </div>
+                {currentScreen === 'illustration01' && (
+                    <div className={styles.storyContainer}>
 
-                        <h3 className={styles.centeredHeader}>Zukünftige Möglichkeiten:</h3>
-                        <p className={styles.centeredText}>Diese Ausbildungen kannst Du nach weiteren Qualifikationen
-                            oder Abschlüssen beginnen:</p>
-                        <div className={`${styles.jobList} md:grid-cols-2`}>
-                            {getRecommendedJobs('zukünftig').map(({id, name, slug, shortDesc}) => (
-                                <div key={slug}>
-                                    <JobCard
-                                        id={id}
-                                        slug={slug}
-                                        name={name}
-                                        shortDesc={shortDesc}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className={styles.buttonContainer}>
-                            <button
-                                className={styles.restartButton}
-                                onClick={() => {
-                                    setCurrentScreen('intro');
-                                    setCurrentQuestionIndex(0);
-                                    setAnswers([]);
-                                    setEducation('');
-                                    setQuizResult(null);
-                                }}
-                            >
-                                Quiz erneut starten
-                            </button>
-                        </div>
+                        <h3>Erlebe eine Geschichte, in der Du die Entscheidungen triffst!</h3>
+                        <img src='/assets/quiz/besties.png'
+                             style={{
+                                 width: '200px',
+                                 height: 'auto',
+                                 display: 'block',
+                                 margin: '0 auto'
+                             }}
+                        />
+                        <p style={{fontSize: '18px'}}> Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden
+                            unterwegs</p>
+                        <button onClick={goNext} className={styles.continueButton}>
+                            Weiter
+                        </button>
+                    </div>
+                )}
+                {currentScreen === 'illustration02' && (
+                    <div className={styles.storyContainer}>
+                        <img src='/assets/quiz/carCrashL.png'
+                             style={{
+                                 width: '200px',
+                                 height: 'auto',
+                                 display: 'block',
+                                 margin: '0 auto'
+                             }}
+                        />
+                        <p style={{ fontSize: '18px' }}>Als plötzlich ein lautes Krachen durch die Luft hallt. Ein Auto ist frontal in einem Baum gekracht und Rauch steigt aus der Motorhaube auf.</p>
+                        <button onClick={goNext} className={styles.continueButton}>
+                            Weiter
+                        </button>
                     </div>
                 )}
             </div>
