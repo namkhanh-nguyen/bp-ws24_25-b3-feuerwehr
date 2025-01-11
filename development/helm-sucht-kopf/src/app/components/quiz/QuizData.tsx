@@ -1,7 +1,7 @@
 type Option = {
     prefix: string;
     text: string;
-    category: 'A' | 'B' | 'C';
+    category: 'A' | 'B' | 'C' | 'D' | 'E';
 };
 
 type Question = {
