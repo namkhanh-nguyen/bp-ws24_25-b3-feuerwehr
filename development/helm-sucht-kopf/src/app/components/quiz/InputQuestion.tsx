@@ -12,29 +12,28 @@ type InputQuestionProps = {
     };
     value: string | number;
     onChange: (value: string) => void;
+    onBlur?: () => void;
 };
 
-const InputQuestion: FC<InputQuestionProps> = ({ question, value, onChange }) => {
+const InputQuestion: FC<InputQuestionProps> = ({ question, value, onChange, onBlur }) => {
+
     return (
         <div className={styles.inputContainer}>
             <input
                 id={`question-${question.id}`}
-                type="number"
-                min={question.minValue}
-                max={question.maxValue}
-                placeholder="in CM"
+                type="text"
+                placeholder="in cm"
                 className={styles.inputField}
                 value={value}
                 onChange={(e) => {
                     const inputValue = e.target.value;
                     if (
-                        inputValue === '' ||
-                        (parseInt(inputValue) >= (question.minValue || 0) &&
-                            parseInt(inputValue) <= (question.maxValue || Infinity))
-                    ) {
+                        inputValue === '' ||!isNaN(Number(inputValue)))
+                    {
                         onChange(inputValue);
                     }
                 }}
+                onBlur={onBlur}
             />
         </div>
     );
