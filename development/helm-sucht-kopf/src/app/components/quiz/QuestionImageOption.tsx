@@ -7,11 +7,13 @@ type Image = {
 };
 
 type QuestionImageOptionsProps = {
-    images: Image[];
-    onSelectionChange: (selectedImages: Image[]) => void;
+    images: Image[],
+    onSelectionChange: (selectedImages: Image[]) => void,
+    image?: string,
+    onSelect?: () => void
 };
 
-const QuestionImageOptions: React.FC<QuestionImageOptionsProps> = ({ images, onSelectionChange }) => {
+const QuestionImageOptions: React.FC<QuestionImageOptionsProps> = ({images, onSelectionChange, image, onSelect}) => {
     const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
 
     // Handle the selection or deselection of images
