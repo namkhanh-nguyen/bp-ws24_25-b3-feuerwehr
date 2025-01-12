@@ -14,8 +14,6 @@ export async function POST(request: Request) {
         // Abschluss speichern
         const graduationAnswer = receivedData.find((answer: any) => answer.questionId === 0)?.selectedOption;
 
-        const languageLevelAnswer = receivedData.find((answer: any) => answer.questionId === 1)?.selectedOption;
-
         // Kategorieantworten zählen
         const categoryCounts = { A: 0, B: 0, C: 0 };
         receivedData.forEach((answer: any) => {
