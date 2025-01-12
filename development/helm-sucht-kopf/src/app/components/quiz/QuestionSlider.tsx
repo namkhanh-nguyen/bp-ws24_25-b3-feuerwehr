@@ -26,7 +26,7 @@ const QuestionSlider = ({
     };
 
     return (
-        <div>
+        <div className={styles.sliderContainer}>
             {/* Slider Labels */}
             <div className={styles.sliderLabels}>
                 <span>{question.minLabel}</span>
