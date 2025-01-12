@@ -10,13 +10,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Load custom fonts
 const berlinTypeWebRegular = localFont({
-  src: "../../public/fonts/BerlinTypeWeb-Regular.woff", // Korrigierter Pfad
+  src: "../../public/fonts/BerlinTypeWeb-Regular.woff",
   variable: "--font-berlin-type-regular",
   weight: "400",
 });
 
 const berlinTypeWebBold = localFont({
-  src: "../../public/fonts/BerlinTypeWeb-Bold.woff", // Korrigierter Pfad
+  src: "../../public/fonts/BerlinTypeWeb-Bold.woff",
   variable: "--font-berlin-type-bold",
   weight: "700",
 });

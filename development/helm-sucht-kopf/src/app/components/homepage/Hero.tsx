@@ -13,12 +13,12 @@ export default function Hero() {
           <div className="hero-content">
             <h1 className="hero-title">Lust auf den besten Job der Welt?</h1>
             <p className="hero-description">
-              Bist du bereit für Action, Teamgeist und einen Job, der wirklich
-              etwas bewegt? Dann bist du bei der Berliner Feuerwehr genau
-              richtig!
+              Alle Wege führen nach Berlin – welcher ist deiner? Finde es heraus
+              und entdecke, welche Ausbildung bei der Berliner Feuerwehr perfekt
+              zu dir passt.
             </p>
             <Link href="/jobs" className="hero-button">
-              Finde deinen Weg
+              Starte das Berufsquiz
             </Link>
           </div>
         </div>
