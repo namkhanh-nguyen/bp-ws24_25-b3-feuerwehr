@@ -47,9 +47,7 @@ const Quiz = () => {
             } else {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             }
-        } else if (currentScreen === 'illustration01') {
-            setCurrentScreen('illustration02');
-        } else if (currentScreen === 'illustration02') {
+        }  else if (currentScreen === 'illustration01') {
             setCurrentScreen('quiz');
             setCurrentQuestionIndex(6); // Start from question 7
         }
@@ -61,14 +59,15 @@ const Quiz = () => {
         } else if (currentScreen === 'quiz') {
             if (currentQuestionIndex === 0) {
                 setCurrentScreen('intermediate');
-            } else {
+            } else if (currentQuestionIndex === 6){
+                setCurrentScreen('illustration01');
+            }
+            else {
                 setCurrentQuestionIndex(currentQuestionIndex - 1);
             }
         } else if (currentScreen === 'illustration01') {
             setCurrentScreen('quiz');
             setCurrentQuestionIndex(5); // Go back to last general question
-        } else if (currentScreen === 'illustration02') {
-            setCurrentScreen('illustration01');
         }
     };
 
@@ -126,7 +125,6 @@ const submitQuiz = async () => {
     return (
         <div className={styles.quizContainer}>
             <div className={styles.quizWrapper}>
-
                 {/* Intro Screen */}
                 {currentScreen === 'intro' && (
                     <div className={styles.introContainer}>
@@ -394,37 +392,26 @@ const submitQuiz = async () => {
 
                 {currentScreen === 'illustration01' && (
                     <div className={styles.storyContainer}>
-
-                        <h3>Erlebe eine Geschichte, in der Du die Entscheidungen triffst!</h3>
-                        <img src='/assets/quiz/besties.png'
-                             style={{
-                                 width: '200px',
-                                 height: 'auto',
-                                 display: 'block',
-                                 margin: '0 auto'
-                             }}
-                        />
-                        <p style={{fontSize: '18px'}}> Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden
-                            unterwegs</p>
-                        <button onClick={goNext} className={styles.continueButton}>
-                            Weiter
-                        </button>
-                    </div>
-                )}
-                {currentScreen === 'illustration02' && (
-                    <div className={styles.storyContainer}>
                         <img src='/assets/quiz/carCrashL.png'
-                             style={{
-                                 width: '200px',
-                                 height: 'auto',
-                                 display: 'block',
-                                 margin: '0 auto'
-                             }}
+                             className={styles.storyImage}
                         />
-                        <p style={{ fontSize: '18px' }}>Als plötzlich ein lautes Krachen durch die Luft hallt. Ein Auto ist frontal in einem Baum gekracht und Rauch steigt aus der Motorhaube auf.</p>
-                        <button onClick={goNext} className={styles.continueButton}>
-                            Weiter
-                        </button>
+                        <h3>Erlebe eine Geschichte, in der Du die Entscheidungen triffst!</h3>
+                        <p style={{fontSize: '18px', color: '#333' }}> Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden 👨🏻‍🤝‍👨🏼
+                            unterwegs.</p>
+                        <p style={{fontSize: '18px', color: '#333' }}>Als plötzlich ein lautes Krachen durch die Luft hallt. Ein Auto
+                            ist frontal in einem Baum gekracht 🚗💥 und Rauch 💨 steigt aus der Motorhaube auf.</p>
+                        {/* Navigation Buttons */}
+                        <div className={styles.navButtons}>
+                            <button
+                                className={styles.backButton}
+                                onClick={goBack}
+                            >
+                                Zurück
+                            </button>
+                            <button onClick={goNext} className={styles.nextButton}>
+                                Weiter
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
