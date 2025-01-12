@@ -14,8 +14,9 @@
     min-height: 70vh; /* Vollständige Höhe des Viewports */
 }
 
-.introImage{
-    width: 40%;
+.introImage,
+.customSvg{
+    width: 30%;
     height: auto;
     margin-left: auto;
     margin-right: auto;
@@ -49,7 +50,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 50vh;
+    height: 30vh;
 }
 
 .inputField {
@@ -57,16 +58,13 @@
     max-width: 300px;
     padding: 12px;
     font-size: 1rem;
-    border: 1px solid #E40422;
+    border: 1px solid #000;
     border-radius: 25px;
     text-align: center;
-    margin-bottom: 20px; /* Adds space specifically between input and buttons */
 }
-
 .inputField:focus {
-    border-color: #E40422;
     outline: none;
-    box-shadow: 0 0 5px rgba(228, 4, 34, 0.5);
+    border: 2px solid #E40422;
 }
 
 .imageContainer {
@@ -115,10 +113,6 @@
     transform: scale(1.05); /* Optionally scale up the image when selected */
 }
 
-.selectionCounter {
-    font-weight: bold;
-    color: #333;
-}
 .imageOption:hover {
     transform: scale(1.03); /* Slight zoom effect on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
@@ -134,15 +128,16 @@
 .fitnessDropdownContainer {
     margin-bottom: 20px; /* Add margin between dropdowns */
     text-align: left; /* Align text to the left */
+
 }
 
 .fitnessLabel {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     color: #333;
-    margin-bottom: 8px; /* Space between label and dropdown */
+    margin-bottom: 15px; /* Space between label and dropdown */
     display: block;
-    text-align: left;
+    text-align: center;
 }
 
 .fitnessDropdown {
@@ -157,20 +152,30 @@
     margin: 0 auto 20px; /* Centers dropdown and adds spacing below */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
     transition: box-shadow 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .fitnessDropdown:focus {
-    border-color: #6c63ff; /* Purple border on focus */
+    border: 2px solid #E40422; /* Purple border on focus */
     outline: none;
-    box-shadow: 0 0 8px rgba(108, 99, 255, 0.5); /* Purple glow */
 }
 
-/* Slider Labels */
+.sliderContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40vh;
+    text-align: center;
+}
+
 .sliderLabels {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 18px;
     color: #333;
 }
 
@@ -453,7 +458,7 @@
     display: flex;
     justify-content: space-between;
     position: absolute;
-    bottom: 70px;
+    bottom: 4%;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
@@ -526,6 +531,9 @@
     margin-top: 10px;
     font-size: 16px;
     font-weight: bold;
+}
+.selectionCounter{
+    margin-bottom: 10px;
 }
 
 .imageOptionsContainer {
