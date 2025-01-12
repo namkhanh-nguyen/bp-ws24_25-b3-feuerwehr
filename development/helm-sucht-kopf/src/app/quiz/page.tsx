@@ -225,7 +225,7 @@ const submitQuiz = async () => {
                             <div className={styles.inputContainer}>
                                     <div className={styles.imageContainer}>
                                         <img
-                                            src="/assets/quiz/growSW.svg"
+                                            src="/assets/quiz/growRed.svg"
                                             alt="Icon for height question"
                                             className={styles.customSvg}
                                         />
