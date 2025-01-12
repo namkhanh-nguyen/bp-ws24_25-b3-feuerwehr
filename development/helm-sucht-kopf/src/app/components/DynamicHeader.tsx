@@ -88,28 +88,28 @@ const DynamicHeader: React.FC = () => {
           <ul className={styles["menu-item"]}>
             {[
               {
-                href: "https://www.berliner-feuerwehr.de/aktuelles/",
-                text: "Aktuelles",
+                href: "/jobs",
+                text: "Ausbildungen",
               },
               {
-                href: "https://www.berliner-feuerwehr.de/ihre-sicherheit/",
-                text: "Ihre Sicherheit",
-              },
-              {
-                href: "https://www.berliner-feuerwehr.de/ueber-uns",
-                text: "Über Uns",
+                href: "https://www.berliner-feuerwehr.de/karriere/benefits/",
+                text: "Warum Berliner Feuerwehr?",
               },
               {
                 href: "https://www.berliner-feuerwehr.de/technik",
                 text: "Technik",
               },
               {
-                href: "https://www.berliner-feuerwehr.de/forschung",
-                text: "Forschung",
+                href: "https://www.berliner-feuerwehr.de/ueber-uns",
+                text: "Über uns",
               },
               {
-                href: "https://www.berliner-feuerwehr.de/service",
-                text: "Service",
+                href: "https://www.berliner-feuerwehr.de/karriere/faq/",
+                text: "Häufige Fragen",
+              },
+              {
+                href: "https://www.berliner-feuerwehr.de/kontakt/",
+                text: "Kontakt",
               },
             ].map((item, index) => (
               <li key={index}>

@@ -22,12 +22,16 @@
   height: auto;
   display: inline-block;
   vertical-align: middle;
-  padding: 1.25rem;
+  padding: 1rem;
   transition: width 0.3s ease;
 }
 
 .logo.shrunk {
   width: 80px;
+}
+
+a.title:hover {
+  text-decoration: none;
 }
 
 .title {

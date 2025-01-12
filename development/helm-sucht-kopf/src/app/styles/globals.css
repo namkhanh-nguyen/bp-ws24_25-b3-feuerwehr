@@ -11,6 +11,7 @@
 * {
   font-family: var(--font-berlin-type-regular);
   font-weight: 400;
+  box-sizing: border-box;
 }
 
 /* Allgemeine Schriftstile */
@@ -89,10 +90,6 @@ a:has(h1, h2, h3, h4, h5, h6):hover {
   color: inherit;
 }
 
-a:active {
-  color: var(--red-primary);
-}
-
 /* Hero Section */
 .homepage-hero {
   transition: all 0.3s ease;
@@ -162,7 +159,7 @@ a:active {
 
 .red {
   background-color: var(--red-primary);
-  padding: 3rem 1.25rem;
+  padding: 6rem 1.25rem;
   color: white;
 }
 .red * {
