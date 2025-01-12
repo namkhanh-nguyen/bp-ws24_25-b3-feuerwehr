@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import styles from '../styles/quiz.module.css';
+import styles2 from '../styles/jobs.module.css'
 import JobCard from "@/app/components/jobs/JobCard";
 import React, {useState, useEffect} from "react";
 import { fetchJobs } from '@/app/api/jobs/fetchJobs';
@@ -47,48 +48,49 @@ const Results = () => {
         console.log('Filtered Jobs:', recommendedJobs);
         return jobs.filter((job) => recommendedJobs.includes(job.name));
     };
-
+    const futureJobs = getRecommendedJobs('zukünftig');
+    const currentJobs = getRecommendedJobs('direkt');
 
     return (
         <div className={styles.resultsContainer}>
-            {/* Display Comments */}
-            {quizResult?.comments && quizResult.comments.length > 0 && (
-                <div className={styles.commentsContainer}>
-                    <h3 className={styles.centeredHeader}>Hinweise:</h3>
-                    <ul className={styles.commentList}>
-                        {quizResult.comments.map((comment: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined, index: React.Key | null | undefined) => (
-                            <li key={index} className={styles.commentItem}>
-                                {comment}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
             {/* Display Immediate Opportunities */}
             <h3 className={styles.centeredHeader}>Aktuelle Möglichkeiten:</h3>
-            <p className={styles.centeredText}>
-                Diese Ausbildungen kannst Du direkt mit Deinem aktuellen Abschluss beginnen:
-            </p>
-            <div className={`${styles.jobList} md:grid-cols-2`}>
-                {getRecommendedJobs('direkt').map(({ id, name, slug, shortDesc }) => (
-                    <div key={slug}>
-                        <JobCard id={id} slug={slug} name={name} shortDesc={shortDesc} />
+            {currentJobs.length > 0 ? (
+                <>
+                    <p className={styles.centeredText}>
+                        Diese Ausbildungen kannst Du direkt mit Deinem aktuellen Abschluss beginnen:
+                    </p>
+                    <div className={`${styles.jobList} md:grid-cols-2`}>
+                        {currentJobs.map(({id, name, slug, shortDesc}) => (
+                            <div key={slug}>
+                                <JobCard id={id} slug={slug} name={name} shortDesc={shortDesc}/>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </>
+            ) : (
+                <p className={styles.centeredText}>
+                    Leider gibt es derzeit keine Ausbildungen, die direkt mit Ihrem aktuellen Abschluss begonnen werden
+                    können. Schauen Sie sich jedoch die zukünftigen Möglichkeiten an.
+                </p>
+            )}
 
             {/* Display Future Opportunities */}
-            <h3 className={styles.centeredHeader}>Zukünftige Möglichkeiten:</h3>
-            <p className={styles.centeredText}>
-                Diese Ausbildungen kannst Du nach weiteren Qualifikationen oder Abschlüssen beginnen:
-            </p>
-            <div className={`${styles.jobList} md:grid-cols-2`}>
-                {getRecommendedJobs('zukünftig').map(({ id, name, slug, shortDesc }) => (
-                    <div key={slug}>
-                        <JobCard id={id} slug={slug} name={name} shortDesc={shortDesc} />
+            {futureJobs.length > 0 && (
+                <>
+                    <h3 className={styles.centeredHeader}>Zukünftige Möglichkeiten:</h3>
+                    <p className={styles.centeredText}>
+                        Diese Ausbildungen kannst Du nach weiteren Qualifikationen oder Abschlüssen beginnen:
+                    </p>
+                    <div className={`${styles.jobList} md:grid-cols-2`}>
+                        {futureJobs.map(({id, name, slug, shortDesc}) => (
+                            <div key={slug}>
+                                <JobCard id={id} slug={slug} name={name} shortDesc={shortDesc}/>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </>
+            )}
 
             {/* Restart Button */}
             <div className={styles.buttonContainer}>
@@ -99,8 +101,46 @@ const Results = () => {
                     Quiz erneut starten
                 </button>
             </div>
-        </div>
-    );
+            <div>
+                <div className={styles2.undecidedDiv}>
+                    <div
+                         style={{
+                             width: '100%',
+                         }}>
+                        <div style={{
+                            position: 'relative',
+                            display: 'inline-block',
+                            width: '100%', // Full width for stacking vertically
+                            marginBottom: '1rem'
+                        }}>
+                            <img
+                                src={`./assets/jobs/undecided-1.png`}
+                                alt="Noch unsicher 1"
+                                style={{
+                                    borderRadius: '2rem',
+                                    filter: 'brightness(0.7)',
+                                    width: '85vw',
+                                    objectFit: 'cover',
+                                    height: '30vh',
+                                }}
+                            />
+                            <div className={styles2.undecidedText}>
+                                Noch unsicher?<br/>
+                                Probiere unseren interaktiven Rundgang!
+                            </div>
+                            <button
+                                onClick={() => window.location.href = '/quiz'}
+                                className={styles2.startButton}
+                            >
+                                Starten!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+)
+    ;
 };
 
 export default Results;
