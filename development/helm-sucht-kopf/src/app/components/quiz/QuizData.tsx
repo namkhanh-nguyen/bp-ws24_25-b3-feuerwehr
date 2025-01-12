@@ -83,7 +83,7 @@ export const quizData: Question[] = [
     {
         id: 6,
         required: false,
-        title: 'Ausdauertest – Wie lange kannst Du Deinen Atem anhalten?',
+        title: 'Ausdauertest – Wie lange kannst du deinen Atem anhalten? ',
         type: 'timer',
     },
     {
@@ -158,11 +158,10 @@ export const quizData: Question[] = [
         title: "Nach dem Unfall sind deine Freunde aufgewühlt, und die Ereignisse gehen dir nicht aus dem Kopf. Wie gehst du damit um?",
         type: 'options',
         options: [
-            {prefix: 'A', text: 'Ich fühle mich überwältigt und emotional stark betroffen', category: 'A'},
-            {prefix: 'B', text: 'Ich bin emotional, aber ich kann mich einigermaßen gut beruhigen', category: 'A'},
-            {prefix: 'C', text: 'Ich fühle eine Mischung aus Betroffenheit und einem Bedürfnis, das Erlebte zu erarbeiten', category: 'B'},
-            {prefix: 'D', text: 'Ich bin nach dem Vorfall zwar bewegt, aber auch motiviert, mich zu verbessern.', category: 'B'},
-            {prefix: 'E', text: 'Ich fühle mich motiviert und voller Tatendrang, um meine Fähigkeiten zu erweitern und in Zukunft noch besser zu reagieren', category: 'C'}
+            {prefix: 'A', text: 'Ich fühle mich überwältigt und emotional stark betroffen.', category: 'A'},
+            {prefix: 'B', text: 'Ich bin emotional, aber ich kann mich einigermaßen gut beruhigen.', category: 'E'},
+            {prefix: 'C', text: 'Ich fühle eine Mischung aus Betroffenheit und einem Bedürfnis, das Erlebte zu erarbeiten.', category: 'B'},
+            {prefix: 'D', text: 'Ich fühle mich bewegt, aber auch motiviert, mich zu verbessern und in Zukunft besser zu reagieren.', category: 'C'},
         ],
     },
 ];
