@@ -35,8 +35,10 @@ const Question: FC<QuestionProps> = ({ question, onNext, onBack }) => {
                     <QuestionImageOption
                         key={idx}
                         image={option}
-                        onSelect={() => onNext(option)}
-                    />
+                        onSelect={() => onNext(option)} images={[]}
+                        onSelectionChange={function (selectedImages: { src: string; category: string; }[]): void {
+                            throw new Error('Function not implemented.');
+                        }}                    />
                 ))}
             </div>
         );
