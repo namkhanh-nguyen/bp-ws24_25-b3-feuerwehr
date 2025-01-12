@@ -9,6 +9,7 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
     const [isRunning, setIsRunning] = useState(false);
     const timerRef = useRef<NodeJS.Timeout | null>(null); // Interval reference
     const [finalTime, setFinalTime] = useState<string | null>(null);
+    const [currentImage, setCurrentImage] = useState<string>("/assets/quiz/smile.svg")
 
     // Cleanup the timer when the component unmounts
     useEffect(() => {
@@ -27,6 +28,7 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
     const startTimer = () => {
         clearTimer(); // Ensure no multiple intervals are running
         setIsRunning(true);
+        setCurrentImage('/assets/quiz/inhaleNormal.svg')
         timerRef.current = setInterval(() => {
             setTime((prevTime) => prevTime + 1); // Increment time in seconds
         }, 1000);
@@ -38,6 +40,7 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
         setFinalTime(
             `${String(Math.floor(time / 60)).padStart(2, '0')}:${String(time % 60).padStart(2, '0')}`
         ); // Save the formatted time
+        setCurrentImage('/assets/quiz/longExhale.svg')
         if (onTimerComplete) {
             onTimerComplete(time); // Trigger callback if provided
         }
@@ -48,7 +51,14 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
         setIsRunning(false);
         setTime(0);
         setFinalTime(null); // Reset the congratulation text
+        setCurrentImage('/assets/quiz/smile.svg')
     };
+    // Change image after 20 seconds
+    useEffect(() => {
+        if (isRunning && time === 20) {
+            setCurrentImage('/assets/quiz/inhaleLong.svg'); // Change to third image
+        }
+    }, [time, isRunning]);
 
     // Format time as MM:SS
     const formatTime = (seconds: number) => {
@@ -65,13 +75,26 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
                     style={{
                         fontSize: '1.2rem',
                         fontWeight: 'normal',
-                        color: '#666',
+                        color: '#333',
                         marginBottom: '20px',
                         textAlign: 'center',
                     }}
                 >
-                    Drücke Start, halte deinen Atem an und drücke Stopp, wenn du nicht mehr kannst!
+                    Drücke auf <span style={{ color: 'green' }}>'Start'</span>, halte deinen Atem an und drücke{' '}
+                    <span style={{ color: 'red' }}>'Stopp'</span>, wenn du nicht mehr kannst!
                 </p>
+            )}
+
+            {/* Congratulation text */}
+            {finalTime && (
+                <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                    <h3 style={{ color: '#E40422', fontSize: '1.5rem' }}>Super!!</h3>
+                    <p style={{ fontSize: '1.2rem', color: '#333' }}>
+                        Du hast deinen Atem{' '}
+                        <span style={{ fontWeight: 'bold', color: '#E40422' }}>{finalTime}</span> Sekunden
+                        angehalten!
+                    </p>
+                </div>
             )}
 
             {/* Timer display positioned above the icon */}
@@ -86,18 +109,6 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
                 {formatTime(time)}
             </p>
 
-            {/* Congratulation text */}
-            {finalTime && (
-                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                    <h3 style={{ color: '#E40422', fontSize: '1.5rem', margin: '0' }}>Super!!</h3>
-                    <p style={{ fontSize: '1.2rem', color: '#333' }}>
-                        Du hast deinen Atem{' '}
-                        <span style={{ fontWeight: 'bold', color: '#E40422' }}>{finalTime}</span> Sekunden
-                        angehalten!
-                    </p>
-                </div>
-            )}
-
             {/* Icon */}
             <div
                 style={{
@@ -108,9 +119,9 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
                 }}
             >
                 <img
-                    src={isRunning ? '/assets/quiz/holdL.png' : '/assets/quiz/breathL.png'}
-                    alt={isRunning ? 'Timer Running' : 'Timer Idle'}
-                    style={{ width: '200px', height: '200px' }}
+                    src={currentImage}
+                    alt={"Time state"}
+                    style={{ width: '40vw', height: '20vh' }}
                 />
             </div>
             <div
@@ -126,7 +137,7 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
             >
                 <button
                     style={{
-                        fontSize: '0.9rem',
+                        fontSize: '1rem',
                         backgroundColor: 'transparent',
                         color: '#E40422',
                         border: 'none',
@@ -135,7 +146,15 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
                     }}
                     onClick={resetTimer}
                 >
-                    Wiederholen
+                    <img
+                        src="/assets/quiz/laden.png" // Replace with your image path
+                        alt="Wiederholen"
+                        style={{
+                            width: '30px',
+                            height: '30px',
+                            objectFit: 'contain',
+                        }}
+                    />
                 </button>
 
                 {!isRunning ? (
@@ -166,7 +185,7 @@ const QuestionTimer: React.FC<QuestionTimerProps> = ({ onTimerComplete }) => {
                         }}
                         onClick={stopTimer}
                     >
-                        Stop
+                        Stopp
                     </button>
                 )}
             </div>
