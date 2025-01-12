@@ -1,14 +1,83 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 
+const videoPaths = {
+    intro: "https://static.videezy.com/system/resources/previews/000/052/918/original/21.mp4",
+    sporthalle: "https://static.videezy.com/system/resources/previews/000/012/324/original/Venice_10.mp4",
+    rtw: "https://static.videezy.com/system/resources/previews/000/007/291/original/Dunes.mp4",
+    wohnzimmer: "https://static.videezy.com/system/resources/previews/000/055/884/original/201118-CountdownChristmas.mp4",
+    kugelraum: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+    finale: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    activities: {
+        sporthalle_train: "https://static.videezy.com/system/resources/previews/000/031/414/original/4k-numbers-digits-countdown-close-up-background.mp4",
+        rtw_vitalzeichen: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        rtw_notfallausrüstung: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        wohnzimmer_erstversorgung: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+        wohnzimmer_ausrüstung: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        kugelraum_umsehen: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+        kugelraum_train: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    },
+};
+
+type Overlay = {
+    title: string;
+    options: {
+        label: string;
+        video: string;
+        img: string;
+    }[];
+};
+
+const overlays: Record<string, Overlay> = {
+    karte: {
+        title: "Wohin möchtest du als nächstes?",
+        options: [
+            { label: "Sporthalle", video: videoPaths.sporthalle, img: "/assets/video/sporthalle.jpg" },
+            { label: "RTW-Simulationsraum", video: videoPaths.rtw, img: "/assets/video/rtw.jpg" },
+            { label: "Wohnzimmer-Simulationsraum", video: videoPaths.wohnzimmer, img: "/assets/video/wohnzimmer.jpg" },
+            { label: "360°-Simulationsraum", video: videoPaths.kugelraum, img: "/assets/video/kugelraum.jpg" },
+        ],
+    },
+    sporthalle_overlay: {
+        title: "Was möchtest du tun?",
+        options: [
+            { label: "Trainiere mit!", video: videoPaths.activities.sporthalle_train, img: "/assets/video/sporthalle_train.jpg" },
+            { label: "Weiter zur Karte", video: "karte", img: "/assets/video/back_to_map.jpg" },
+        ],
+    },
+    rtw_overlay: {
+        title: "Was möchtest du tun?",
+        options: [
+            { label: "Vitalzeichen messen", video: videoPaths.activities.rtw_vitalzeichen, img: "/assets/video/rtw_vitalzeichen.jpg" },
+            { label: "Notfallausrüstung zeigen", video: videoPaths.activities.rtw_notfallausrüstung, img: "/assets/video/rtw_ausrüstung.jpg" },
+            { label: "Weiter zur Karte", video: "karte", img: "/assets/video/back_to_map.jpg" },
+        ],
+    },
+    wohnzimmer_overlay: {
+        title: "Was möchtest du tun?",
+        options: [
+            { label: "Erstversorgung zeigen", video: videoPaths.activities.wohnzimmer_erstversorgung, img: "/assets/video/wohnzimmer_erstversorgung.jpg" },
+            { label: "Ausrüstung erklären", video: videoPaths.activities.wohnzimmer_ausrüstung, img: "/assets/video/wohnzimmer_ausrüstung.jpg" },
+            { label: "Weiter zur Karte", video: "karte", img: "/assets/video/back_to_map.jpg" },
+        ],
+    },
+    kugelraum_overlay: {
+        title: "Was möchtest du tun?",
+        options: [
+            { label: "Schau dich um", video: videoPaths.activities.kugelraum_umsehen, img: "/assets/video/kugelraum_umsehen.jpg" },
+            { label: "Wie trainiert ihr hier?", video: videoPaths.activities.kugelraum_train, img: "/assets/video/kugelraum_train.jpg" },
+            { label: "Weiter zur Karte", video: "karte", img: "/assets/video/back_to_map.jpg" },
+        ],
+    },
+};
+
 const Video: React.FC = () => {
-    const [buttonText, setButtonText] = useState(["RTW", "Sporthalle", "360° Raum", "Wohnzimmer"]);
+    const [playing, setPlaying] = useState(false);
+    const [currentVideo, setCurrentVideo] = useState(videoPaths.intro);
+    const [showOverlay, setShowOverlay] = useState<keyof typeof overlays | null>(null);
     const [showButtons, setShowButtons] = useState(false);
-    const [playing, setPlaying] = useState(false); // Start with video not playing
-    const [videoUrl, setVideoUrl] = useState("https://static.videezy.com/system/resources/previews/000/052/918/original/21.mp4"); // Default video URL
     const videoRef = useRef<ReactPlayer>(null);
     const videoContainerRef = useRef<HTMLDivElement>(null);
-    const [cycle, setCycle] = useState(0); // To track the cycle
 
     useEffect(() => {
         let buttonTimer: NodeJS.Timeout;
@@ -24,29 +93,36 @@ const Video: React.FC = () => {
         return () => {
             clearTimeout(buttonTimer);
         };
-    }, [playing, videoUrl]);
+    }, [playing]);
 
-    const handleClick = (index: number) => {
-        const videoCycles = [
-            [
-                "https://static.videezy.com/system/resources/previews/000/031/414/original/4k-numbers-digits-countdown-close-up-background.mp4",
-                "https://static.videezy.com/system/resources/previews/000/012/324/original/Venice_10.mp4",
-                "https://static.videezy.com/system/resources/previews/000/007/291/original/Dunes.mp4",
-                "https://static.videezy.com/system/resources/previews/000/055/884/original/201118-CountdownChristmas.mp4",
-            ],
-        ];
-
-        // Reset cycle after last video
-        if (cycle === videoCycles[0].length - 1) {
-            setCycle(0);
-            setVideoUrl("https://static.videezy.com/system/resources/previews/000/052/918/original/21.mp4"); // Go back to first video
-        } else {
-            setCycle(index);
-            setVideoUrl(videoCycles[0][index]);
+    const handleVideoEnd = () => {
+        if (currentVideo === videoPaths.intro) {
+            setShowOverlay("karte");
+        } else if (currentVideo === videoPaths.sporthalle || currentVideo === videoPaths.activities.sporthalle_train) {
+            setShowOverlay("sporthalle_overlay");
+        } else if (currentVideo === videoPaths.rtw || currentVideo === videoPaths.activities.rtw_vitalzeichen || currentVideo === videoPaths.activities.rtw_notfallausrüstung) {
+            setShowOverlay("rtw_overlay");
+        } else if (currentVideo === videoPaths.wohnzimmer || currentVideo === videoPaths.activities.wohnzimmer_erstversorgung || currentVideo === videoPaths.activities.wohnzimmer_ausrüstung) {
+            setShowOverlay("wohnzimmer_overlay");
+        } else if (currentVideo === videoPaths.kugelraum || currentVideo === videoPaths.activities.kugelraum_umsehen || currentVideo === videoPaths.activities.kugelraum_train) {
+            setShowOverlay("kugelraum_overlay");
         }
 
-        setShowButtons(false); // Hide buttons
-        setPlaying(true); // Restart the video
+        setPlaying(false);
+        setShowButtons(false);
+    };
+
+
+
+
+    const handleOverlayClick = (video: string) => {
+        if (video === "karte") {
+            setShowOverlay("karte");
+        } else {
+            setCurrentVideo(video);
+            setShowOverlay(null);
+            setPlaying(true);
+        }
     };
 
     const handleStart = () => {
@@ -97,6 +173,9 @@ const Video: React.FC = () => {
         };
     }, []);
 
+
+
+
     return (
         <div
             ref={videoContainerRef}
@@ -104,34 +183,23 @@ const Video: React.FC = () => {
         >
             <ReactPlayer
                 ref={videoRef}
-                url={videoUrl}
+                url={currentVideo}
                 playing={playing}
                 controls={true}
                 width="100%"
                 height="100%"
                 onStart={handleStart}
+                onEnded={handleVideoEnd}
             />
-            {/* Exit Fullscreen Button */}
             {document.fullscreenElement && (
                 <button
                     onClick={handleExitFullscreen}
-                    style={{
-                        position: "absolute",
-                        top: "10px",
-                        left: "10px",
-                        zIndex: 1000,
-                        padding: "5px 10px",
-                        backgroundColor: "rgba(255, 255, 255, 0.8)",
-                        border: "1px solid #ccc",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                    }}
+                    style={{ position: "absolute", top: "10px", left: "10px", zIndex: 1000, padding: "5px 10px", backgroundColor: "rgba(255, 255, 255, 0.8)", border: "1px solid #ccc", borderRadius: "5px", cursor: "pointer" }}
                 >
                     X
                 </button>
             )}
-            {/* Overlay elements */}
-            {showButtons && playing && (
+            {showOverlay && (
                 <div
                     style={{
                         position: "absolute",
@@ -139,6 +207,7 @@ const Video: React.FC = () => {
                         left: 0,
                         width: "100%",
                         height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.8)",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
@@ -154,29 +223,27 @@ const Video: React.FC = () => {
                             backgroundColor: "rgba(0, 0, 0, 0.6)",
                             padding: "10px 20px",
                             borderRadius: "10px",
-                            pointerEvents: "none",
                         }}
                     >
-                        Wohin möchtest du als nächstes?
+                        {overlays[showOverlay].title}
                     </h2>
                     <div style={{ display: "flex", justifyContent: "space-around", width: "80%" }}>
-                        {[0, 1].map((index) => (
+                        {overlays[showOverlay].options.map((option, index: number) => (
                             <div key={index} style={{ textAlign: "center", pointerEvents: "auto" }}>
                                 <img
-                                    src={`/assets/video/Button+2.jpg`}
-                                    // src={`https://via.placeholder.com/100x100?text=Image+${index + 1}`}
-                                    alt={`Button ${index + 1}`}
+                                    src={option.img}
+                                    alt={option.label}
                                     style={{
                                         cursor: "pointer",
                                         marginBottom: "1rem",
                                         padding: "1rem",
                                         borderTopLeftRadius: "25%",
-                                        borderTopRightRadius: "25%"
+                                        borderTopRightRadius: "25%",
                                     }}
-                                    onClick={() => handleClick(index)}
+                                    onClick={() => handleOverlayClick(option.video)}
                                 />
                                 <button
-                                    onClick={() => handleClick(index)}
+                                    onClick={() => handleOverlayClick(option.video)}
                                     style={{
                                         padding: "10px 20px",
                                         fontSize: "14px",
@@ -186,39 +253,7 @@ const Video: React.FC = () => {
                                         cursor: "pointer",
                                     }}
                                 >
-                                    {buttonText[index]}
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-around", width: "80%" }}>
-                        {[2, 3].map((index) => (
-                            <div key={index} style={{ textAlign: "center", pointerEvents: "auto" }}>
-                                <img
-                                    src={`/assets/video/Button+2.jpg`}
-                                    alt={`Button ${index + 1}`}
-                                    style={{
-                                        cursor: "pointer",
-                                        marginBottom: "1rem",
-                                        padding: "1rem",
-                                        borderTopLeftRadius: "25%",
-                                        borderTopRightRadius: "25%"
-                                    }}
-                                    onClick={() => handleClick(index)}
-                                />
-                                <button
-                                    onClick={() => handleClick(index)}
-                                    style={{
-                                        padding: "10px 20px",
-                                        fontSize: "14px",
-                                        backgroundColor: "rgba(255, 255, 255, 0.8)",
-                                        border: "1px solid #ccc",
-                                        borderRadius: "5px",
-                                        cursor: "pointer",
-                                    }}
-                                >
-
-                                {buttonText[index]}
+                                    {option.label}
                                 </button>
                             </div>
                         ))}
