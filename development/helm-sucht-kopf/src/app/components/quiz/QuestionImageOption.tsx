@@ -33,9 +33,6 @@ const QuestionImageOptions: React.FC<QuestionImageOptionsProps> = ({images, onSe
 
     return (
         <div>
-            <div className={styles.selectionCounter}>
-                Ausgewählt {selectedIndexes.length}/2
-            </div>
             <div className={styles.imageOptionsContainer}>
                 {images.map((image, index) => (
                     <div
