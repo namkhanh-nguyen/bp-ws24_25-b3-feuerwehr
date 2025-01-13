@@ -3,39 +3,20 @@
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/app/components/chatbot/ui/button"
 import { Card } from "@/app/components/chatbot/ui/card"
-import { MessageCircle, X, ChevronRight } from 'lucide-react'
+import { MessageCircle, X, ChevronRight, Send, ArrowLeft } from 'lucide-react'
 import Image from "next/image"
+import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
+import { extractKeywords, rankQuestions, highlightText } from "@/app/components/chatbot/ui/text-processing"
+import { Message, Option, Category } from "@/app/components/chatbot/ui/chat"
 
 
 
-type Message = {
-    id: string
-    text: string
-    sender: 'bot' | 'user'
-    options?: Option[]
-}
-
-type Option = {
-    text: string
-    value: string
-}
-
-const mainCategories = [
-    { text: 'Bewerbung', value: 'bewerbung' },
-    { text: 'Formale, körperliche und gesundheitliche Voraussetzungen', value: 'voraussetzungen' },
-    { text: 'Auswahlverfahren', value: 'auswahlverfahren' },
-    { text: 'Ausbildung', value: 'ausbildung' },
-]
-
-const ausbildungCategories = [
-    { text: '112 Direkt', value: 'direkt' },
-    { text: '112 Direkt Plus', value: 'direkt-plus' },
-    { text: '112 Medic', value: 'medic' },
-    { text: '112 Dual', value: 'dual' },
-    { text: '112 Classic', value: 'classic' },
-    { text: '112 Medic Expert', value: 'medic-expert' },
-    { text: '112 Bachelor', value: 'bachelor' },
-    { text: '112 Master', value: 'master' },
+const categories: Category[] = [
+    { name: 'Bewerbung', value: 'bewerbung', keywords: ['bewerbung', 'bewerben', 'stelle', 'ausschreibung'] },
+    { name: 'Formale, körperliche und gesundheitliche Voraussetzungen', value: 'voraussetzungen', keywords: ['voraussetzung', 'anforderung', 'bedingung', 'körperlich', 'gesundheitlich'] },
+    { name: 'Auswahlverfahren', value: 'auswahlverfahren', keywords: ['auswahl', 'verfahren', 'test', 'prüfung'] },
+    { name: 'Ausbildung', value: 'ausbildung', keywords: ['ausbildung', 'lernen', 'studium', 'kurs'] },
 ]
 
 const questionsByCategory: Record<string, Option[]> = {
@@ -92,156 +73,281 @@ const answers: Record<string, string> = {
 export default function ChatBot() {
     const [isOpen, setIsOpen] = useState(false)
     const [messages, setMessages] = useState<Message[]>([])
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const [userInput, setUserInput] = useState('')
+    const [isTyping, setIsTyping] = useState(false)
+    const [composingEmail, setComposingEmail] = useState(false)
     const messageIdCounter = useRef(0)
     const chatContainerRef = useRef<HTMLDivElement>(null)
-
-    const addMessage = (text: string, sender: 'bot' | 'user', options?: Option[]) => {
-        const newId = messageIdCounter.current++
-        setMessages(prev => [...prev, { id: newId.toString(), text, sender, options }])
-    }
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const handleToggle = () => {
         setIsOpen(prev => !prev);
-        if (!isOpen && messages.length === 0) {
-            addMessage('Hallo, ich würde mich freuen, wenn ich Dir helfen kann. In welchem Bereich brauchst Du Unterstützung?', 'bot', mainCategories);
+        if (!isOpen) {
+            if (messages.length === 0) {
+                addMessage('Hallo! Wie kann ich Ihnen helfen? Bitte beschreiben Sie Ihr Anliegen oder stellen Sie eine Frage.', 'bot');
+            }
         }
     };
 
-    const handleOptionClick = (option: Option) => {
-        addMessage(option.text, 'user')
+    const handleUserInput = () => {
+        if (userInput.trim() === '') return;
 
-        if (mainCategories.find(cat => cat.value === option.value)) {
-            setSelectedCategory(option.value)
-            if (option.value === 'ausbildung') {
-                addMessage('Zu welcher Ausbildungskategorie haben Sie Fragen?', 'bot', ausbildungCategories)
-            } else {
-                addMessage(`Hier sind häufig gestellte Fragen zur Kategorie "${option.text}":`, 'bot', questionsByCategory[option.value])
-            }
-        } else if (ausbildungCategories.find(cat => cat.value === option.value)) {
-            addMessage('Hier sind häufig gestellte Fragen zu dieser Ausbildungskategorie:', 'bot', questionsByCategory['ausbildung'])
-        } else if (answers[option.value]) {
-            addMessage(answers[option.value], 'bot')
-            addMessage('War diese Information hilfreich?', 'bot', [
-                { text: 'Ja', value: 'feedback_yes' },
-                { text: 'Nein', value: 'feedback_no' },
-            ])
-        } else if (option.value === 'feedback_yes') {
-            addMessage('Das freut mich! Wie kann ich Ihnen weiter helfen?', 'bot', [
-                { text: 'Ich habe weitere Fragen', value: 'more_questions' },
-                { text: 'Zurück zur Hauptauswahl', value: 'main_menu' },
-            ])
-        } else if (option.value === 'feedback_no') {
-            addMessage('Es tut mir leid, dass die Information nicht hilfreich war. Bitte kontaktieren Sie uns für weitere Unterstützung:', 'bot', [
-                { text: 'E-Mail: info@berliner-feuerwehr.de', value: 'contact_email' },
-                { text: 'Telefon: +49 30 12345678', value: 'contact_phone' },
-                { text: 'Zurück zur Hauptauswahl', value: 'main_menu' },
-            ])
-        } else if (option.value === 'more_questions') {
-            addMessage('Gerne! Zu welchem Thema haben Sie weitere Fragen?', 'bot', mainCategories)
-        } else if (option.value === 'main_menu') {
-            addMessage('Alles klar, lassen Sie uns zum Hauptmenü zurückkehren. Welches Thema interessiert Sie?', 'bot', mainCategories)
-        } else if (option.value === 'end_chat') {
-            addMessage('Vielen Dank für Ihr Interesse an der Berliner Feuerwehr. Wenn Sie weitere Fragen haben, zögern Sie nicht, mich erneut zu kontaktieren. Auf Wiedersehen!', 'bot')
-        } else if (option.value === 'contact_email' || option.value === 'contact_phone') {
-            addMessage('Vielen Dank. Wir hoffen, dass Sie die benötigte Unterstützung erhalten. Kann ich Ihnen bei etwas anderem helfen?', 'bot', [
-                { text: 'Ja, zurück zur Hauptauswahl', value: 'main_menu' },
-                { text: 'Nein, Chat beenden', value: 'end_chat' },
-            ])
+        addMessage(userInput, 'user');
+
+        const allQuestions = Object.values(questionsByCategory).flat();
+        const rankedQuestions = rankQuestions(userInput, allQuestions);
+
+        if (rankedQuestions.length > 0) {
+            addMessage('Ich habe folgende relevante Fragen gefunden:', 'bot', rankedQuestions.map(q => ({
+                text: highlightText(q.text, q.highlights),
+                value: q.value
+            })));
+        } else {
+            addMessage(
+                'Ich konnte keine passenden Fragen finden. Bitte versuchen Sie:' +
+                '\n• Andere Schlüsselwörter zu verwenden' +
+                '\n• Ihre Frage umzuformulieren' +
+                '\n• Eine der Kategorien auszuwählen:',
+                'bot',
+                categories.map(cat => ({
+                    text: cat.name,
+                    value: `category_${cat.value}`
+                }))
+            );
         }
+
+        setUserInput('');
+    }
+
+    const handleOptionClick = (option: Option) => {
+        if (option.value.startsWith('category_')) {
+            const categoryValue = option.value.replace('category_', '');
+            const category = categories.find(c => c.value === categoryValue);
+            if (category) {
+                addMessage(`Sie haben die Kategorie "${category.name}" ausgewählt:`, 'bot');
+                addMessage('Hier sind die verfügbaren Fragen:', 'bot',
+                    questionsByCategory[categoryValue].map(q => ({
+                        text: q.text,
+                        value: q.value
+                    }))
+                );
+            }
+        } else {
+            addMessage(option.text.replace(/<[^>]*>/g, ''), 'user');
+            if (answers[option.value]) {
+                addMessage(answers[option.value], 'bot');
+                addMessage('War diese Information hilfreich?', 'bot', [
+                    { text: 'Ja', value: 'feedback_yes' },
+                    { text: 'Nein', value: 'feedback_no' },
+                ]);
+            } else if (option.value === 'feedback_yes') {
+                addMessage('Das freut mich! Wie kann ich Ihnen weiter helfen?', 'bot')
+            } else if (option.value === 'feedback_no') {
+                addMessage('Es tut mir leid, dass die Information nicht hilfreich war. Bitte kontaktieren Sie uns für weitere Unterstützung:', 'bot', [
+                    { text: 'E-Mail: info@berliner-feuerwehr.de', value: 'contact_email' },
+                    { text: 'Telefon: +49 30 12345678', value: 'contact_phone' },
+                ])
+            } else if (option.value === 'contact_email') {
+                setComposingEmail(true)
+                addMessage('Bitte schreiben Sie Ihre Frage oder Ihr Anliegen. Ich werde es an info@berliner-feuerwehr.de weiterleiten.', 'bot')
+            } else if (option.value === 'contact_phone') {
+                addMessage('Vielen Dank. Sie können uns unter +49 30 12345678 erreichen. Kann ich Ihnen bei etwas anderem helfen?', 'bot')
+            }
+        }
+    }
+
+    const handleEmailSubmit = () => {
+        if (userInput.trim() === '') return;
+
+        addMessage(userInput, 'user')
+        addMessage('Vielen Dank für Ihre Nachricht. Sie wird an info@berliner-feuerwehr.de weitergeleitet. Kann ich Ihnen bei etwas anderem helfen?', 'bot')
+        setComposingEmail(false)
+        setUserInput('')
+    }
+
+    const simulateTyping = async () => {
+        setIsTyping(true)
+        await new Promise(resolve => setTimeout(resolve, 500))
+        setIsTyping(false)
+    }
+
+    const addMessage = async (text: string, sender: 'bot' | 'user', options?: Option[]) => {
+        if (sender === 'bot') {
+            await simulateTyping()
+        }
+        const newId = messageIdCounter.current++
+        const displayText = sender === 'user' ? text : text
+        setMessages(prev => [...prev, { id: newId.toString(), text: displayText, sender, options }])
     }
 
     useEffect(() => {
         if (chatContainerRef.current) {
-            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+            const scrollContainer = chatContainerRef.current;
+            const lastMessage = scrollContainer.lastElementChild;
+            if (lastMessage && messages.length > 0) {
+                const lastMessageData = messages[messages.length - 1];
+                if (lastMessageData && (lastMessageData.sender === 'user' || (lastMessageData.sender === 'bot' && !lastMessageData.options))) {
+                    lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }
+            }
         }
-    }, [messages])
+        if (isOpen && inputRef.current) {
+            inputRef.current.focus()
+        }
+    }, [messages, isOpen])
 
     return (
         <>
             {isOpen && (
-                <div className="fixed bottom-24 right-4 w-full max-w-[320px] sm:max-w-[350px]">
-                    <Card className="border-2">
-                        <div className="p-3 border-b bg-red-600 text-white flex items-center justify-between rounded-t-lg">
-                            <div className="flex items-center gap-2">
+                <div className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-4 w-full sm:w-[400px] h-full sm:h-auto z-50">
+                    <Card className="flex flex-col h-full sm:h-[600px] rounded-none sm:rounded-xl border-0 sm:border shadow-2xl bg-zinc-50">
+                        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-none sm:rounded-t-xl border-b border-red-700">
+                            <div className="flex items-center gap-3">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => setIsOpen(false)}
+                                    className="md:hidden text-white hover:text-white hover:bg-white/20"
+                                >
+                                    <ArrowLeft className="h-5 w-5" />
+                                </Button>
                                 <img
-                                    src="https://res.cloudinary.com/dymrmcgey/image/upload/v1734362318/gztefgfor0srbezzhafq.png"
+                                    src="https://res-console.cloudinary.com/dymrmcgey/media_explorer_thumbnails/23bebe8766dc010d0c44dc3d77b42abf/detailed"
                                     alt="Chatbot Avatar"
-                                    className="w-8 h-8 rounded-full"
+                                    className="w-10 h-10 rounded-full border-2 border-white/20"
                                 />
-                                <span className="font-semibold text-sm">Feuerwehr Support</span>
+                                <div>
+                                    <h2 className="font-semibold">Feuerwehr Support</h2>
+                                    <p className="text-xs text-white/80">Immer für Sie da</p>
+                                </div>
                             </div>
                             <Button
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => setIsOpen(false)}
-                                className="text-white hover:text-white hover:bg-red-700"
+                                className="hidden md:flex text-white hover:text-white hover:bg-white/20"
                             >
-                                <X className="h-4 w-4" />
+                                <X className="h-5 w-5" />
                             </Button>
                         </div>
-                        <div ref={chatContainerRef} className="h-[350px] overflow-y-auto p-3 space-y-3">
+                        <div
+                            ref={chatContainerRef}
+                            className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth scrollbar-custom"
+                        >
                             {messages.map((message) => (
                                 <div
                                     key={message.id}
-                                    className={`flex items-start ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                                >
-                                    {message.sender === 'bot' && (
-                                        <img
-                                            src="https://res.cloudinary.com/dymrmcgey/image/upload/v1734362318/gztefgfor0srbezzhafq.png"
-                                            alt="Bot Avatar"
-                                            className="w-6 h-6 rounded-full mr-2"
-                                        />
+                                    className={cn(
+                                        "flex gap-3 transition-all",
+                                        message.sender === 'user' ? "flex-row-reverse" : ""
                                     )}
-                                    <div
-                                        className={`max-w-[85%] rounded-lg overflow-hidden text-sm ${
+                                >
+                                    <img
+                                        src={message.sender === 'bot'
+                                            ? "https://res-console.cloudinary.com/dymrmcgey/media_explorer_thumbnails/23bebe8766dc010d0c44dc3d77b42abf/detailed"
+                                            : "https://res-console.cloudinary.com/dymrmcgey/media_explorer_thumbnails/864fd58883f9613abda8ec2d3bf1c43f/detailed"
+                                        }
+                                        alt={`${message.sender === 'bot' ? 'Bot' : 'User'} Avatar`}
+                                        className="w-8 h-8 rounded-full mt-1 border-2 border-white"
+                                    />
+                                    <div className={cn(
+                                        "flex flex-col gap-2 max-w-[80%]",
+                                        message.sender === 'user' ? "items-end" : "items-start"
+                                    )}>
+                                        <div className={cn(
+                                            "rounded-2xl px-4 py-2 text-sm",
                                             message.sender === 'user'
-                                                ? 'bg-red-600 text-white p-3'
-                                                : 'bg-gray-100 text-gray-900 p-5'
-                                        }`}
-                                    >
-                                        <p className="break-words" dangerouslySetInnerHTML={{ __html: message.text }}></p>
-                                        {message.options && (
-                                            <div className="mt-6 space-y-3">
+                                                ? "bg-gradient-to-r from-red-600 to-red-700 text-white"
+                                                : "bg-white shadow-sm border"
+                                        )}>
+                                            <p
+                                                className="break-words whitespace-pre-line"
+                                                dangerouslySetInnerHTML={{ __html: message.text }}
+                                            ></p>
+                                        </div>
+                                        {message.options && message.options.length > 0 && (
+                                            <div className="w-full space-y-2 max-w-full animate-in slide-in-from-bottom-3">
                                                 {message.options.map((option) => (
                                                     <Button
                                                         key={option.value}
                                                         variant="outline"
-                                                        size="sm"
-                                                        className="w-full justify-between text-left h-auto whitespace-normal text-xs py-3 px-4"
+                                                        className="w-full justify-between text-left h-auto text-sm py-3 px-4 bg-white hover:bg-zinc-50"
                                                         onClick={() => handleOptionClick(option)}
                                                     >
-                                                        <span className="mr-2">{option.text}</span>
-                                                        <ChevronRight className="h-3 w-3 flex-shrink-0" />
+                            <span
+                                className="mr-2 whitespace-normal"
+                                dangerouslySetInnerHTML={{ __html: option.text }}
+                            ></span>
+                                                        <ChevronRight className="h-4 w-4 flex-shrink-0 opacity-50 ml-2" />
                                                     </Button>
                                                 ))}
                                             </div>
                                         )}
                                     </div>
-                                    {message.sender === 'user' && (
-                                        <img
-                                            src="https://res.cloudinary.com/dymrmcgey/image/upload/v1734358460/wemywqjjpgbop2ejoxfa.gif"
-                                            alt="User Avatar"
-                                            className="w-6 h-6 rounded-full ml-2"
-                                        />
-                                    )}
                                 </div>
                             ))}
+                            {isTyping && (
+                                <div className="flex gap-2">
+                                    <img
+                                        src="https://res-console.cloudinary.com/dymrmcgey/media_explorer_thumbnails/23bebe8766dc010d0c44dc3d77b42abf/detailed"
+                                        alt="Bot Avatar"
+                                        className="w-6 h-6 rounded-full mt-1 border-2 border-white"
+                                    />
+                                    <div className="bg-white rounded-2xl px-3 py-1 text-xs shadow-sm border">
+                                        <div className="flex gap-1">
+                                            <span className="animate-bounce">●</span>
+                                            <span className="animate-bounce [animation-delay:0.2s]">●</span>
+                                            <span className="animate-bounce [animation-delay:0.4s]">●</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div className="p-4 bg-gray-100 border-t rounded-t-[2rem]">
+                            <form
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    if (composingEmail) {
+                                        handleEmailSubmit();
+                                    } else {
+                                        handleUserInput();
+                                    }
+                                }}
+                                className="flex items-center gap-2"
+                            >
+                                <div className="relative flex-1">
+                                    <input
+                                        ref={inputRef}
+                                        type="text"
+                                        placeholder="Schreiben Sie Ihre Frage..."
+                                        value={userInput}
+                                        onChange={(e) => setUserInput(e.target.value)}
+                                        className="w-full px-4 py-3 rounded-full bg-zinc-100 border-0 focus:ring-0 placeholder:text-zinc-400 text-sm"
+                                    />
+                                </div>
+                                <Button
+                                    type="submit"
+                                    size="icon"
+                                    className="rounded-full w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 flex-shrink-0"
+                                >
+                                    <Send className="h-4 w-4" />
+                                </Button>
+                            </form>
                         </div>
                     </Card>
                 </div>
             )}
-
-            <div className="fixed bottom-4 right-4">
-                <Button
-                    size="icon"
-                    className="w-12 h-12 rounded-full bg-red-600 hover:bg-red-700 shadow-lg"
-                    onClick={handleToggle}
-                >
-                    <MessageCircle className="h-6 w-6" />
-                </Button>
-            </div>
+            <Button
+                size="icon"
+                onClick={handleToggle}
+                className={cn(
+                    "fixed bottom-4 right-4 w-14 h-14 rounded-full shadow-lg transition-all duration-200",
+                    "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800",
+                    "z-50 animate-in slide-in-from-bottom-3"
+                )}
+            >
+                <MessageCircle className="h-6 w-6" />
+            </Button>
         </>
     )
 }
-
