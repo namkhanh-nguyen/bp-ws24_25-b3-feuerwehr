@@ -5,7 +5,7 @@ import { Button } from "@/app/components/chatbot/ui/button"
 import { Card } from "@/app/components/chatbot/ui/card"
 import { MessageCircle, X, ChevronRight, Send, ArrowLeft } from 'lucide-react'
 import Image from "next/image"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/app/components/chatbot/ui/input"
 import { cn } from "@/lib/utils"
 import { extractKeywords, rankQuestions, highlightText } from "@/app/components/chatbot/ui/text-processing"
 import { Message, Option, Category } from "@/app/components/chatbot/ui/chat"
