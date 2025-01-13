@@ -7,14 +7,25 @@ import JobCard from "@/app/components/jobs/JobCard";
 import Loading from "@/app/components/Loading";
 
 const filters = [
-    // Filter by qualification type
-    {key: 'msa', label: 'MSA'},
-    {key: 'bbr', label: 'BBR'},
-    {key: 'bachelor', label: 'Bachelor'},
-    {key: 'master', label: 'Master'},
-    {key: 'hsa2j', label: 'Hauptschulabschluss und 2 Jahre Berufsausbildung'},
-    {key: 'aghr', label: 'Allgemeine Hochschulreife'},
-    {key: 'arb', label: 'Abgeschlossener Rettungsdienstberuf'}
+    { key: 'msa', label: 'MSA' },
+    { key: 'bbr', label: 'BBR' },
+    { key: 'bachelor', label: 'Bachelor' },
+    { key: 'master', label: 'Master' },
+    { key: 'hsa2j', label: 'Hauptschulabschluss und 2 Jahre Berufsausbildung' },
+    { key: 'aghr', label: 'Allgemeine Hochschulreife' },
+    { key: 'arb', label: 'Abgeschlossener Rettungsdienstberuf' },
+];
+
+const ausbildungFilters = [
+    { key: 'ausbildung', label: 'Ausbildung' },
+    { key: 'studium', label: 'Studium' },
+    { key: 'master', label: 'Master' },
+];
+
+const dienstFilters = [
+    { key: 'hoher', label: 'Hoher' },
+    { key: 'gehobener', label: 'Gehobener' },
+    { key: 'mittlerer', label: 'Mittlerer' },
 ];
 
 export default function JobsPage() {
@@ -24,10 +35,12 @@ export default function JobsPage() {
             id: string,
             name: string,
             slug: string,
-            shortDesc: string
-        }
+            shortDesc: string,
+        };
     }>({});
-    const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+    const [selectedSchool, setSelectedSchool] = useState<string>('');
+    const [selectedAusbildung, setSelectedAusbildung] = useState<string>('');
+    const [selectedDienst, setSelectedDienst] = useState<string>('');
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     useRouter();
@@ -45,12 +58,20 @@ export default function JobsPage() {
     }
 
     const handleReset = () => {
-        setSelectedFilters([]);
+        setSelectedSchool('');
+        setSelectedAusbildung('');
+        setSelectedDienst('');
     };
 
-    const filteredJobs = Object.values(jobs).filter((job) =>
-        selectedFilters.every(filter => job.tags.includes(filter))
-    );
+    const filteredJobs = Object.values(jobs).filter((job) => {
+        const { tags } = job;
+
+        return (
+            (!selectedSchool || tags.includes(selectedSchool)) &&
+            (!selectedAusbildung || tags.includes(selectedAusbildung)) &&
+            (!selectedDienst || tags.includes(selectedDienst))
+        );
+    });
 
     return (
         <div className={styles.pageMasterDiv}>
@@ -83,12 +104,44 @@ export default function JobsPage() {
                     </h2>
                     <div className="block p-2">
                         <select
-                            value={selectedFilters[0] || ""}
-                            onChange={(e) => setSelectedFilters([e.target.value])}
+                            value={selectedSchool}
+                            onChange={(e) => setSelectedSchool(e.target.value)}
                             className={styles.filterDropdown}
                         >
-                            <option value="" disabled>Schulabschluss</option>
+                            <option value="" disabled>
+                                Schulabschluss
+                            </option>
                             {filters.map(({key, label}) => (
+                                <option key={key} value={key} className="p-2">
+                                    {label}
+                                </option>
+                            ))}
+                        </select>
+
+                        <select
+                            value={selectedAusbildung}
+                            onChange={(e) => setSelectedAusbildung(e.target.value)}
+                            className={styles.filterDropdown}
+                        >
+                            <option value="" disabled>
+                                Ausbildung
+                            </option>
+                            {ausbildungFilters.map(({key, label}) => (
+                                <option key={key} value={key} className="p-2">
+                                    {label}
+                                </option>
+                            ))}
+                        </select>
+
+                        <select
+                            value={selectedDienst}
+                            onChange={(e) => setSelectedDienst(e.target.value)}
+                            className={styles.filterDropdown}
+                        >
+                            <option value="" disabled>
+                                Dienst
+                            </option>
+                            {dienstFilters.map(({key, label}) => (
                                 <option key={key} value={key} className="p-2">
                                     {label}
                                 </option>
@@ -141,14 +194,46 @@ export default function JobsPage() {
                     </div>
                     {isFiltersVisible && (
                         <div className={styles.mobileFilterContainer}>
-                            <div className="block p-2" style={{display: 'flex', justifyContent: 'center'}}>
+                            <div className="block p-2">
                                 <select
-                                    value={selectedFilters[0] || ""}
-                                    onChange={(e) => setSelectedFilters([e.target.value])}
-                                    className="p-2 mr-2 block w-4/5 border-black border rounded-2xl"
+                                    value={selectedSchool}
+                                    onChange={(e) => setSelectedSchool(e.target.value)}
+                                    className={styles.filterDropdown}
                                 >
-                                    <option value="" disabled>Schulabschluss</option>
+                                    <option value="" disabled>
+                                        Schulabschluss
+                                    </option>
                                     {filters.map(({key, label}) => (
+                                        <option key={key} value={key} className="p-2">
+                                            {label}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <select
+                                    value={selectedAusbildung}
+                                    onChange={(e) => setSelectedAusbildung(e.target.value)}
+                                    className={styles.filterDropdown}
+                                >
+                                    <option value="" disabled>
+                                        Ausbildung
+                                    </option>
+                                    {ausbildungFilters.map(({key, label}) => (
+                                        <option key={key} value={key} className="p-2">
+                                            {label}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <select
+                                    value={selectedDienst}
+                                    onChange={(e) => setSelectedDienst(e.target.value)}
+                                    className={styles.filterDropdown}
+                                >
+                                    <option value="" disabled>
+                                        Dienst
+                                    </option>
+                                    {dienstFilters.map(({key, label}) => (
                                         <option key={key} value={key} className="p-2">
                                             {label}
                                         </option>
@@ -157,7 +242,7 @@ export default function JobsPage() {
                             </div>
 
                             <button className={styles.resetButton}
-                                onClick={handleReset}
+                                    onClick={handleReset}
                             >
                                 Zurücksetzen
                             </button>
