@@ -212,7 +212,7 @@ export default function ChatBot() {
                                     <ArrowLeft className="h-5 w-5" />
                                 </Button>
                                 <img
-                                    src="https://res-console.cloudinary.com/dymrmcgey/media_explorer_thumbnails/23bebe8766dc010d0c44dc3d77b42abf/detailed"
+                                    src="https://res.cloudinary.com/dymrmcgey/image/upload/v1734362318/gztefgfor0srbezzhafq.png"
                                     alt="Chatbot Avatar"
                                     className="w-10 h-10 rounded-full border-2 border-white/20"
                                 />
@@ -244,8 +244,8 @@ export default function ChatBot() {
                                 >
                                     <img
                                         src={message.sender === 'bot'
-                                            ? "https://res-console.cloudinary.com/dymrmcgey/media_explorer_thumbnails/23bebe8766dc010d0c44dc3d77b42abf/detailed"
-                                            : "https://res-console.cloudinary.com/dymrmcgey/media_explorer_thumbnails/864fd58883f9613abda8ec2d3bf1c43f/detailed"
+                                            ? "https://res.cloudinary.com/dymrmcgey/image/upload/v1734362318/gztefgfor0srbezzhafq.png"
+                                            : "https://res.cloudinary.com/dymrmcgey/image/upload/v1734358460/wemywqjjpgbop2ejoxfa.gif"
                                         }
                                         alt={`${message.sender === 'bot' ? 'Bot' : 'User'} Avatar`}
                                         className="w-8 h-8 rounded-full mt-1 border-2 border-white"
@@ -289,7 +289,7 @@ export default function ChatBot() {
                             {isTyping && (
                                 <div className="flex gap-2">
                                     <img
-                                        src="https://res-console.cloudinary.com/dymrmcgey/media_explorer_thumbnails/23bebe8766dc010d0c44dc3d77b42abf/detailed"
+                                        src="https://res.cloudinary.com/dymrmcgey/image/upload/v1734358460/wemywqjjpgbop2ejoxfa.gif"
                                         alt="Bot Avatar"
                                         className="w-6 h-6 rounded-full mt-1 border-2 border-white"
                                     />
