@@ -58,8 +58,8 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
                         cursor: "pointer",
                     }}
                 >
-            Mehr Infos
-        </span>
+                    Mehr Infos
+                </span>
             </div>
 
             <div className="flex flex-col justify-between flex-grow relative">
@@ -73,7 +73,7 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
 
             <div
                 id={`desc-${id}`}
-                className="transition-all rounded-lg"
+                className="block md:hidden transition-all rounded-lg"
                 style={{
                     width: "85%",
                     marginLeft: "1rem",
@@ -90,8 +90,8 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
                         cursor: "pointer",
                     }}
                 >
-            Mehr Infos
-        </span>
+                    Mehr Infos
+                </span>
             </div>
         </div>
     );
