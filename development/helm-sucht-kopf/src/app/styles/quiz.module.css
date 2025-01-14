@@ -1,41 +1,48 @@
+.fadeIn {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .storyImage {
     width: 50%;
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-}
-.container {
-    text-align: center;
-    display: flex; /* Flexbox aktivieren */
-    flex-direction: column; /* Inhalte vertikal anordnen */
-    justify-content: center; /* Vertikal zentrieren */
-    align-items: center; /* Horizontal zentrieren */
-    min-height: 70vh; /* Vollständige Höhe des Viewports */
+    margin: 0 auto 20px;
 }
 
-.introImage,
-.customSvg{
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.introImage{
     width: 30%;
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    margin: 20px;
+    margin: 1.5em;
 }
-.label{
-    font-size:6px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-    display: block;
-    text-align: left;
+
+.customSvg{
+    width: 50vw;
+    height: auto;
+    margin: 1.5em;
 }
 
 .select {
     width: 100%;
     max-width: 400px;
     padding: 12px;
-    font-size: 16px;
+    font-size: 1rem;
     border: 1px solid #E40422;
     border-radius: 25px;
     background-color: #f9f9f9;
@@ -50,7 +57,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 30vh;
+    height: 40vh;
 }
 
 .inputField {
@@ -62,104 +69,87 @@
     border-radius: 25px;
     text-align: center;
 }
+
 .inputField:focus {
     outline: none;
     border: 2px solid #E40422;
 }
 
 .imageContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    width: 80%;
+    margin: 0 auto;
 }
-
-.imageContainer img {
-    width: 100%;
-    height: 100%;
+.imageGridContainer {
+    height: 70vh;
+    margin-bottom: 100px;
 }
-
-
-/* Image Options Container */
-
 .imageOptionsContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
     justify-items: center;
+    gap: 10px;
     width: 100%;
+    height: 58vh;
+    margin-bottom: 90px;
 }
 
 .imageOption {
     display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    max-width: 300px;
-    height: 200px;
-    cursor: pointer;
+    max-width: 200px;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .imageOption img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
 }
+
 .selectedImage img {
-    transform: scale(1.05); /* Optionally scale up the image when selected */
+    transform: scale(1.05);
 }
 
 .imageOption:hover {
-    transform: scale(1.03); /* Slight zoom effect on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     border-color: #E40422;
 }
 
-.image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: inherit;
-}
 .fitnessDropdownContainer {
-    margin-bottom: 20px; /* Add margin between dropdowns */
-    text-align: left; /* Align text to the left */
-
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 .fitnessLabel {
-    font-size: 18px;
+    font-size: 1rem;
     font-weight: bold;
     color: #333;
-    margin-bottom: 15px; /* Space between label and dropdown */
+    margin-bottom: 15px;
     display: block;
-    text-align: center;
+    text-align: left;
 }
 
 .fitnessDropdown {
-    width: 100%;
+    width: 90%;
     max-width: 400px;
     padding: 12px;
-    font-size: 16px;
+    font-size: 1rem;
     border: 1px solid #ddd;
-    border-radius: 8px; /* Sharper corners */
+    border-radius: 8px;
     background-color: #fff;
     color: #333;
-    margin: 0 auto 20px; /* Centers dropdown and adds spacing below */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    margin: 0 auto 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.2s, border-color 0.2s;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .fitnessDropdown:focus {
-    border: 2px solid #E40422; /* Purple border on focus */
+    border: 2px solid #E40422;
     outline: none;
 }
 
@@ -175,14 +165,13 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 1.1rem;
     color: #333;
 }
 
-/* Slider Input */
 .slider {
     width: 100%;
-    -webkit-appearance: none; /* Remove default styles */
+    -webkit-appearance: none;
     appearance: none;
     height: 10px;
     background: #ddd ;
@@ -204,16 +193,16 @@
 .slider::-moz-range-thumb {
     width: 20px;
     height: 20px;
-    background: #4caf50;
+    background: #E40422;
+    border: none;
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Slider Value Display */
 .sliderValue {
     margin-top: 10px;
-    font-size: 16px;
+    font-size: 1.2rem;
     font-weight: bold;
     color: #333;
     text-align: center;
@@ -223,18 +212,14 @@
     border-color: #E40422;
 }
 
-.dropdown {
-    margin: 5px;
-}
-
-/*timer*/
 .timerDisplay {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #E40422;
   margin: 20px 0;
   text-align: center;
 }
+
 .timerButton {
     padding: 10px 20px;
     font-size: 1.2rem;
@@ -252,27 +237,21 @@
 .timerButton.stop {
     background-color: #E40422;
 }
+
 .dropdown select {
     width: 100%;
     padding: 12px 20px;
     border: 1px solid #E40422;
     border-radius: 50px;
-    font-size: 16px;
+    font-size: 1rem;
     background-color: #fff;
     color: #333;
     box-sizing: border-box;
 }
 
-/*Id 8 quiz img*/
 .staticImageContainer {
   text-align: center;
   margin-top: 20px;
-}
-
-.staticImageContainer img {
-  width: 300px;
-  height: auto;
-  margin: 20px auto;
 }
 
 .resultContainer h2 {
@@ -302,9 +281,9 @@
     align-items: center;
     min-height: 70vh;
 }
+
 .storyContainer{
     text-align: left;
-
 }
 
 .intermediateContainer div {
@@ -345,15 +324,13 @@
     background-color: #E40422;
 }
 
-/* Progress text showing the current question number */
 .progressText {
-    font-size: 14px;
+    font-size: 1rem;
     text-align: center;
     margin-bottom: 10px;
     font-weight: 500;
 }
 
-/* Progress bar container */
 .progressBarContainer {
     width: 100%;
     height: 10px;
@@ -375,9 +352,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 20px;
+    padding: 1.25em;
     background-color: #fff;
-    min-height: 100vh;
+    min-height: 90vh;
 }
 
 .quizWrapper {
@@ -388,39 +365,39 @@
 
 .questionNumber {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.3rem;
     color: black;
-    margin-top: 10px;
-    margin-bottom: 5px ;
+    margin-top: 0.4rem;
+    margin-bottom: 0.1rem;
 }
 
 .questionTitle {
-    font-size: 19px;
+    font-size: 1.25rem;
     font-weight: 500;
-    margin-bottom: 10px;
-    line-height: 1.3;
+    margin-bottom: 0.4rem;
+    line-height: 1.1;
     color: #333;
 }
 
 .optionsContainer {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.6rem;
 }
 
 .optionPrefix {
     font-weight: bold;
     font-size: 1.4em;
-    margin-right: 9px;
+    margin-right: 0.5rem;
 }
 
 .optionButton {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 25px;
-    padding: 14px;
+    border-radius: 1.5rem;
+    padding: 0.8rem;
     text-align: left;
-    font-size: 17px;
+    font-size: 1.1rem;
     line-height: 1.3;
     color: #333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -555,7 +532,7 @@
 }
 
 .imageOption.selected {
-    border: 2px solid #E40422; /* Red border for selected container */
+    border: 2px solid #E40422;
 }
 
 .imageOption img {
@@ -564,11 +541,10 @@
     object-fit: cover;
 }
 .imageOption:hover {
-    transform: scale(1.03); /* Slight zoom effect on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Result Screen Styles */
 .resultsContainer {
     display: flex;
     flex-direction: column;
@@ -634,12 +610,12 @@
 }
 
 .jobList.mdGrid {
-    grid-template-columns: repeat(2, 1fr); /* Ab mittleren Bildschirmgrößen zwei Spalten */
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .jobCard {
     display: flex;
-    flex-direction: column; /* Vertikale Anordnung */
+    flex-direction: column;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
@@ -647,7 +623,7 @@
 }
 
 .jobCard:hover {
-    transform: scale(1.03); /* Leichter Zoom-Effekt beim Hover */
+    transform: scale(1.03);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
