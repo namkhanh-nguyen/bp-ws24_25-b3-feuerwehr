@@ -1,4 +1,3 @@
-// /src/app/quiz/QuestionOption.tsx
 import { FC } from 'react';
 
 type QuestionOptionProps = {
@@ -7,7 +6,7 @@ type QuestionOptionProps = {
 };
 
 const QuestionOption: FC<QuestionOptionProps> = ({ option, onSelect }) => {
-    const { prefix, text } = option; // Destructure prefix and text from option
+    const { prefix, text } = option;
     return (
         <button className="question-option" onClick={onSelect}>
             <span className="option-prefix">{prefix}</span>

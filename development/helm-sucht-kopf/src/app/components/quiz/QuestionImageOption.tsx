@@ -19,9 +19,9 @@ const QuestionImageOptions: React.FC<QuestionImageOptionsProps> = ({images, onSe
     // Handle the selection or deselection of images
     const handleSelect = (index: number) => {
         setSelectedIndexes((prev) => {
-            if (prev.includes(index)) return prev.filter((i) => i !== index); // Deselect if already selected
-            if (prev.length < 2) return [...prev, index]; // Add selection if less than 2
-            return prev; // Do nothing if 2 selections already made
+            if (prev.includes(index)) return prev.filter((i) => i !== index);
+            if (prev.length < 2) return [...prev, index];
+            return prev;
         });
     };
 
@@ -29,10 +29,10 @@ const QuestionImageOptions: React.FC<QuestionImageOptionsProps> = ({images, onSe
     useEffect(() => {
         const selectedImages = selectedIndexes.map((idx) => images[idx]);
         onSelectionChange(selectedImages);
-    }, [selectedIndexes, images, onSelectionChange]); // Run when `selectedIndexes` or `images` changes
+    }, [selectedIndexes, images, onSelectionChange]);
 
     return (
-        <div>
+        <div className={styles.imageGridContainer}>
             <div className={styles.imageOptionsContainer}>
                 {images.map((image, index) => (
                     <div
@@ -42,10 +42,8 @@ const QuestionImageOptions: React.FC<QuestionImageOptionsProps> = ({images, onSe
                         }`}
                         onClick={() => handleSelect(index)}
                     >
-                        {/* Check if src is valid, if not display a fallback image */}
                         <img
-                            src={image.src || '/path/to/default-image.jpg'} // Fallback image path
-
+                            src={image.src || '/path/to/default-image.jpg'}
                             className={styles.image}
                         />
                     </div>

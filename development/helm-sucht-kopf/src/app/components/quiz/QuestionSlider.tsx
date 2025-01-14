@@ -6,7 +6,7 @@ import styles from '../../styles/quiz.module.css';
 
 const QuestionSlider = ({
                             question,
-                            value = 50, // Default value to 50
+                            value = 50,
                             onChange,
                         }: {
     question: {
@@ -32,18 +32,14 @@ const QuestionSlider = ({
                 <span>{question.minLabel}</span>
                 <span>{question.maxLabel}</span>
             </div>
-
-            {/* Slider */}
             <input
                 type="range"
                 min={question.minValue}
                 max={question.maxValue}
-                value={value} // Set the slider's starting value
+                value={value}
                 onChange={handleSliderChange}
                 className={styles.slider}
             />
-
-            {/* Current Value Display */}
             <p className={styles.sliderValue}>{value} %</p>
         </div>
     );

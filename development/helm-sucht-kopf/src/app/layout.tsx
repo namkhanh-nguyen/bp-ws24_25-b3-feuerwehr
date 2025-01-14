@@ -43,7 +43,6 @@ export default function RootLayout({
       </head>
       <body className={`${berlinTypeWebRegular.variable} ${berlinTypeWebBold.variable} antialiased`}>
 
-      {/*<Header />*/}
       <DynamicHeader />
       <Chatbot />
       <div style={{paddingTop: "90px"}}>
