@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import styles from '../styles/quiz.module.css';
 import { quizData } from '../components/quiz/QuizData';
 import { fetchJobs } from '@/app/api/jobs/fetchJobs';
-import JobCard from "@/app/components/jobs/JobCard";
 import InputQuestion from '../components/quiz/InputQuestion';
 import QuestionImageOptions from '../components/quiz/QuestionImageOption';
 import QuestionSlider from '../components/quiz/QuestionSlider';
@@ -40,16 +39,16 @@ const Quiz = () => {
         } else if (currentScreen === 'intermediate' && education) {
             setCurrentScreen('quiz');
         } else if (currentScreen === 'quiz') {
-            if (currentQuestionIndex === 5) { // After General Questions
+            if (currentQuestionIndex === 5) {
                 setCurrentScreen('illustration01');
-            } else if (currentQuestionIndex === quizData.length - 1) { // End of Main Quiz
+            } else if (currentQuestionIndex === quizData.length - 1) {
                 submitQuiz();
             } else {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             }
         }  else if (currentScreen === 'illustration01') {
             setCurrentScreen('quiz');
-            setCurrentQuestionIndex(6); // Start from question 7
+            setCurrentQuestionIndex(6);
         }
     };
 
@@ -67,7 +66,7 @@ const Quiz = () => {
             }
         } else if (currentScreen === 'illustration01') {
             setCurrentScreen('quiz');
-            setCurrentQuestionIndex(5); // Go back to last general question
+            setCurrentQuestionIndex(5);
         }
     };
 
@@ -127,7 +126,7 @@ const submitQuiz = async () => {
             <div className={styles.quizWrapper}>
                 {/* Intro Screen */}
                 {currentScreen === 'intro' && (
-                    <div className={styles.introContainer}>
+                    <div className={`${styles.introContainer} ${styles.fadeIn}`}>
                         <img src="/Lupe.png" alt="Intro Image" className={styles.introImage}/>
                         <h3>Finde den Job, der zu Dir passt!</h3>
                         <p>
@@ -143,7 +142,7 @@ const submitQuiz = async () => {
 
                 {/* Intermediate Screen */}
                 {currentScreen === 'intermediate' && (
-                    <div className={styles.intermediateContainer}>
+                    <div className={`${styles.intermediateContainer} ${styles.fadeIn}`}>
                         <img src="/Peace.png" alt="Intermediate Image" className={styles.introImage}/>
                         <h3>Bitte wähle Deinen höchsten Abschluss aus der Liste aus.</h3>
                         <div className={`${styles.dropdown} ${education ? styles.selected : ''}`}>
@@ -172,7 +171,6 @@ const submitQuiz = async () => {
                         </button>
                     </div>
                 )}
-
 
                 {/* Quiz Screen */}
                 {currentScreen === 'quiz' && (
@@ -232,7 +230,6 @@ const submitQuiz = async () => {
                                     question={currentQuestion}
                                     value={answers[currentQuestionIndex]?.fullText || ''}
                                     onChange={(value: any) => {
-                                        // Eingabe speichern
                                         setAnswers((prev) => {
                                             const updatedAnswers = [...prev];
                                             updatedAnswers[currentQuestionIndex] = {
@@ -273,7 +270,7 @@ const submitQuiz = async () => {
                                                     currentAnswer.selectedOption === selectedCategories &&
                                                     currentAnswer.fullText === selectedSrc
                                                 ) {
-                                                    return prev; // Return previous state if no changes
+                                                    return prev;
                                                 }
                                                 updatedAnswers[currentQuestionIndex] = {
                                                     questionId: currentQuestion.id,
@@ -320,8 +317,6 @@ const submitQuiz = async () => {
                                             }
                                             onChange={(e) => {
                                                 const selectedValue = e.target.value;
-
-                                                // Check if the selected value is "Weniger als 10" and show an alert
                                                 if (selectedValue === 'Weniger als 10') {
                                                     alert("Die Berliner Feuerwehr benötigt sportliche Personen. Bitte arbeite an deiner Fitness!");
                                                 }
@@ -392,7 +387,7 @@ const submitQuiz = async () => {
 
                 {currentScreen === 'illustration01' && (
                     <div className={styles.storyContainer}>
-                        <img src='/assets/quiz/carCrashL.png'
+                        <img src='/assets/quiz/unfallNeu.svg'
                              className={styles.storyImage}
                         />
                         <h3>Erlebe eine Geschichte, in der Du die Entscheidungen triffst!</h3>
