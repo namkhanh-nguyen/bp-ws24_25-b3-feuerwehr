@@ -45,12 +45,12 @@ export const quizData: Question[] = [
         title: 'Ich interessiere mich für: ',
         type: 'imageOptions',
         images: [
-            {src: '/assets/quiz/sani.jpg', category: 'A'},
-            { src: '/assets/quiz/auto.jpg',  category: 'B' },
-            { src: '/assets/quiz/feuerwehrauto.jpg', category: 'B' },
-            { src: '/assets/quiz/brand.jpg',  category: 'C' },
-            { src: '/assets/quiz/handwerk.jpg',  category: 'C' },
-            { src: '/assets/quiz/schutz.jpg',  category: 'A' },
+            {src: '/assets/quiz/sani.jpeg', category: 'A'},
+            { src: '/assets/quiz/auto.jpeg',  category: 'B' },
+            { src: '/assets/quiz/feuerwehrauto.jpeg', category: 'B' },
+            { src: '/assets/quiz/brand.jpeg',  category: 'C' },
+            { src: '/assets/quiz/handwerk.jpeg',  category: 'C' },
+            { src: '/assets/quiz/schutz.jpeg',  category: 'A' },
         ],
     },
     {
@@ -58,10 +58,10 @@ export const quizData: Question[] = [
         required: false,
         title: 'Wie wohl fühlst Du Dich im Umgang mit Blut und medizinischen Notfällen?',
         type: 'slider',
-        minLabel: 'Sehr unwohl', // Label for the minimum value
-        maxLabel: 'Sehr sicher', // Label for the maximum value
-        minValue: 0, // Minimum value
-        maxValue: 100, // Maximum value
+        minLabel: 'Sehr unwohl',
+        maxLabel: 'Sehr sicher',
+        minValue: 0,
+        maxValue: 100,
     },
 
     {
