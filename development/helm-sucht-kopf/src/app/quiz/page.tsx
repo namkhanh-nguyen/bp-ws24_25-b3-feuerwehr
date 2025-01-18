@@ -20,6 +20,7 @@ const Quiz = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [pushUpsValue, setPushUpsValue] = useState('');
     const [sitUpsValue, setSitUpsValue] = useState('');
+    const [messages, setMessages] = useState<{[key: string]: string}> ({});
     const router = useRouter();
 
     const currentQuestion = quizData[currentQuestionIndex];
@@ -71,9 +72,6 @@ const Quiz = () => {
     };
 
     const selectAnswer = (category: string, text: string) => {
-        if (currentQuestion.id === 1 && category === 'D') {
-            alert("Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-SpSprachniveau erreichen.");
-        }
         setAnswers((prev) => {
         const updatedAnswers = [...prev];
             updatedAnswers[currentQuestionIndex] = {
@@ -85,6 +83,7 @@ const Quiz = () => {
         });
         goNext();
     };
+
 const submitQuiz = async () => {
     setIsSubmitting(true);
     try {
@@ -196,7 +195,9 @@ const submitQuiz = async () => {
                                         className={`${styles.optionButton} ${answers[currentQuestionIndex]?.selectedOption === option.category ? styles.selectedOption : ''}`}
                                         onClick={() => {
                                             if (currentQuestion.id === 1 && option.category === 'D') {
-                                                alert("Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-Sprachniveau erreichen.");
+                                                setMessages({ ...messages, languageLevel: "Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-Sprachniveau erreichen." });
+                                            } else {
+                                                setMessages({...messages, languageLevel: ""});
                                             }
                                             setAnswers((prev) => {
                                                 const updatedAnswers = [...prev];
@@ -214,6 +215,7 @@ const submitQuiz = async () => {
                                         </button>
                                     )
                                 )}
+                                {messages.languageLevel && <div className={styles.message}>{messages.languageLevel}</div>}
                             </div>
                         )}
 
@@ -244,14 +246,17 @@ const submitQuiz = async () => {
                                         const heightValue = parseFloat(answers[currentQuestionIndex]?.fullText || '');
                                         if (!isNaN(heightValue)) {
                                             if (heightValue < currentQuestion.minValue!) {
-                                                alert(`Für die Verbeamtung bei der Berliner Feuerwehr ist eine Mindestgröße von ${currentQuestion.minValue} cm erforderlich. Du kannst jedoch ohne Verbeamtung einsteigen.`);
+                                                setMessages({ ...messages, heightMessage: `Für die Verbeamtung bei der Berliner Feuerwehr ist eine Mindestgröße von ${currentQuestion.minValue} cm erforderlich. Du kannst jedoch ohne Verbeamtung einsteigen.` });
                                             } else if (heightValue > currentQuestion.maxValue!) {
-                                                alert(`Für die Verbeamtung bei der Berliner Feuerwehr darf die Größe ${currentQuestion.maxValue} cm nicht überschreiten. Du kannst jedoch ohne Verbeamtung einsteigen.`);
-                                            }
+                                                setMessages({ ...messages, heightMessage: `Für die Verbeamtung bei der Berliner Feuerwehr darf die Größe ${currentQuestion.maxValue} cm nicht überschreiten. Du kannst jedoch ohne Verbeamtung einsteigen.` });
+                                            } else {
+                                            setMessages({ ...messages, heightMessage: "" });
+                                        }
                                         }
                                     }
                                     }
                                 />
+                                {messages.heightMessage && <div className={styles.message}>{messages.heightMessage}</div>}
                             </div>
                         )}
 
@@ -305,7 +310,7 @@ const submitQuiz = async () => {
                         {currentQuestion.type === 'fitness' && (
                             <div className={styles.fitnessContainer}>
                                 {currentQuestion.questions?.map((subQuestion, index) => (
-                                    <div key={index} className={styles.fitnessQuestion}>
+                                    <div key={index} className={styles.fitnessDropdownContainer}>
                                         <label htmlFor={`fitness-${index}`} className={styles.fitnessLabel}>
                                             {subQuestion.label}
                                         </label>
@@ -318,7 +323,9 @@ const submitQuiz = async () => {
                                             onChange={(e) => {
                                                 const selectedValue = e.target.value;
                                                 if (selectedValue === 'Weniger als 10') {
-                                                    alert("Die Berliner Feuerwehr benötigt sportliche Personen. Bitte arbeite an deiner Fitness!");
+                                                    setMessages({ ...messages, fitnessMessage: "Die Berliner Feuerwehr benötigt sportliche Personen. Bitte arbeite an deiner Fitness!" });
+                                                } else {
+                                                    setMessages({ ...messages, fitnessMessage: "" });
                                                 }
                                                 if (index === 0) {
                                                     setPushUpsValue(e.target.value);
@@ -345,6 +352,7 @@ const submitQuiz = async () => {
                                         </select>
                                     </div>
                                 ))}
+                                {messages.fitnessMessage && <div className={styles.message}>{messages.fitnessMessage}</div>}
                             </div>
                         )}
 
