@@ -369,13 +369,13 @@
     font-size: 1.3rem;
     color: black;
     margin-top: 0.4rem;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.2rem;
 }
 
 .questionTitle {
     font-size: 1.25rem;
     font-weight: 500;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
     line-height: 1.1;
     color: #333;
 }
@@ -683,6 +683,9 @@
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
+    .questionNumber {
+        font-size: 1.2rem;
+    }
     .quizContainer {
         padding: 1rem;
     }
@@ -695,6 +698,9 @@
 }
 
 @media (max-width: 480px) {
+    .questionNumber {
+        font-size: 1.2rem;
+    }
     .questionTitle {
         font-size: 1.1rem;
     }
