@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 
 const Video: React.FC = () => {
-    const [buttonText, setButtonText] = useState(["RTW", "Sporthalle", "360° Raum", "Wohnzimmer"]);
+    const [buttonName, setButtonName] = useState(["rtw", "sporthalle", "360raum", "wohnzimmer"]);
     const [showButtons, setShowButtons] = useState(false);
     const [playing, setPlaying] = useState(false); // Start with video not playing
     const [videoUrl, setVideoUrl] = useState("https://static.videezy.com/system/resources/previews/000/052/918/original/21.mp4");// Default video URL
@@ -150,27 +150,8 @@ const Video: React.FC = () => {
                 onEnded={handleVideoEnd}
             />
             {/* Exit Fullscreen Button */}
-            {document.fullscreenElement && (
-                <button
-                    onClick={handleExitFullscreen}
-                    style={{
-                        position: "absolute",
-                        top: "10px",
-                        left: "10px",
-                        zIndex: 1000,
-                        padding: "5px 10px",
-                        backgroundColor: "rgba(255, 255, 255, 0.8)",
-                        border: "1px solid #ccc",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                    }}
-                >
-                    X
-                </button>
-            )}
             {/* Overlay elements */}
-            {showButtons && playing && cycle < videosWatched.length - 1 &&(
-
+            {showButtons && playing && cycle < videosWatched.length - 1 && (
                 <div
                     style={{
                         position: "absolute",
@@ -178,137 +159,87 @@ const Video: React.FC = () => {
                         left: 0,
                         width: "100%",
                         height: "100%",
-                        //transform: "translate(-50%, -50%)",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        //pointerEvents: "none",
-                        //borderRadius: "15px",
-                        overflow: "visible",
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        backgroundColor: "rgba(0, 0, 0, 0.6)", // Darker semi-transparent background
                         padding: "20px",
                         zIndex: "1",
-                        //border: "3px solid #333333",
+                        overflow: "hidden", // Prevents unwanted overflow
                     }}
                 >
                     <h2
                         style={{
-                            position: "absolute",
-                            top: "5%",
-                            left: "10%",
-                            color: "black",
-                            padding: "10px 20px",
+                            color: "white",
+                            backgroundColor: "rgba(0, 0, 0, 0.7)",
+                            padding: "12px 20px",
                             borderRadius: "10px",
-                            pointerEvents: "none",
+                            textAlign: "center",
+                            marginBottom: "20px",
                             zIndex: "2",
                         }}
                     >
                         Wohin möchtest du als nächstes?
                     </h2>
 
-                    <div style={{ display: "flex", justifyContent: "space-evenly" , width: "95%" }}>
-                        {[0, 1].map((index) => (
-                            <div key={index}
-
-                             style={{ textAlign: "center",
-                              pointerEvents: "auto"  ,
-                              display: "flex",            // Flexbox verwenden
-                              flexDirection: "column",    // Bild und Text vertikal ausrichten
-                              alignItems: "center",       // Text und Bild zentrieren
-                              borderRadius: "15px",       // Abgerundete Ecken für das ganze Element
-                              overflow: "hidden",         // Verhindert, dass das Bild über die abgerundeten Ecken hinausgeht
-                              backgroundColor: "#ffffff",
-                              marginLeft: "15px",             // Abstand von der linken Seite
-                              marginRight: "15px",
-                              marginBottom:"20px",
-
-                             }}>
-                                <img
-                                    src={`/assets/video/Button+2.jpg`}
-                                    // src={`https://via.placeholder.com/100x100?text=Image+${index + 1}`}
-                                    alt={`Button ${index + 1}`}
+                    {/* Grid Layout for 2x2 Buttons */}
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(2, 1fr)", // 2 Columns
+                            gap: "15px",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            maxWidth: "100vw", // Prevents overflow
+                            maxHeight: "90vh", // Prevents exceeding screen height
+                            overflow: "auto", // Adds scroll if needed
+                            margin: "0 auto",
+                        }}
+                    >
+                        {buttonName.map((name, index) => (
+                            <div
+                                key={index}
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    borderRadius: "10px",
+                                    overflow: "hidden",
+                                    backgroundColor: "#ffffff",
+                                    width: "40vw", // Each button is 40% of screen width
+                                    maxWidth: "200px", // Prevents buttons from getting too big
+                                    maxHeight: "30vh", // Prevents buttons from exceeding 30% of screen height
+                                    textAlign: "center",
+                                }}
+                            >
+                                <div
                                     style={{
-                                        cursor: "pointer",
-                                         margin: "0", //mew
-                                        padding: "0", //1rem
-                                        borderTopLeftRadius: "15px", //25%
-                                        borderTopRightRadius: "15px",
-
-                                    }}
-                                    onClick={() => handleClick(index)}
-                                />
-                                <button
-                                    onClick={() => handleClick(index)}
-                                    style={{
-                                        padding: "10px 20px",
-                                        fontSize: "13px",
-                                        borderRadius: "5px",
-                                        cursor: "pointer",
-                                         marginTop: "0",
-                                         color:"black",
-                                          paddingTop: "6px", // Reduziere den Abstand oben
-                                          paddingBottom: "6px", // Reduziere den Abstand unten
-
+                                        width: "100%",
+                                        height: "100%", // Ensures it scales within its container
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        overflow: "hidden", // Prevents any overflow
                                     }}
                                 >
-                                    {buttonText[index]}
-                                </button>
+                                    <img
+                                        src={`/assets/video/sporthalle.jpg`}
+                                        alt={`${name}`}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%", // Ensures full scaling
+                                            objectFit: "contain", // Prevents cropping
+                                            aspectRatio: "36/25", // Maintains correct proportions
+                                            borderTopLeftRadius: "10px",
+                                            borderTopRightRadius: "10px",
+                                        }}
+                                        onClick={() => handleClick(index)}
+                                    />
+                                </div>
                             </div>
                         ))}
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-evenly", width: "95%" }}>
-                        {[2, 3].map((index) => (
-                            <div key={index} style={{
-                             textAlign: "center",
-                             pointerEvents: "auto"  ,
-                             display: "flex",            // Flexbox verwenden
-                             flexDirection: "column",    // Bild und Text vertikal ausrichten
-                             alignItems: "center",       // Text und Bild zentrieren
-                             borderRadius: "15px",       // Abgerundete Ecken für das ganze Element
-                             overflow: "hidden",         // Verhindert, dass das Bild über die abgerundeten Ecken hinausgeht
-                             backgroundColor: "#ffffff",
-                             marginLeft: "15px",             // Abstand von der linken Seite
-                             marginRight: "15px",
-                             marginBottom:"20px",
-
-                          }}>
-                                <img
-                                    src={`/assets/video/Button+2.jpg`}
-                                    alt={`Button ${index + 1}`}
-                                    style={{
-                                        cursor: "pointer",
-                                        margin: "0",
-                                        padding: "0",
-                                        borderTopLeftRadius: "15px",
-                                        borderTopRightRadius: "15px",
-
-
-                                    }}
-                                    onClick={() => handleClick(index)}
-                                />
-                                <button
-                                    onClick={() => handleClick(index)}
-                                    style={{
-                                        padding: "10px 20px",
-                                        fontSize: "13px",
-                                        borderRadius: "5px",
-                                        cursor: "pointer",
-                                        marginTop: "0",
-                                        color:"black",
-                                        paddingTop: "6px",
-                                        paddingBottom: "6px",
-
-                                    }}
-                                >
-
-                                {buttonText[index]}
-                                </button>
-                            </div>
-
-                        ))}
-                    </div>
-
                 </div>
             )}
              {fadeToBlack && (
