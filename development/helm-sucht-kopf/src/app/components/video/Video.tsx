@@ -149,7 +149,6 @@ const Video: React.FC = () => {
                 onStart={handleStart}
                 onEnded={handleVideoEnd}
             />
-            {/* Exit Fullscreen Button */}
             {/* Overlay elements */}
             {showButtons && playing && cycle < videosWatched.length - 1 && (
                 <div
@@ -173,11 +172,10 @@ const Video: React.FC = () => {
                         style={{
                             color: "white",
                             backgroundColor: "rgba(0, 0, 0, 0.7)",
-                            padding: "12px 20px",
+                            padding: "12px",
                             borderRadius: "10px",
                             textAlign: "center",
-                            marginBottom: "20px",
-                            zIndex: "2",
+                            marginBottom: "20px"
                         }}
                     >
                         Wohin möchtest du als nächstes?
@@ -224,7 +222,7 @@ const Video: React.FC = () => {
                                     }}
                                 >
                                     <img
-                                        src={`/assets/video/sporthalle.jpg`}
+                                        src={`/assets/video/${name}.png`}
                                         alt={`${name}`}
                                         style={{
                                             width: "100%",
