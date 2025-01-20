@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 
 const Video: React.FC = () => {
-    const [buttonName, setButtonName] = useState(["rtw", "sporthalle", "360raum", "wohnzimmer"]);
+    const [buttonName] = useState(["rtw", "sporthalle", "360raum", "wohnzimmer"]);
     const [showButtons, setShowButtons] = useState(false);
     const [playing, setPlaying] = useState(false); // Start with video not playing
     const [videoUrl, setVideoUrl] = useState("https://static.videezy.com/system/resources/previews/000/052/918/original/21.mp4");// Default video URL
@@ -20,7 +20,7 @@ const Video: React.FC = () => {
         if (playing) {
             buttonTimer = setTimeout(() => {
                 setShowButtons(true);
-            }, 5000);
+            }, 1000);
         } else {
             setShowButtons(false);
         }
@@ -50,14 +50,6 @@ const Video: React.FC = () => {
                     setShowEndMessage(false);
                 }
 
-         //Reset cycle after last video
-       // if (cycle === videoCycles[0].length - 1) {
-          //  setCycle(0);
-          //  setVideoUrl("https://static.videezy.com/system/resources/previews/000/052/918/original/21.mp4"); // Go back to first video
-        //} else {
-         //  setCycle(index);
-          //  setVideoUrl(videoCycles[0][index]);
-       //}
         setCycle(index);
         setVideoUrl(videoCycles[0][index]);
         setShowButtons(false); // Hide buttons
@@ -149,6 +141,25 @@ const Video: React.FC = () => {
                 onStart={handleStart}
                 onEnded={handleVideoEnd}
             />
+            {/* Exit Fullscreen Button */}
+            {document.fullscreenElement && (
+                <button
+                    onClick={handleExitFullscreen}
+                    style={{
+                        position: "absolute",
+                        top: "10px",
+                        left: "10px",
+                        zIndex: 1000,
+                        padding: "5px 10px",
+                        backgroundColor: "rgba(255, 255, 255, 0.8)",
+                        border: "1px solid #ccc",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                    }}
+                >
+                    X
+                </button>
+            )}
             {/* Overlay elements */}
             {showButtons && playing && cycle < videosWatched.length - 1 && (
                 <div
@@ -160,86 +171,91 @@ const Video: React.FC = () => {
                         height: "100%",
                         display: "flex",
                         flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        justifyContent: "center", // Centers the entire container
                         backgroundColor: "rgba(0, 0, 0, 0.6)", // Darker semi-transparent background
-                        padding: "20px",
-                        zIndex: "1",
                         overflow: "hidden", // Prevents unwanted overflow
                     }}
                 >
-                    <h2
-                        style={{
-                            color: "white",
-                            backgroundColor: "rgba(0, 0, 0, 0.7)",
-                            padding: "12px",
-                            borderRadius: "10px",
-                            textAlign: "center",
-                            marginBottom: "20px"
-                        }}
-                    >
-                        Wohin möchtest du als nächstes?
-                    </h2>
-
-                    {/* Grid Layout for 2x2 Buttons */}
+                    {/* Container for header and buttons to keep them together */}
                     <div
                         style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(2, 1fr)", // 2 Columns
-                            gap: "15px",
-                            justifyContent: "center",
+                            display: "flex",
+                            flexDirection: "column",
                             alignItems: "center",
-                            maxWidth: "100vw", // Prevents overflow
-                            maxHeight: "90vh", // Prevents exceeding screen height
-                            overflow: "auto", // Adds scroll if needed
-                            margin: "0 auto",
+                            justifyContent: "center", // Ensures this block is centered
                         }}
                     >
-                        {buttonName.map((name, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    borderRadius: "10px",
-                                    overflow: "hidden",
-                                    backgroundColor: "#ffffff",
-                                    width: "40vw", // Each button is 40% of screen width
-                                    maxWidth: "200px", // Prevents buttons from getting too big
-                                    maxHeight: "30vh", // Prevents buttons from exceeding 30% of screen height
-                                    textAlign: "center",
-                                }}
-                            >
+                        <h2
+                            style={{
+                                color: "white",
+                                backgroundColor: "rgba(0, 0, 0, 0.7)",
+                                borderRadius: "10px",
+                                textAlign: "center",
+                            }}
+                        >
+                            Wohin möchtest du als nächstes?
+                        </h2>
+
+                        {/* Centered Grid Layout */}
+                        <div
+                            style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(2, 1fr)", // 2 Columns
+                                gap: "15px",
+                                justifyContent: "center",
+                                alignItems: "center", // Ensures vertical centering
+                                maxWidth: "100vw", // Prevents overflow
+                                maxHeight: "90vh", // Prevents exceeding screen height
+                            }}
+                        >
+                            {buttonName.map((name, index) => (
                                 <div
+                                    key={index}
                                     style={{
-                                        width: "100%",
-                                        height: "100%", // Ensures it scales within its container
                                         display: "flex",
+                                        flexDirection: "column",
                                         alignItems: "center",
-                                        justifyContent: "center",
-                                        overflow: "hidden", // Prevents any overflow
+                                        borderRadius: "10px",
+                                        overflow: "hidden",
+                                        backgroundColor: "#ffffff",
+                                        width: "40vw", // Each button is 40% of screen width
+                                        maxWidth: "200px", // Prevents buttons from getting too big
+                                        aspectRatio: "36/25", // Maintains correct aspect ratio
+                                        textAlign: "center",
                                     }}
                                 >
-                                    <img
-                                        src={`/assets/video/${name}.png`}
-                                        alt={`${name}`}
+                                    <div
                                         style={{
                                             width: "100%",
-                                            height: "100%", // Ensures full scaling
-                                            objectFit: "contain", // Prevents cropping
-                                            aspectRatio: "36/25", // Maintains correct proportions
-                                            borderTopLeftRadius: "10px",
-                                            borderTopRightRadius: "10px",
+                                            height: "100%", // Ensures it scales within its container
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            overflow: "hidden", // Prevents any overflow
                                         }}
-                                        onClick={() => handleClick(index)}
-                                    />
+                                    >
+                                        <img
+                                            src={`/assets/video/${name}.png`}
+                                            alt={`${name}`}
+                                            style={{
+                                                width: "100%",
+                                                height: "100%", // Ensures full scaling
+                                                objectFit: "cover", // Maintains aspect ratio without cropping
+                                                aspectRatio: "36/25", // Enforces the correct proportions
+                                                borderTopLeftRadius: "10px",
+                                                borderTopRightRadius: "10px",
+                                            }}
+                                            onClick={() => handleClick(index)}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}
+
+
              {fadeToBlack && (
                  <div
                      style={{
