@@ -32,10 +32,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="de">
       <head>
-        <title>Berliner Feuerwehr: Karriere</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Berliner Feuerwehr – Karriere</title>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="default-src 'self';"
+        />
+        <meta name="theme-color" content="#e40422" />
         <link
           rel="icon"
           type="image/png"
