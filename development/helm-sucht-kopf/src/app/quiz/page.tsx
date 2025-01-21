@@ -215,7 +215,9 @@ const submitQuiz = async () => {
                                         </button>
                                     )
                                 )}
-                                {messages.languageLevel && <div className={styles.message}>{messages.languageLevel}</div>}
+                                {currentQuestion.id === 1 && messages.languageLevel && (
+                                    <div className={styles.message}>{messages.languageLevel}</div>
+                                )}
                             </div>
                         )}
 
