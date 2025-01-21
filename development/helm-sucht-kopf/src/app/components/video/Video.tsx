@@ -32,10 +32,10 @@ const overlays: Record<string, Overlay> = {
     karte: {
         title: "Wohin möchtest du als nächstes?",
         options: [
-            { label: "Sporthalle", video: videoPaths.sporthalle, img: "/assets/video/sporthalle.png" },
-            { label: "RTW-Simulationsraum", video: videoPaths.rtw, img: "/assets/video/rtw.png" },
-            { label: "Wohnzimmer-Simulationsraum", video: videoPaths.wohnzimmer, img: "/assets/video/wohnzimmer.png" },
-            { label: "360°-Simulationsraum", video: videoPaths.kugelraum, img: "/assets/video/kugelraum.png" },
+            { label: "Sporthalle", video: videoPaths.sporthalle, img: "/assets/video/sporthalle.jpg" },
+            { label: "RTW-Simulationsraum", video: videoPaths.rtw, img: "/assets/video/rtw.jpg" },
+            { label: "Wohnzimmer-Simulationsraum", video: videoPaths.wohnzimmer, img: "/assets/video/wohnzimmer.jpg" },
+            { label: "360°-Simulationsraum", video: videoPaths.kugelraum, img: "/assets/video/kugelraum.jpg" },
         ],
     },
     sporthalle_overlay: {
@@ -77,7 +77,7 @@ const overlays: Record<string, Overlay> = {
 
 const Video: React.FC = () => {
     const [playing, setPlaying] = useState(false);
-    const [visibleExitButton, setVisibleExitButton] = useState(false);
+    const [requestRotate, setRequestRotate] = useState(false);
     const [currentVideo, setCurrentVideo] = useState(videoPaths.intro);
     const [showOverlay, setShowOverlay] = useState<keyof typeof overlays | null>(null);
     const [showEndMessage, setShowEndMessage] = useState(false);
@@ -117,59 +117,34 @@ const Video: React.FC = () => {
         }
     };
 
-    const handleStart = () => {
-        const container = videoContainerRef.current;
-        if (container && container.requestFullscreen) {
-            container.requestFullscreen();
-        } else if (container && (container as any).webkitRequestFullscreen) {
-            (container as any).webkitRequestFullscreen();
-        } else if (container && (container as any).mozRequestFullScreen) {
-            (container as any).mozRequestFullScreen();
-        } else if (container && (container as any).msRequestFullscreen) {
-            (container as any).msRequestFullscreen();
-        }
-        setVisibleExitButton(true);
-        setPlaying(true); // Start video only in fullscreen
-    };
-
-    const handleExitFullscreen = () => {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if ((document as any).webkitExitFullscreen) {
-            (document as any).webkitExitFullscreen();
-        } else if ((document as any).mozCancelFullScreen) {
-            (document as any).mozCancelFullScreen();
-        } else if ((document as any).msExitFullscreen) {
-            (document as any).msExitFullscreen();
-        }
-        setShowEndMessage(false);
-        window.location.reload(); // Reload the component to reset the video
-    };
-
     useEffect(() => {
-        const handleFullscreenChange = () => {
-            if (!document.fullscreenElement) {
-                setPlaying(false); // Pause video when exiting fullscreen
+        const checkOrientation = () => {
+            if (window.innerHeight > window.innerWidth) {
+                setRequestRotate(true); // Portrait mode
+            } else {
+                setRequestRotate(false); // Landscape mode
             }
         };
 
-        document.addEventListener("fullscreenchange", handleFullscreenChange);
-        document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
-        document.addEventListener("mozfullscreenchange", handleFullscreenChange);
-        document.addEventListener("msfullscreenchange", handleFullscreenChange);
+        // Check on mount
+        checkOrientation();
+
+        // Listen for resize events
+        window.addEventListener("resize", checkOrientation);
 
         return () => {
-            document.removeEventListener("fullscreenchange", handleFullscreenChange);
-            document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
-            document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
-            document.removeEventListener("msfullscreenchange", handleFullscreenChange);
+            window.removeEventListener("resize", checkOrientation);
         };
     }, []);
+
+    const handleStart = () => {
+        setPlaying(true);
+    };
 
     return (
         <div
             ref={videoContainerRef}
-            style={{ position: "relative", width: "100%", maxWidth: "640px", margin: "0 auto", aspectRatio: "16 / 9" }} >
+            style={{ position: "relative", width: "100%", maxWidth: "720px", margin: "0 auto", aspectRatio: "16 / 9" }} >
             <style>{`
                     @keyframes fadeToBlack {
                         from {
@@ -181,25 +156,27 @@ const Video: React.FC = () => {
                     }
                 `}</style>
 
+            {requestRotate && (
+                <div>
+                    <h2>
+                        Bitte dein Gerät zu Landscape drehen
+                    </h2>
+                </div>
+            )}
+
             <ReactPlayer
                 ref={videoRef}
                 url={currentVideo}
                 playing={playing}
                 controls={true}
+                playsinline={true}
                 width="100%"
                 height="100%"
                 onStart={handleStart}
                 onEnded={handleVideoEnd}
             />
-            {visibleExitButton && (
-                <button
-                    onClick={handleExitFullscreen}
-                    style={{ position: "absolute", top: "10px", left: "10px", zIndex: 1000, padding: "5px 10px", borderRadius: "5px", cursor: "pointer" }}
-                >
-                    X
-                </button>
-            )}
-            {showOverlay && (
+
+            {(showOverlay && !requestRotate) && (
                 <div
                     style={{
                         position: "absolute",
@@ -310,37 +287,47 @@ const Video: React.FC = () => {
                  />
              )}
 
-             {showEndMessage && (
-                 <div
-                     style={{
-                         position: "absolute",
-                         top: "50%",
-                         left: "50%",
-                         transform: "translate(-50%, -50%)",
-                         textAlign: "center",
-                         color: "reds",
-                         zIndex: 20,
-                     }}
-                 >
-                     <h2>Das war ein kleiner Einblick in die spannende Welt der Berliner Feuerwehr.</h2>
-                     <p>Bereit, ein Teil davon zu werden? Deine Zukunft beginnt hier!</p>
-                     <button
-                         style={{
-                             padding: "10px 20px",
-                             fontSize: "16px",
-                             backgroundColor: "#E40422",
-                             color: "white",
-                             border: "none",
-                             borderRadius: "5px",
-                             cursor: "pointer",
-                             marginTop: "20px",
-                         }}
-                         onClick={() => (window.location.href = `/ausbildungen/`)}
-                     >
-                         Jetzt bewerben!
-                     </button>
-                 </div>
-             )}
+            {showEndMessage && (
+                <div
+                    style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        textAlign: "center",
+                        zIndex: 20,
+                        width: "90%", // Ensures it doesn’t overflow
+                        maxWidth: "500px", // Limits size on larger screens
+                        padding: "20px",
+                        borderRadius: "10px",
+                    }}
+                >
+                    <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
+                        Das war ein kleiner Einblick in die spannende Welt der Berliner Feuerwehr.
+                    </h2>
+                    <p style={{ fontSize: "1rem" }}>
+                        Bereit, ein Teil davon zu werden?
+                    </p>
+                    <button
+                        style={{
+                            padding: "8px 15px",
+                            fontSize: "1rem",
+                            backgroundColor: "#E40422",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            marginTop: "15px",
+                            width: "100%", // Makes sure it doesn’t overflow
+                            maxWidth: "250px", // Limits button width
+                        }}
+                        onClick={() => (window.location.href = `/ausbildungen/`)}
+                    >
+                        Jetzt bewerben!
+                    </button>
+                </div>
+            )}
+
 
         </div>
     );
