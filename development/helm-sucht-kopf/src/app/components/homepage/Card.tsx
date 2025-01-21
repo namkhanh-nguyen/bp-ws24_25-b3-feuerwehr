@@ -1,12 +1,14 @@
 "use client";
+import Link from "next/link";
 
 type CardProps = {
   title: string;
-  subtitle?: string; // Optional, z. B. für "Ausbildung" oder "Schritt 1"
+  subtitle?: string;
   description: string;
-  image?: string; // Optional, für Karten mit Bildern
-  icon?: string; // Optional, für Karten mit Icons
-  variant?: "process" | "career"; // Steuert das Styling
+  image?: string;
+  icon?: string;
+  link?: string;
+  variant?: "process" | "career";
 };
 
 const Card: React.FC<CardProps> = ({
@@ -15,6 +17,7 @@ const Card: React.FC<CardProps> = ({
   description,
   image,
   icon,
+  link,
   variant = "career",
 }) => {
   return (
@@ -31,12 +34,19 @@ const Card: React.FC<CardProps> = ({
       )}
       <div className="card-content">
         {subtitle && <p className="card-subtitle">{subtitle}</p>}
-        <h3 className="card-title">{title}</h3>
+        <a href={link} target="_blank" rel="noopener noreferrer">
+          <h3 className="card-title">{title}</h3>
+        </a>
         <p className="card-description">{description}</p>
-        <button className="card-button">
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="card-button"
+        >
           Erfahre mehr
           <span className="arrow">&rarr;</span>
-        </button>
+        </a>
       </div>
     </div>
   );

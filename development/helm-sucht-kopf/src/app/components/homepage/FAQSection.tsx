@@ -41,7 +41,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="faq-section">
+    <section className="faq-section container">
       <h2 className="faq-title">Häufig gestellte Fragen</h2>
       <ul className="faq-list">
         {faqs.map((faq, index) => (
@@ -67,8 +67,10 @@ export default function FAQSection() {
       </ul>
       <h3>Hast du noch weitere Fragen?</h3>
       <p>
-        Schau gerne auf unserer <Link href="/">FAQ-Seite</Link> vorbei, dort
-        findest du ausführliche Antworten zu vielen weiteren Themen.
+        Schau gerne auf unserer&nbsp;
+        <a href="https://www.berliner-feuerwehr.de/karriere/faq/">FAQ-Seite</a>
+        &nbsp;vorbei, dort findest du ausführliche Antworten zu vielen weiteren
+        Themen.
       </p>
     </section>
   );
