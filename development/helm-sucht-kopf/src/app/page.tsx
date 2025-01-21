@@ -1,7 +1,7 @@
 "use client";
 
 import Hero from "./components/homepage/Hero";
-import Counter from "./components/homepage/Counter";
+import dynamic from 'next/dynamic';import Counter from "./components/homepage/Counter";
 import SliderAusbildungen from "./components/homepage/SliderCareerOpportunities";
 import SliderBewerbung from "./components/homepage/SliderApplicationProcess";
 import FAQSection from "./components/homepage/FAQSection";
@@ -14,6 +14,8 @@ export default function Home() {
     { number: 57, title: "Nationen vereint in einem Team" },
     { number: 1330, title: "Fahrzeuge" },
   ];
+
+  const Video = dynamic(() => import("./components/video/Video"), { ssr: false });
 
   return (
     <div>

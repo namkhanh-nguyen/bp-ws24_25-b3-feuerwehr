@@ -17,8 +17,8 @@ export default function Hero() {
               und entdecke, welche Ausbildung bei der Berliner Feuerwehr perfekt
               zu dir passt.
             </p>
-            <Link href="/jobs" className="hero-button">
-              Starte das Berufsquiz
+            <Link href="/ausbildungen" className="hero-button">
+              Zum Navigator
             </Link>
           </div>
         </div>

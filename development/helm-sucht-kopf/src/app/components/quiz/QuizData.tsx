@@ -1,24 +1,94 @@
 type Option = {
     prefix: string;
     text: string;
-    category: 'A' | 'B' | 'C';
+    category: 'A' | 'B' | 'C' | 'D' | 'E';
 };
 
 type Question = {
     id: number,
     title: string;
-    type: 'options' | 'scale' | 'imageOptions';
+    type: 'options' | 'scale' | 'imageOptions'| 'input'| 'slider'| 'timer'|'illustration' | 'fitness';
     options?: Option[];
-    images?: { src: string; label: string }[];
+    questions?: { label: string; options: string[] }[];
+    images?: { src: string; category: string }[];
     minLabel?: string;
     maxLabel?: string;
     minValue?: number;
     maxValue?: number;
+    story?: string;
+    image?: string;
+    required: boolean;
 };
 
 export const quizData: Question[] = [
     {
         id: 1,
+        required: false,
+        title: 'Wie würdest Du dein Deutsches Sprachniveau einschätzen?',
+        type: 'options',
+        options: [
+            { prefix: 'A', text: '„Ich kann mich gut verständigen, aber mein Niveau liegt unter C1."', category: 'D' },
+            { prefix: 'B', text: '„Mein Sprachniveau ist C1 oder höher – ich fühle mich sicher in komplexen Gesprächen und Texten."', category: 'E' },
+        ],
+    },
+    {
+        id: 2,
+        required: false,
+        title: 'Wie groß bist Du?',
+        type: 'input',
+        minValue: 165,
+        maxValue: 195
+    },
+    {
+        id: 3,
+        required: false,
+        title: 'Ich interessiere mich für: ',
+        type: 'imageOptions',
+        images: [
+            {src: '/assets/quiz/sani.jpeg', category: 'A'},
+            { src: '/assets/quiz/auto.jpeg',  category: 'B' },
+            { src: '/assets/quiz/feuerwehrauto.jpeg', category: 'B' },
+            { src: '/assets/quiz/brand.jpeg',  category: 'C' },
+            { src: '/assets/quiz/handwerk.jpeg',  category: 'C' },
+            { src: '/assets/quiz/schutz.jpeg',  category: 'A' },
+        ],
+    },
+    {
+        id: 4,
+        required: false,
+        title: 'Wie wohl fühlst Du Dich im Umgang mit Blut und medizinischen Notfällen?',
+        type: 'slider',
+        minLabel: 'Sehr unwohl',
+        maxLabel: 'Sehr sicher',
+        minValue: 0,
+        maxValue: 100,
+    },
+
+    {
+        id: 5,
+        required: false,
+        title: 'Fitnesstest - Bist Du bereit für eine Challenge?',
+        type: 'fitness',
+        questions: [
+            {
+                label: 'Wie viele Liegestütze schaffst Du am Stück?',
+                options: ['Weniger als 10', '10 - 20', '20 - 30', '30 - 40', 'Über 40'],
+            },
+            {
+                label: 'Wie viele Sit ups schaffst Du am Stück?',
+                options: ['Weniger als 10', '10 - 20', '20 - 30', '30 - 40', 'Über 40'],
+            },
+        ],
+    },
+    {
+        id: 6,
+        required: false,
+        title: 'Ausdauertest – Wie lange kannst du deinen Atem anhalten? ',
+        type: 'timer',
+    },
+    {
+        id: 7,
+        required: false,
         title: 'Du siehst den Unfall und bemerkst, dass Personen noch im Fahrzeug sind. Dein Adrenalin steigt. Was ist Dein erster Instinkt?',
         type: 'options',
         options: [
@@ -28,7 +98,8 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 2,
+        id: 8,
+        required: true,
         title: 'Als Du Dich dem Auto näherst, siehst Du, dass der Fahrer bei Bewusstsein ist, aber schwer verletzt wirkt. Der Beifahrer scheint bewusstlos zu sein. Wie gehst du vor?',
         type: 'options',
         options: [
@@ -38,7 +109,8 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 3,
+        id:9,
+        required: false,
         title: 'Der Motorraum beginnt gefährlich zu qualmen, und Du spürst die Hitze des Autos. Was machst Du?',
         type: 'options',
         options: [
@@ -48,7 +120,8 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 4,
+        id: 10,
+        required: false,
         title: 'Ein anderer Passant kommt hinzu und bietet seine Hilfe an. Was ist Deine Reaktion?',
         type: 'options',
         options: [
@@ -58,7 +131,8 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 5,
+        id: 11,
+        required: false,
         title: 'Während Du auf den Rettungsdienst wartest, fängt jemand an, Fotos und Videos des Unfalls zu machen. Wie reagierst Du?',
         type: 'options',
         options: [
@@ -68,7 +142,8 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 6,
+        id: 12,
+        required: false,
         title: 'Die Rettungskräfte treffen endlich ein und übernehmen die Situation. Was machst Du jetzt?',
         type: 'options',
         options: [
@@ -78,15 +153,15 @@ export const quizData: Question[] = [
         ],
     },
     {
-        id: 7,
+        id: 13,
+        required: false,
         title: "Nach dem Unfall sind deine Freunde aufgewühlt, und die Ereignisse gehen dir nicht aus dem Kopf. Wie gehst du damit um?",
         type: 'options',
         options: [
-            {prefix: 'A', text: 'Ich fühle mich überwältigt und emotional stark betroffen', category: 'A'},
-            {prefix: 'B', text: 'Ich bin emotional, aber ich kann mich einigermaßen gut beruhigen', category: 'A'},
-            {prefix: 'C', text: 'Ich fühle eine Mischung aus Betroffenheit und einem Bedürfnis, das Erlebte zu erarbeiten', category: 'B'},
-            {prefix: 'D', text: 'Ich bin nach dem Vorfall zwar bewegt, aber auch motiviert, mich zu verbessern.', category: 'B'},
-            {prefix: 'E', text: 'Ich fühle mich motiviert und voller Tatendrang, um meine Fähigkeiten zu erweitern und in Zukunft noch besser zu reagieren', category: 'C'}
+            {prefix: 'A', text: '„Ich fühle mich überwältigt und emotional stark betroffen.„', category: 'A'},
+            {prefix: 'B', text: '„Ich bin emotional, aber ich kann mich einigermaßen gut beruhigen.„', category: 'E'},
+            {prefix: 'C', text: '„Ich fühle eine Mischung aus Betroffenheit und einem Bedürfnis, das Erlebte zu erarbeiten.„', category: 'B'},
+            {prefix: 'D', text: '„Ich fühle mich bewegt, aber auch motiviert, mich zu verbessern und in Zukunft besser zu reagieren.„', category: 'C'},
         ],
     },
 ];
