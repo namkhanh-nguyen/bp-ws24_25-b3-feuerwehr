@@ -40,10 +40,6 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
-        <meta
-          http-equiv="Content-Security-Policy"
-          content="default-src 'self';"
-        />
         <meta name="theme-color" content="#e40422" />
         <link
           rel="icon"
