@@ -1,5 +1,5 @@
 import {fetchJobs} from '@/app/api/jobs/fetchJobs';
-
+import BackButton from '@/app/components/button/backbutton';
 type JobProps = {
     params: Promise<{
         slug: string;
@@ -26,18 +26,7 @@ export default async function JobPage({params}: JobProps) {
         }}>
 
             <div style={{width: '100%', maxWidth: '600px'}}>
-                <a href={'/ausbildungen'}
-                   style={{
-                       color: 'var(--red-primary)',
-                       marginBottom: '20px',
-                       display: 'flex',
-                       cursor: 'pointer'
-                   }}>
-                    <h3 style={{marginRight: '10px'}}>←</h3>
-                    <h3 style={{textDecoration: 'underline'}}>
-                        Zurück
-                    </h3>
-                </a>
+                <BackButton />
 
                 <h1 style={{
                     fontFamily: 'var(--font-berlin-type-bold)',
