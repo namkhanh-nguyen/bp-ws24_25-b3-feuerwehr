@@ -43,27 +43,28 @@ export default function Home() {
           <img src="./assets/shapes/curve-top.svg" alt="Obere Kurve" />
         </div> */}
         <div className="sec red">
-          <div className="video-container">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube-nocookie.com/embed/Y7CIIu9kPzY"
-              title="Berliner Feuerwehr Karriere Video"
-              loading="lazy"
-              style={{ border: "none" }}
-              allow="autoplay; encrypted-media;"
-              allowFullScreen
-            ></iframe>
+          <div className="container">
+            <div className="video-container">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube-nocookie.com/embed/Y7CIIu9kPzY"
+                title="Berliner Feuerwehr Karriere Video"
+                loading="lazy"
+                style={{ border: "none" }}
+                allow="autoplay; encrypted-media;"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <h2>Mehr als ein Job, eine Mission!</h2>
+            <p>
+              Bei uns wird Teamgeist großgeschrieben. Action, Verantwortung und
+              echte Kameradschaft erwarten dich. Werde Teil der Feuerwehr – der
+              beste Job der Welt, bei dem du Leben rettest, Brände bekämpfst und
+              echte Heldenmomente erlebst. Gemeinsam für mehr Sicherheit und
+              eine starke Gemeinschaft!
+            </p>
           </div>
-
-          <h2>Mehr als ein Job, eine Mission!</h2>
-          <p>
-            Bei uns wird Teamgeist großgeschrieben. Action, Verantwortung und
-            echte Kameradschaft erwarten dich. Werde Teil der Feuerwehr – der
-            beste Job der Welt, bei dem du Leben rettest, Brände bekämpfst und
-            echte Heldenmomente erlebst. Gemeinsam für mehr Sicherheit und eine
-            starke Gemeinschaft!
-          </p>
         </div>
         {/* <div className="shape-bottom">
           <img src="./assets/shapes/curve-bottom.svg" alt="Untere Kurve" />
