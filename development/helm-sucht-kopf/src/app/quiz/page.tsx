@@ -9,6 +9,7 @@ import QuestionImageOptions from '../components/quiz/QuestionImageOption';
 import QuestionSlider from '../components/quiz/QuestionSlider';
 import QuestionTimer from '../components/quiz/QuestionTimer';
 import { useRouter } from 'next/navigation';
+import WaveProgress from '../components/quiz/WaveProgress';
 
 const Quiz = () => {
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'illustration01'| 'illustration02'| 'results'>('intro')  ;
@@ -75,7 +76,7 @@ const Quiz = () => {
             alert("Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-SpSprachniveau erreichen.");
         }
         setAnswers((prev) => {
-        const updatedAnswers = [...prev];
+            const updatedAnswers = [...prev];
             updatedAnswers[currentQuestionIndex] = {
                 questionId: currentQuestion.id,
                 selectedOption: category,
@@ -85,10 +86,10 @@ const Quiz = () => {
         });
         goNext();
     };
-const submitQuiz = async () => {
-    setIsSubmitting(true);
-    try {
-        console.log("Answers:", answers);
+    const submitQuiz = async () => {
+        setIsSubmitting(true);
+        try {
+            console.log("Answers:", answers);
             const response = await fetch('/api/quiz', {
                 method: 'POST',
                 headers: {
@@ -111,14 +112,21 @@ const submitQuiz = async () => {
 
             const result = await response.json();
             setQuizResult(result);
-        localStorage.setItem('quizResult', JSON.stringify(result));
-        router.push('/results');
+            localStorage.setItem('quizResult', JSON.stringify(result));
+            router.push('/results');
         } catch (error) {
             console.error('Error submitting quiz:', error);
             alert('There was an error submitting the quiz. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const calculateProgress = () => {
+        if (currentScreen === 'quiz') {
+            return ((currentQuestionIndex + 1) / totalQuestions) * 100;
+        }
+        return 0;
     };
 
     return (
@@ -175,14 +183,7 @@ const submitQuiz = async () => {
                 {/* Quiz Screen */}
                 {currentScreen === 'quiz' && (
                     <>
-                        <div className={styles.progressBarContainer}>
-                            <div
-                                className={styles.progressBar}
-                                style={{
-                                    width: `${(((currentQuestionIndex as number) + 1) / (totalQuestions as number)) * 100}%`,
-                                }}
-                            />
-                        </div>
+                        <WaveProgress progress={calculateProgress()} showWaterDrop={false} />
                         <div className={styles.questionNumber}>
                             Frage {currentQuestionIndex + 1}
                         </div>
@@ -191,24 +192,24 @@ const submitQuiz = async () => {
                         {currentQuestion.type === 'options' && currentQuestion.options && (
                             <div className={styles.optionsContainer}>
                                 {currentQuestion.options.map((option, index) => (
-                                    <button
-                                        key={index}
-                                        className={`${styles.optionButton} ${answers[currentQuestionIndex]?.selectedOption === option.category ? styles.selectedOption : ''}`}
-                                        onClick={() => {
-                                            if (currentQuestion.id === 1 && option.category === 'D') {
-                                                alert("Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-Sprachniveau erreichen.");
-                                            }
-                                            setAnswers((prev) => {
-                                                const updatedAnswers = [...prev];
-                                                updatedAnswers[currentQuestionIndex] = {
-                                                    questionId: currentQuestion.id,
-                                                    selectedOption: option.category,
-                                                    fullText: option.text,
-                                                };
-                                                return updatedAnswers;
-                                            });
-                                        }}
-                                    >
+                                        <button
+                                            key={index}
+                                            className={`${styles.optionButton} ${answers[currentQuestionIndex]?.selectedOption === option.category ? styles.selectedOption : ''}`}
+                                            onClick={() => {
+                                                if (currentQuestion.id === 1 && option.category === 'D') {
+                                                    alert("Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-Sprachniveau erreichen.");
+                                                }
+                                                setAnswers((prev) => {
+                                                    const updatedAnswers = [...prev];
+                                                    updatedAnswers[currentQuestionIndex] = {
+                                                        questionId: currentQuestion.id,
+                                                        selectedOption: option.category,
+                                                        fullText: option.text,
+                                                    };
+                                                    return updatedAnswers;
+                                                });
+                                            }}
+                                        >
                                             <span className={styles.optionPrefix}>{option.prefix}</span>
                                             <span className={styles.optionText}>{option.text}</span>
                                         </button>
@@ -219,13 +220,13 @@ const submitQuiz = async () => {
 
                         {currentQuestion.type === 'input' && (
                             <div className={styles.inputContainer}>
-                                    <div className={styles.imageContainer}>
-                                        <img
-                                            src="/assets/quiz/growRed.svg"
-                                            alt="Icon for height question"
-                                            className={styles.customSvg}
-                                        />
-                                    </div>
+                                <div className={styles.imageContainer}>
+                                    <img
+                                        src="/assets/quiz/growRed.svg"
+                                        alt="Icon for height question"
+                                        className={styles.customSvg}
+                                    />
+                                </div>
                                 <InputQuestion
                                     question={currentQuestion}
                                     value={answers[currentQuestionIndex]?.fullText || ''}
@@ -256,33 +257,33 @@ const submitQuiz = async () => {
                         )}
 
                         {currentQuestion.type === 'imageOptions' && currentQuestion.images && (
-                                    <QuestionImageOptions
-                                        images={currentQuestion.images}
-                                        onSelectionChange={(selectedImages) => {
-                                            setAnswers((prev) => {
-                                                const updatedAnswers = [...prev];
-                                                const currentAnswer = updatedAnswers[currentQuestionIndex];
-                                                // Check if the selected option already exists in the current answer
-                                                const selectedCategories = selectedImages.map((image) => image.category).join(', ');
-                                                const selectedSrc = selectedImages.map((image) => image.src).join(',');
-                                                if (
-                                                    currentAnswer &&
-                                                    currentAnswer.selectedOption === selectedCategories &&
-                                                    currentAnswer.fullText === selectedSrc
-                                                ) {
-                                                    return prev;
-                                                }
-                                                updatedAnswers[currentQuestionIndex] = {
-                                                    questionId: currentQuestion.id,
-                                                    selectedOption: selectedCategories,
-                                                    fullText: selectedSrc,
-                                                };
-                                                return updatedAnswers;
-                                            });
+                            <QuestionImageOptions
+                                images={currentQuestion.images}
+                                onSelectionChange={(selectedImages) => {
+                                    setAnswers((prev) => {
+                                        const updatedAnswers = [...prev];
+                                        const currentAnswer = updatedAnswers[currentQuestionIndex];
+                                        // Check if the selected option already exists in the current answer
+                                        const selectedCategories = selectedImages.map((image) => image.category).join(', ');
+                                        const selectedSrc = selectedImages.map((image) => image.src).join(',');
+                                        if (
+                                            currentAnswer &&
+                                            currentAnswer.selectedOption === selectedCategories &&
+                                            currentAnswer.fullText === selectedSrc
+                                        ) {
+                                            return prev;
+                                        }
+                                        updatedAnswers[currentQuestionIndex] = {
+                                            questionId: currentQuestion.id,
+                                            selectedOption: selectedCategories,
+                                            fullText: selectedSrc,
+                                        };
+                                        return updatedAnswers;
+                                    });
 
-                                        }}
-                                    />
-                                )}
+                                }}
+                            />
+                        )}
 
                         {currentQuestion.type === 'slider' && (
                             <QuestionSlider
