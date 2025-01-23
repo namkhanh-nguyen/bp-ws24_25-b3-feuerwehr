@@ -141,7 +141,9 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className={styles.bottomBar}>
+      </div>
+      <div className={styles.bottomBar}>
+        <div className="container">
           <div>&copy; {currentYear}, Berliner Feuerwehr</div>
           <div>
             <a href="/impressum">Impressum</a> |{" "}
