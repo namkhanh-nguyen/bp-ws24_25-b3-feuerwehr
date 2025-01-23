@@ -108,7 +108,7 @@ a:has(h1, h2, h3, h4, h5, h6):hover {
   left: 0;
   width: 100%;
   height: 100%;
-  max-height: calc(100dvh - 80px);
+  max-height: calc(100dvh - 5rem);
   object-fit: cover;
   z-index: -1;
   filter: brightness(50%);
@@ -120,7 +120,6 @@ a:has(h1, h2, h3, h4, h5, h6):hover {
   position: relative;
   z-index: 1;
   color: white;
-  padding: 1.25rem;
   line-height: 1.5;
 }
 
@@ -400,12 +399,6 @@ h3.card-title {
   color: var(--foreground);
 }
 
-footer {
-  margin-top: 3rem;
-  padding: 3rem 1.25rem;
-  background-color: #e3e3e3;
-}
-
 @media (max-width: 43rem) {
   .counter {
     min-width: 12.5rem;
@@ -415,8 +408,9 @@ footer {
 @media (min-width: 75em) {
   .hero-background-image {
     position: relative;
-    filter: brightness(80%);
-    max-height: 45rem;
+    object-position: 0% 20%;
+    filter: brightness(100%);
+    max-height: 35rem;
   }
 
   .homepage-hero {
@@ -427,7 +421,7 @@ footer {
     border-radius: 0.5rem;
     padding: 2em 4em;
     background-color: white;
-    margin-top: -6.25rem;
+    margin-top: -10rem;
   }
 
   .hero-content,

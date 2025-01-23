@@ -124,31 +124,46 @@ const DynamicHeader: React.FC = () => {
           >
             <ul className={styles["menu-item"]}>
               {[
-                { href: "/jobs", text: "Ausbildungen" },
+                {
+                  href: "/ausbildungen",
+                  text: "Ausbildungen",
+                  isExternal: false,
+                },
                 {
                   href: "https://www.berliner-feuerwehr.de/karriere/benefits/",
-                  text: "Warum Berliner Feuerwehr?",
+                  text: "Warum wir?",
+                  isExternal: true,
                 },
                 {
                   href: "https://www.berliner-feuerwehr.de/technik",
                   text: "Technik",
+                  isExternal: true,
                 },
                 {
                   href: "https://www.berliner-feuerwehr.de/ueber-uns",
                   text: "Über uns",
+                  isExternal: true,
                 },
                 {
                   href: "https://www.berliner-feuerwehr.de/karriere/faq/",
                   text: "Häufige Fragen",
+                  isExternal: true,
                 },
                 {
                   href: "https://www.berliner-feuerwehr.de/kontakt/",
                   text: "Kontakt",
+                  isExternal: true,
                 },
-              ].map((item, index) => (
-                <li key={index}>
-                  <a href={item.href} target="_blank" rel="noopener noreferrer">
-                    {item.text}
+              ].map(({ href, text, isExternal }, index) => (
+                <li key={`nav-${text}`}>
+                  <a
+                    href={href}
+                    {...(isExternal && {
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    })}
+                  >
+                    {text}
                   </a>
                 </li>
               ))}
