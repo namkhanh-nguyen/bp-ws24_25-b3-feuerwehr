@@ -46,7 +46,6 @@
 }
 
 .bottomBar {
-  max-width: 75rem;
   margin: auto;
   display: flex;
   justify-content: space-between;
