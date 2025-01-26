@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import FiremenIcon from '@/app/components/quiz/FiremenIcon';
+import HouseOnFireIcon from '@/app/components/quiz/HouseOnFire';
 
 interface WaveProgressProps {
     progress: number; // 0 to 100
-    showWaterDrop: boolean; // Indicates whether to replace the fire icon with the water drop
 }
 
-export default function WaveProgress({ progress, showWaterDrop }: WaveProgressProps) {
+export default function WaveProgress({ progress }: WaveProgressProps) {
     const waveRefs = [
         useRef<SVGPathElement>(null),
         useRef<SVGPathElement>(null),
@@ -35,47 +36,42 @@ export default function WaveProgress({ progress, showWaterDrop }: WaveProgressPr
                 className="w-full"
                 preserveAspectRatio="none"
             >
-                {/* Pipe icon at the start */}
-                <text x="0" y="60" className="text-gray-800" fontSize="40">
-                    🛁
-                </text>
+                {/* Firemen Icon at the start */}
+                <foreignObject x="0" y="15" width="70" height="70">
+                    <FiremenIcon />
+                </foreignObject>
 
                 {/* Waves */}
                 <path
                     ref={waveRefs[0]}
-                    d="M 50 50 C 150 20, 150 80, 300 50 C 450 20, 450 80, 550 50"
+                    d="M 70 27 C 150 -3, 150 57, 300 27 C 450 -3, 450 57, 550 27"
                     className="stroke-blue-500/80 stroke-[3] fill-none"
                 />
                 <path
                     ref={waveRefs[1]}
-                    d="M 50 50 C 150 10, 150 90, 300 50 C 450 10, 450 90, 570 50"
+                    d="M 70 27 C 150 -13, 150 67, 300 27 C 450 -13, 450 67, 570 27"
                     className="stroke-blue-400/60 stroke-[3] fill-none"
                 />
                 <path
                     ref={waveRefs[2]}
-                    d="M 50 50 C 150 30, 150 70, 300 50 C 450 30, 450 70, 570 50"
+                    d="M 70 27 C 150 7, 150 47, 300 27 C 450 7, 450 47, 570 27"
                     className="stroke-blue-600/70 stroke-[3] fill-none"
                 />
                 <path
                     ref={waveRefs[3]}
-                    d="M 50 50 C 150 15, 150 85, 300 50 C 450 15, 450 85, 570 50"
+                    d="M 70 27 C 150 -8, 150 62, 300 27 C 450 -8, 450 62, 570 27"
                     className="stroke-blue-300/50 stroke-[3] fill-none"
                 />
                 <path
                     ref={waveRefs[4]}
-                    d="M 50 50 C 150 25, 150 75, 300 50 C 450 25, 450 75, 570 50"
+                    d="M 70 27 C 150 2, 150 52, 300 27 C 450 2, 450 52, 570 27"
                     className="stroke-blue-700/40 stroke-[3] fill-none"
                 />
 
-                {/* Fire or water drop icon at the end */}
-                <text
-                    x="550" // Fixed position near the end of the path
-                    y="60"
-                    className="text-gray-800"
-                    fontSize="40"
-                >
-                    {showWaterDrop ? "💧" : "🔥"}
-                </text>
+                {/* House on Fire icon at the end */}
+                <foreignObject x="520" y="20" width="60" height="60">
+                    <HouseOnFireIcon />
+                </foreignObject>
             </svg>
         </div>
     );
