@@ -45,27 +45,37 @@ export default function WaveProgress({ progress }: WaveProgressProps) {
                 <path
                     ref={waveRefs[0]}
                     d="M 70 27 C 150 -3, 150 57, 300 27 C 450 -3, 450 57, 530 27"
-                    className="stroke-blue-500/80 stroke-[3] fill-none"
+                    stroke="#cfebff"
+                    strokeWidth="3"
+                    fill="none"
                 />
                 <path
                     ref={waveRefs[1]}
                     d="M 70 27 C 150 -13, 150 67, 300 27 C 450 -13, 450 67, 530 27"
-                    className="stroke-blue-400/60 stroke-[3] fill-none"
+                    stroke="#cfebff"
+                    strokeWidth="3"
+                    fill="none"
                 />
                 <path
                     ref={waveRefs[2]}
                     d="M 70 27 C 150 7, 150 47, 300 27 C 450 7, 450 47, 530 27"
-                    className="stroke-blue-600/70 stroke-[3] fill-none"
+                    stroke="#cfebff"
+                    strokeWidth="3"
+                    fill="none"
                 />
                 <path
                     ref={waveRefs[3]}
                     d="M 70 27 C 150 -8, 150 62, 300 27 C 450 -8, 450 62, 530 27"
-                    className="stroke-blue-300/50 stroke-[3] fill-none"
+                    stroke="#cfebff"
+                    strokeWidth="3"
+                    fill="none"
                 />
                 <path
                     ref={waveRefs[4]}
                     d="M 70 27 C 150 2, 150 52, 300 27 C 450 2, 450 52, 530 27"
-                    className="stroke-blue-700/40 stroke-[3] fill-none"
+                    stroke="#cfebff"
+                    strokeWidth="3"
+                    fill="none"
                 />
 
                 {/* House on Fire icon at the end */}

@@ -10,6 +10,9 @@ import QuestionSlider from '../components/quiz/QuestionSlider';
 import QuestionTimer from '../components/quiz/QuestionTimer';
 import { useRouter } from 'next/navigation';
 import WaveProgress from '../components/quiz/WaveProgress';
+import FireVictoryIcon from '@/app/components/quiz/FIreVictory';
+import HouseOnFireIcon from "@/app/components/quiz/HouseOnFire";
+import FIreVictory from "@/app/components/quiz/FIreVictory";
 
 const Quiz = () => {
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'illustration01'| 'illustration02'| 'results' | 'success'>('intro')  ;
@@ -44,13 +47,17 @@ const Quiz = () => {
             if (currentQuestionIndex === 5) {
                 setCurrentScreen('illustration01');
             } else if (currentQuestionIndex === quizData.length - 1) {
-                submitQuiz();
+                // Go to success screen after the last question
+                setCurrentScreen('success');
             } else {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             }
-        }  else if (currentScreen === 'illustration01') {
+        } else if (currentScreen === 'illustration01') {
             setCurrentScreen('quiz');
             setCurrentQuestionIndex(6);
+        } else if (currentScreen === 'success') {
+            // Trigger quiz submission on Weiter from success screen
+            submitQuiz();
         }
     };
 
@@ -69,6 +76,10 @@ const Quiz = () => {
         } else if (currentScreen === 'illustration01') {
             setCurrentScreen('quiz');
             setCurrentQuestionIndex(5);
+        } else if (currentScreen === 'success') {
+            // Return to the last question from the success screen
+            setCurrentScreen('quiz');
+            setCurrentQuestionIndex(quizData.length - 1);
         }
     };
 
@@ -386,7 +397,7 @@ const Quiz = () => {
                                 disabled={!answers[currentQuestionIndex]?.selectedOption}
                             >
                                 {currentQuestionIndex === totalQuestions - 1
-                                    ? (isSubmitting ? 'Wird geladen...' : 'Ergebnisse')
+                                    ? (isSubmitting ? 'Wird geladen...' : 'Quiz beenden')
                                     : 'Weiter'}
                             </button>
                         </div>
@@ -417,9 +428,12 @@ const Quiz = () => {
                         </div>
                     </div>
                 )}
+                {/* Success Screen */}
                 {currentScreen === 'success' && (
                     <div className={styles.successContainer}>
-                        <img src="" alt="Success" className={styles.successImage} />
+                        <foreignObject x="520" y="20" width="60" height="60">
+                            <FireVictoryIcon/>
+                        </foreignObject>
                         <h3>Du hast es geschafft!</h3>
                         <p>
                             Du hast alle Fragen beantwortet und den Brand erfolgreich gelöscht. Erfahre nun,
@@ -427,21 +441,16 @@ const Quiz = () => {
                             du gelangst zum Ergebnis.
                         </p>
                         <div className={styles.navButtons}>
-                            <button
-                                className={styles.backButton}
-                                onClick={() => router.push('/')}
-                            >
+                            <button className={styles.backButton} onClick={goBack}>
                                 Zurück
                             </button>
-                            <button
-                                className={styles.nextButton}
-                                onClick={() => router.push('/results')}
-                            >
-                                Weiter
+                            <button className={styles.nextButton} onClick={() => submitQuiz()}>
+                                Ergebnisse
                             </button>
                         </div>
                     </div>
                 )}
+
             </div>
         </div>
     );
