@@ -1,7 +1,7 @@
 type Option = {
     prefix: string;
     text: string;
-    category: 'A' | 'B' | 'C' | 'D' | 'E';
+    category: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 };
 
 type Question = {
@@ -27,8 +27,8 @@ export const quizData: Question[] = [
         title: 'Wie würdest Du dein Deutsches Sprachniveau einschätzen?',
         type: 'options',
         options: [
-            { prefix: 'A', text: '„Ich kann mich gut verständigen, aber mein Niveau liegt unter C1."', category: 'D' },
-            { prefix: 'B', text: '„Mein Sprachniveau ist C1 oder höher – ich fühle mich sicher in komplexen Gesprächen und Texten."', category: 'E' },
+            { prefix: 'A', text: '„Ich kann mich gut verständigen, aber mein Niveau liegt unter C1."', category: 'E' },
+            { prefix: 'B', text: '„Mein Sprachniveau ist C1 oder höher – ich fühle mich sicher in komplexen Gesprächen und Texten."', category: 'F' },
         ],
     },
     {
@@ -42,7 +42,7 @@ export const quizData: Question[] = [
     {
         id: 3,
         required: false,
-        title: 'Ich interessiere mich für: ',
+        title: 'Welches Bild spricht dich am meisten an?',
         type: 'imageOptions',
         images: [
             {src: '/assets/quiz/sani.jpeg', category: 'A'},
@@ -159,7 +159,7 @@ export const quizData: Question[] = [
         type: 'options',
         options: [
             {prefix: 'A', text: '„Ich fühle mich überwältigt und emotional stark betroffen.„', category: 'A'},
-            {prefix: 'B', text: '„Ich bin emotional, aber ich kann mich einigermaßen gut beruhigen.„', category: 'E'},
+            {prefix: 'B', text: '„Ich bin emotional, aber ich kann mich einigermaßen gut beruhigen.„', category: 'D'},
             {prefix: 'C', text: '„Ich fühle eine Mischung aus Betroffenheit und einem Bedürfnis, das Erlebte zu erarbeiten.„', category: 'B'},
             {prefix: 'D', text: '„Ich fühle mich bewegt, aber auch motiviert, mich zu verbessern und in Zukunft besser zu reagieren.„', category: 'C'},
         ],
