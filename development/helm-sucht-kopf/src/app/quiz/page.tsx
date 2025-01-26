@@ -9,9 +9,13 @@ import QuestionImageOptions from '../components/quiz/QuestionImageOption';
 import QuestionSlider from '../components/quiz/QuestionSlider';
 import QuestionTimer from '../components/quiz/QuestionTimer';
 import { useRouter } from 'next/navigation';
+import WaveProgress from '../components/quiz/WaveProgress';
+import FireVictoryIcon from '@/app/components/quiz/FIreVictory';
+import HouseOnFireIcon from "@/app/components/quiz/HouseOnFire";
+import FIreVictory from "@/app/components/quiz/FIreVictory";
 
 const Quiz = () => {
-    const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'illustration01'| 'illustration02'| 'results'>('intro')  ;
+    const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'illustration01'| 'illustration02'| 'results' | 'success'>('intro')  ;
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<{questionId: number, selectedOption: string, fullText: string}[]>([]);
     const [education, setEducation] = useState<string>('');
@@ -43,13 +47,15 @@ const Quiz = () => {
             if (currentQuestionIndex === 5) {
                 setCurrentScreen('illustration01');
             } else if (currentQuestionIndex === quizData.length - 1) {
-                submitQuiz();
+                setCurrentScreen('success');
             } else {
                 setCurrentQuestionIndex(currentQuestionIndex + 1);
             }
-        }  else if (currentScreen === 'illustration01') {
+        } else if (currentScreen === 'illustration01') {
             setCurrentScreen('quiz');
             setCurrentQuestionIndex(6);
+        } else if (currentScreen === 'success') {
+            submitQuiz();
         }
     };
 
@@ -68,6 +74,9 @@ const Quiz = () => {
         } else if (currentScreen === 'illustration01') {
             setCurrentScreen('quiz');
             setCurrentQuestionIndex(5);
+        } else if (currentScreen === 'success') {
+            setCurrentScreen('quiz');
+            setCurrentQuestionIndex(quizData.length - 1);
         }
     };
 
@@ -118,6 +127,13 @@ const submitQuiz = async () => {
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const calculateProgress = () => {
+        if (currentScreen === 'quiz') {
+            return ((currentQuestionIndex + 1) / totalQuestions) * 100;
+        }
+        return 0;
     };
 
     return (
@@ -179,14 +195,7 @@ const submitQuiz = async () => {
                 {/* Quiz Screen */}
                 {currentScreen === 'quiz' && (
                     <>
-                        <div className={styles.progressBarContainer}>
-                            <div
-                                className={styles.progressBar}
-                                style={{
-                                    width: `${(((currentQuestionIndex as number) + 1) / (totalQuestions as number)) * 100}%`,
-                                }}
-                            />
-                        </div>
+                        <WaveProgress progress={calculateProgress()} />
                         <div className={styles.questionNumber}>
                             Frage {currentQuestionIndex + 1}
                         </div>
@@ -408,7 +417,7 @@ const submitQuiz = async () => {
                                 disabled={!answers[currentQuestionIndex]?.selectedOption}
                             >
                                 {currentQuestionIndex === totalQuestions - 1
-                                    ? (isSubmitting ? 'Wird geladen...' : 'Ergebnisse')
+                                    ? (isSubmitting ? 'Wird geladen...' : 'Quiz beenden')
                                     : 'Weiter'}
                             </button>
                         </div>
@@ -439,6 +448,29 @@ const submitQuiz = async () => {
                         </div>
                     </div>
                 )}
+                {/* Success Screen */}
+                {currentScreen === 'success' && (
+                    <div className={styles.successContainer}>
+                        <foreignObject x="520" y="20" width="60" height="60">
+                            <FireVictoryIcon/>
+                        </foreignObject>
+                        <h3>Du hast es geschafft!</h3>
+                        <p>
+                            Du hast alle Fragen beantwortet und den Brand erfolgreich gelöscht. Erfahre nun,
+                            welcher Beruf am besten zu dir passt. Klick dazu ganz einfach auf den Button und
+                            du gelangst zum Ergebnis.
+                        </p>
+                        <div className={styles.navButtons}>
+                            <button className={styles.backButton} onClick={goBack}>
+                                Zurück
+                            </button>
+                            <button className={styles.nextButton} onClick={() => submitQuiz()}>
+                                Ergebnisse
+                            </button>
+                        </div>
+                    </div>
+                )}
+
             </div>
         </div>
     );

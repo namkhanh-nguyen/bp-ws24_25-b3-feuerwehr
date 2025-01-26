@@ -686,6 +686,20 @@
     border: 1px solid #E40422;
     animation: fadeIn 0.3s ease-in-out;
 }
+.successContainer h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #E40422;
+    margin-bottom: 1rem;
+}
+
+.successContainer p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
