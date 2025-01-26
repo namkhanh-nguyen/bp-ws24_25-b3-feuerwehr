@@ -141,6 +141,15 @@ const Video: React.FC = () => {
         setPlaying(true);
     };
 
+    const handleReplay = () => {
+        // Reset to the intro video and set playing to true to start the intro video
+        setCurrentVideo(videoPaths.intro);
+        setPlaying(true); // This will start the intro video
+        setShowEndMessage(false); // Hide the end screen
+        setFadeToBlack(false); // Remove the fade effect
+    };
+
+
     return (
         <div
             ref={videoContainerRef}
@@ -302,12 +311,14 @@ const Video: React.FC = () => {
                         borderRadius: "10px",
                     }}
                 >
-                    <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
-                        Das war ein kleiner Einblick in die spannende Welt der Berliner Feuerwehr.
-                    </h2>
-                    <p style={{ fontSize: "1rem" }}>
-                        Bereit, ein Teil davon zu werden?
-                    </p>
+                    <img
+                        src="/assets/video/logo.png"
+                        alt="Berliner Feuerwehr Logo"
+                        style={{
+                            maxWidth: "100%",
+                            height: "auto",   // Maintains aspect ratio
+                        }}
+                    />
                     <button
                         style={{
                             padding: "8px 15px",
@@ -317,13 +328,35 @@ const Video: React.FC = () => {
                             border: "none",
                             borderRadius: "5px",
                             cursor: "pointer",
-                            marginTop: "15px",
+                            marginTop: "50px",
                             width: "100%", // Makes sure it doesn’t overflow
-                            maxWidth: "250px", // Limits button width
+                            maxWidth: "200px", // Limits button width
                         }}
                         onClick={() => (window.location.href = `/ausbildungen/`)}
                     >
                         Jetzt bewerben!
+                    </button>
+
+                    {/* Replay Button */}
+                    <button
+                        style={{
+                            padding: "8px 15px",
+                            fontSize: "1rem",
+                            backgroundColor: "#444",  // Different background for replay button
+                            color: "white",
+                            border: "none",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            display: "block",
+                            marginLeft: "auto", // Centers button horizontally
+                            marginRight: "auto", // Centers button horizontally
+                            marginTop: "20px", // Spacing between the buttons
+                            width: "100%", // Makes sure it doesn’t overflow
+                            maxWidth: "200px", // Limits button width
+                        }}
+                        onClick={handleReplay}
+                    >
+                        Neu starten
                     </button>
                 </div>
             )}
