@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import WaveProgress from '../components/quiz/WaveProgress';
 
 const Quiz = () => {
-    const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'illustration01'| 'illustration02'| 'results'>('intro')  ;
+    const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'illustration01'| 'illustration02'| 'results' | 'success'>('intro')  ;
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<{questionId: number, selectedOption: string, fullText: string}[]>([]);
     const [education, setEducation] = useState<string>('');
@@ -181,7 +181,7 @@ const Quiz = () => {
                 {/* Quiz Screen */}
                 {currentScreen === 'quiz' && (
                     <>
-                        <WaveProgress progress={calculateProgress()} showWaterDrop={false} />
+                        <WaveProgress progress={calculateProgress()} />
                         <div className={styles.questionNumber}>
                             Frage {currentQuestionIndex + 1}
                         </div>
@@ -412,6 +412,31 @@ const Quiz = () => {
                                 Zurück
                             </button>
                             <button onClick={goNext} className={styles.nextButton}>
+                                Weiter
+                            </button>
+                        </div>
+                    </div>
+                )}
+                {currentScreen === 'success' && (
+                    <div className={styles.successContainer}>
+                        <img src="" alt="Success" className={styles.successImage} />
+                        <h3>Du hast es geschafft!</h3>
+                        <p>
+                            Du hast alle Fragen beantwortet und den Brand erfolgreich gelöscht. Erfahre nun,
+                            welcher Beruf am besten zu dir passt. Klick dazu ganz einfach auf den Button und
+                            du gelangst zum Ergebnis.
+                        </p>
+                        <div className={styles.navButtons}>
+                            <button
+                                className={styles.backButton}
+                                onClick={() => router.push('/')}
+                            >
+                                Zurück
+                            </button>
+                            <button
+                                className={styles.nextButton}
+                                onClick={() => router.push('/results')}
+                            >
                                 Weiter
                             </button>
                         </div>
