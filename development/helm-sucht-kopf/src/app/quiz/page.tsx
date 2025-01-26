@@ -127,8 +127,12 @@ const submitQuiz = async () => {
                 {currentScreen === 'intro' && (
                     <div className={`${styles.introContainer} ${styles.fadeIn}`}>
                         <img src="/Lupe.png" alt="Intro Image" className={styles.introImage}/>
-                        <h3>Finde den Job, der zu Dir passt!</h3>
-                        <p>
+                        <h3
+                            style={{fontSize: '1.3rem'}}
+                        >Finde den Job, der zu Dir passt!</h3>
+                        <p
+                        style={{fontSize: '1.1rem'}}
+                        >
                             Willkommen beim Karriere-Navigator! Mit diesem Quiz findest Du heraus, welche Ausbildungsmöglichkeiten
                             bei der <span style={{ fontWeight: 'bold', color: 'red' }}>Berliner Feuerwehr</span> perfekt
                             zu Dir und Deinen Stärken passen.
@@ -143,12 +147,13 @@ const submitQuiz = async () => {
                 {currentScreen === 'intermediate' && (
                     <div className={`${styles.intermediateContainer} ${styles.fadeIn}`}>
                         <img src="/Peace.png" alt="Intermediate Image" className={styles.introImage}/>
-                        <h3>Bitte wähle Deinen höchsten Abschluss aus der Liste aus.</h3>
+                        <h3 style={{fontSize: '1.3rem'}}>Bitte wähle Deinen höchsten Abschluss aus der Liste aus.</h3>
                         <div className={`${styles.dropdown} ${education ? styles.selected : ''}`}>
                             <select
                                 id="education"
                                 value={education}
                                 onChange={(e) => setEducation(e.target.value)}
+                                style={{fontSize: '1.1rem'}}
                             >
                                 <option value="">Bitte auswählen</option>
                                 <option value="Berufsbildungsreife">Berufsbildungsreife</option>
@@ -194,8 +199,10 @@ const submitQuiz = async () => {
                                         key={index}
                                         className={`${styles.optionButton} ${answers[currentQuestionIndex]?.selectedOption === option.category ? styles.selectedOption : ''}`}
                                         onClick={() => {
-                                            if (currentQuestion.id === 1 && option.category === 'D') {
-                                                setMessages({ ...messages, languageLevel: "Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-Sprachniveau erreichen." });
+                                            if (currentQuestion.id === 1 && option.category === 'E') {
+                                                setMessages({ ...messages, languageLevel:
+                                                        "Um in die Feuerwehr-Ausbildung aufgenommen zu werden, musst du ein C1-Sprachniveau erreichen."
+                                                });
                                             } else {
                                                 setMessages({...messages, languageLevel: ""});
                                             }
@@ -216,16 +223,29 @@ const submitQuiz = async () => {
                                     )
                                 )}
                                 {currentQuestion.id === 1 && messages.languageLevel && (
-                                    <div className={styles.message}>{messages.languageLevel}</div>
+                                    <div className={styles.message}>
+                                        {messages.languageLevel}
+                                        <p style={{fontSize: '0.9rem', marginTop: '10px' }}>
+                                            C1 ist ein fortgeschrittenes Niveau, bei dem du Deutsch fließend, sicher und präzise beherrschst – wichtig für die Feuerwehr-Ausbildung.
+                                        </p>
+                                    </div>
+                                )}
+                                {/* Nachricht für die zweite Selektion (Kategorie "F") */}
+                                {currentQuestion.id === 1 && answers[currentQuestionIndex]?.selectedOption === 'F' && (
+                                    <div className={styles.message}>
+                                        <p style={{ fontSize: '0.9rem', marginTop: '10px' }}>
+                                            C1 ist ein fortgeschrittenes Niveau, bei dem du Deutsch fließend, sicher und präzise beherrschst – wichtig für die Feuerwehr-Ausbildung.
+                                        </p>
+                                    </div>
                                 )}
                             </div>
                         )}
 
                         {currentQuestion.type === 'input' && (
                             <div className={styles.inputContainer}>
-                                    <div className={styles.imageContainer}>
-                                        <img
-                                            src="/assets/quiz/growRed.svg"
+                                <div className={styles.imageContainer}>
+                                    <img
+                                        src="/assets/quiz/growRed.svg"
                                             alt="Icon for height question"
                                             className={styles.customSvg}
                                         />
