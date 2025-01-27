@@ -33,8 +33,7 @@ const overlays: Record<string, Overlay> = {
         options: [
             { label: "RTW-Simulationsraum", video: videoPaths.rtw, img: "/assets/video/rtw.jpg" },
             { label: "Wohnzimmer-Simulationsraum", video: videoPaths.wohnzimmer, img: "/assets/video/wohnzimmer.jpg" },
-            { label: "360°-Simulationsraum", video: videoPaths.kugelraum, img: "/assets/video/kugelraum.jpg" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
+            { label: "360°-Simulationsraum", video: videoPaths.kugelraum, img: "/assets/video/kugelraum.jpg" }
         ],
     },
     rtw_overlay: {
@@ -43,7 +42,7 @@ const overlays: Record<string, Overlay> = {
             { label: "Vitalzeichen messen", video: videoPaths.activities.rtw_vitalzeichen, img: "" },
             { label: "Notfallausrüstung zeigen", video: videoPaths.activities.rtw_notfallausruestung, img: "" },
             { label: "Weiter zur Karte", video: "karte", img: "" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
+            { label: "Zum Ausgang", video: videoPaths.finale, img: "" }
         ],
     },
     wohnzimmer_overlay: {
@@ -52,7 +51,7 @@ const overlays: Record<string, Overlay> = {
             { label: "Erstversorgung zeigen", video: videoPaths.activities.wohnzimmer_erstversorgung, img: "" },
             { label: "Ausrüstung erklären", video: videoPaths.activities.wohnzimmer_ausruestung, img: "" },
             { label: "Weiter zur Karte", video: "karte", img: "" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
+            { label: "Zum Ausgang", video: videoPaths.finale, img: "" }
         ],
     },
     kugelraum_overlay: {
@@ -61,7 +60,7 @@ const overlays: Record<string, Overlay> = {
             { label: "Schau Dich um", video: videoPaths.activities.kugelraum_umsehen, img: "" },
             { label: "Wie trainiert ihr hier?", video: videoPaths.activities.kugelraum_train, img: "" },
             { label: "Weiter zur Karte", video: "karte", img: "" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
+            { label: "Zum Ausgang", video: videoPaths.finale, img: "" }
         ],
     },
 };
@@ -247,46 +246,62 @@ const Video: React.FC = () => {
                                     <div
                                         style={{
                                             width: "100%",
-                                            height: "80%", // 70% of the option's height for the image
+                                            height: option.img ? "80%" : "100%",
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
                                             overflow: "hidden", // Prevents any overflow
-                                            backgroundColor: option.img ? "transparent" : "rgba(0, 0, 0, 0.7)",
+                                            backgroundColor: option.img ? "transparent" : "white",
                                         }}
                                     >
-                                        <img
-                                            src={option.img}
-                                            alt={option.label}
-                                            style={{
-                                                width: "100%",
-                                                height: "100%", // Ensures full scaling
-                                                objectFit: "cover", // Maintains aspect ratio without cropping
-                                                aspectRatio: "36/25", // Enforces the correct proportions
-                                                borderTopLeftRadius: "10px",
-                                                borderTopRightRadius: "10px",
-                                            }}
-                                        />
+                                        {option.img ? (
+                                            <img
+                                                src={option.img}
+                                                alt={option.label}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "100%", // Ensures full scaling
+                                                    objectFit: "cover", // Maintains aspect ratio without cropping
+                                                    aspectRatio: "36/25", // Enforces the correct proportions
+                                                    borderTopLeftRadius: "10px",
+                                                    borderTopRightRadius: "10px",
+                                                }}
+                                            />
+                                        ) : (
+                                            <div
+                                                style={{
+                                                    color: "black",
+                                                    fontSize: "1rem",
+                                                    textAlign: "center",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                }}
+                                            >
+                                                {option.label}
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Title Container */}
-                                    <div
-                                        style={{
-                                            width: "100%",
-                                            height: "20%", // 30% of the option's height for the title
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            backgroundColor: "white", // White background for the title
-                                            color: "black", // Text color for the title
-                                            fontSize: "0.9rem",
-                                            overflow: "hidden", // Prevents any overflow
-                                            borderBottomLeftRadius: "10px",
-                                            borderBottomRightRadius: "10px",
-                                        }}
-                                    >
-                                        {option.label}
-                                    </div>
+                                    {option.img && (
+                                        <div
+                                            style={{
+                                                width: "100%",
+                                                height: "20%", // 20% of the option's height for the title
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                backgroundColor: "white", // White background for the title
+                                                color: "black", // Text color for the title
+                                                fontSize: "0.9rem",
+                                                overflow: "hidden", // Prevents any overflow
+                                                borderBottomLeftRadius: "10px",
+                                                borderBottomRightRadius: "10px",
+                                            }}
+                                        >
+                                            {option.label}
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
