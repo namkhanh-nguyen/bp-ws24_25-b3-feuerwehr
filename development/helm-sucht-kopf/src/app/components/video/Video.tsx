@@ -29,7 +29,7 @@ type Overlay = {
 
 const overlays: Record<string, Overlay> = {
     karte: {
-        title: "Wohin möchtest du als nächstes?",
+        title: "Wohin möchtest Du als nächstes?",
         options: [
             { label: "RTW-Simulationsraum", video: videoPaths.rtw, img: "/assets/video/rtw.jpg" },
             { label: "Wohnzimmer-Simulationsraum", video: videoPaths.wohnzimmer, img: "/assets/video/wohnzimmer.jpg" },
@@ -38,7 +38,7 @@ const overlays: Record<string, Overlay> = {
         ],
     },
     rtw_overlay: {
-        title: "Was möchtest du tun?",
+        title: "Was möchtest Du tun?",
         options: [
             { label: "Vitalzeichen messen", video: videoPaths.activities.rtw_vitalzeichen, img: "" },
             { label: "Notfallausrüstung zeigen", video: videoPaths.activities.rtw_notfallausruestung, img: "" },
@@ -47,7 +47,7 @@ const overlays: Record<string, Overlay> = {
         ],
     },
     wohnzimmer_overlay: {
-        title: "Was möchtest du tun?",
+        title: "Was möchtest Du tun?",
         options: [
             { label: "Erstversorgung zeigen", video: videoPaths.activities.wohnzimmer_erstversorgung, img: "" },
             { label: "Ausrüstung erklären", video: videoPaths.activities.wohnzimmer_ausruestung, img: "" },
@@ -56,9 +56,9 @@ const overlays: Record<string, Overlay> = {
         ],
     },
     kugelraum_overlay: {
-        title: "Was möchtest du tun?",
+        title: "Was möchtest Du tun?",
         options: [
-            { label: "Schau dich um", video: videoPaths.activities.kugelraum_umsehen, img: "" },
+            { label: "Schau Dich um", video: videoPaths.activities.kugelraum_umsehen, img: "" },
             { label: "Wie trainiert ihr hier?", video: videoPaths.activities.kugelraum_train, img: "" },
             { label: "Weiter zur Karte", video: "karte", img: "" },
             { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
@@ -67,6 +67,7 @@ const overlays: Record<string, Overlay> = {
 };
 
 const Video: React.FC = () => {
+    const [playing, setPlaying] = useState(false);
     const [requestRotate, setRequestRotate] = useState(false);
     const [currentVideo, setCurrentVideo] = useState(videoPaths.intro);
     const [showOverlay, setShowOverlay] = useState<keyof typeof overlays | null>(null);
@@ -92,6 +93,7 @@ const Video: React.FC = () => {
                 setShowEndMessage(true); // Show end message after fade
             }, 2000); // 2 seconds fade duration
         }
+        setPlaying(false);
     };
 
     const handleOverlayClick = (video: string) => {
@@ -100,6 +102,7 @@ const Video: React.FC = () => {
         } else {
             setCurrentVideo(video);
             setShowOverlay(null);
+            setPlaying(true);
         }
     };
 
@@ -123,8 +126,14 @@ const Video: React.FC = () => {
         };
     }, []);
 
+    const handleStart = () => {
+        setPlaying(true);
+    };
+
     const handleReplay = () => {
+        // Reset to the intro video and set playing to true to start the intro video
         setCurrentVideo(videoPaths.intro);
+        setPlaying(true); // This will start the intro video
         setShowEndMessage(false); // Hide the end screen
         setFadeToBlack(false); // Remove the fade effect
     };
@@ -156,10 +165,12 @@ const Video: React.FC = () => {
             <ReactPlayer
                 ref={videoRef}
                 url={currentVideo}
+                playing={playing}
                 controls={true}
                 playsinline={true}
                 width="100%"
                 height="100%"
+                onStart={handleStart}
                 onEnded={handleVideoEnd}
             />
 
@@ -173,7 +184,8 @@ const Video: React.FC = () => {
                         height: "100%",
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "center", // Centers the entire container
+                        justifyContent: "center", // Centers the entire container vertically
+                        alignItems: "center", // Centers the entire container horizontally
                         backgroundColor: "rgba(0, 0, 0, 0.6)", // Darker semi-transparent background
                         overflow: "hidden", // Prevents unwanted overflow
                     }}
@@ -185,6 +197,7 @@ const Video: React.FC = () => {
                             flexDirection: "column",
                             alignItems: "center",
                             justifyContent: "center", // Ensures this block is centered
+                            width: "100%", // Take full width to ensure proper alignment
                         }}
                     >
                         <h2
@@ -193,6 +206,8 @@ const Video: React.FC = () => {
                                 backgroundColor: "rgba(0, 0, 0, 0.7)",
                                 borderRadius: "10px",
                                 textAlign: "center",
+                                padding: "10px", // Add padding for better spacing
+                                marginBottom: "20px", // Add margin to separate from the grid
                             }}
                         >
                             {overlays[showOverlay].title}
@@ -203,7 +218,7 @@ const Video: React.FC = () => {
                             style={{
                                 display: "grid",
                                 gridTemplateColumns: "repeat(2, 1fr)", // 2 Columns
-                                gap: "15px",
+                                gap: "10px",
                                 justifyContent: "center",
                                 alignItems: "center", // Ensures vertical centering
                                 maxWidth: "100vw", // Prevents overflow
