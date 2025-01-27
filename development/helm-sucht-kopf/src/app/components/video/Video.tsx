@@ -10,9 +10,9 @@ const videoPaths = {
     activities: {
         sporthalle_train: "https://static.videezy.com/system/resources/previews/000/031/414/original/4k-numbers-digits-countdown-close-up-background.mp4",
         rtw_vitalzeichen: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        rtw_notfallausrüstung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        rtw_notfallausruestung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
         wohnzimmer_erstversorgung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-        wohnzimmer_ausrüstung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        wohnzimmer_ausruestung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
         kugelraum_umsehen: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
         kugelraum_train: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     },
@@ -41,7 +41,7 @@ const overlays: Record<string, Overlay> = {
         title: "Was möchtest du tun?",
         options: [
             { label: "Vitalzeichen messen", video: videoPaths.activities.rtw_vitalzeichen, img: "" },
-            { label: "Notfallausrüstung zeigen", video: videoPaths.activities.rtw_notfallausrüstung, img: "" },
+            { label: "Notfallausrüstung zeigen", video: videoPaths.activities.rtw_notfallausruestung, img: "" },
             { label: "Weiter zur Karte", video: "karte", img: "" },
             { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
         ],
@@ -50,7 +50,7 @@ const overlays: Record<string, Overlay> = {
         title: "Was möchtest du tun?",
         options: [
             { label: "Erstversorgung zeigen", video: videoPaths.activities.wohnzimmer_erstversorgung, img: "" },
-            { label: "Ausrüstung erklären", video: videoPaths.activities.wohnzimmer_ausrüstung, img: "" },
+            { label: "Ausrüstung erklären", video: videoPaths.activities.wohnzimmer_ausruestung, img: "" },
             { label: "Weiter zur Karte", video: "karte", img: "" },
             { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
         ],
@@ -79,9 +79,9 @@ const Video: React.FC = () => {
     const handleVideoEnd = () => {
         if (currentVideo === videoPaths.intro) {
             setShowOverlay("karte");
-        } else if (currentVideo === videoPaths.rtw || currentVideo === videoPaths.activities.rtw_vitalzeichen || currentVideo === videoPaths.activities.rtw_notfallausrüstung) {
+        } else if (currentVideo === videoPaths.rtw || currentVideo === videoPaths.activities.rtw_vitalzeichen || currentVideo === videoPaths.activities.rtw_notfallausruestung) {
             setShowOverlay("rtw_overlay");
-        } else if (currentVideo === videoPaths.wohnzimmer || currentVideo === videoPaths.activities.wohnzimmer_erstversorgung || currentVideo === videoPaths.activities.wohnzimmer_ausrüstung) {
+        } else if (currentVideo === videoPaths.wohnzimmer || currentVideo === videoPaths.activities.wohnzimmer_erstversorgung || currentVideo === videoPaths.activities.wohnzimmer_ausruestung) {
             setShowOverlay("wohnzimmer_overlay");
         } else if (currentVideo === videoPaths.kugelraum || currentVideo === videoPaths.activities.kugelraum_umsehen || currentVideo === videoPaths.activities.kugelraum_train) {
             setShowOverlay("kugelraum_overlay");
@@ -237,7 +237,7 @@ const Video: React.FC = () => {
                                             alignItems: "center",
                                             justifyContent: "center",
                                             overflow: "hidden", // Prevents any overflow
-                                            backgroundColor: option.img ? "transparent" : "rgba(0, 0, 0, 0.7)", // Background for imageless options
+                                            backgroundColor: option.img ? "transparent" : "rgba(0, 0, 0, 0.7)",
                                         }}
                                     >
                                         <img
