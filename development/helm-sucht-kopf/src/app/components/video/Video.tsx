@@ -3,19 +3,18 @@ import ReactPlayer from "react-player";
 
 const videoPaths = {
     intro: "https://static.videezy.com/system/resources/previews/000/052/918/original/21.mp4",
-    sporthalle: "https://static.videezy.com/system/resources/previews/000/012/324/original/Venice_10.mp4",
-    rtw: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    rtw: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     wohnzimmer: "https://static.videezy.com/system/resources/previews/000/055/884/original/201118-CountdownChristmas.mp4",
-    kugelraum: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+    kugelraum: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
     finale: "https://static.videezy.com/system/resources/previews/000/007/291/original/Dunes.mp4",
     activities: {
         sporthalle_train: "https://static.videezy.com/system/resources/previews/000/031/414/original/4k-numbers-digits-countdown-close-up-background.mp4",
-        rtw_vitalzeichen: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        rtw_notfallausrüstung: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        wohnzimmer_erstversorgung: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-        wohnzimmer_ausrüstung: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        kugelraum_umsehen: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
-        kugelraum_train: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+        rtw_vitalzeichen: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        rtw_notfallausrüstung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        wohnzimmer_erstversorgung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+        wohnzimmer_ausrüstung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        kugelraum_umsehen: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
+        kugelraum_train: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     },
 };
 
@@ -32,51 +31,42 @@ const overlays: Record<string, Overlay> = {
     karte: {
         title: "Wohin möchtest du als nächstes?",
         options: [
-            { label: "Sporthalle", video: videoPaths.sporthalle, img: "/assets/video/sporthalle.jpg" },
             { label: "RTW-Simulationsraum", video: videoPaths.rtw, img: "/assets/video/rtw.jpg" },
             { label: "Wohnzimmer-Simulationsraum", video: videoPaths.wohnzimmer, img: "/assets/video/wohnzimmer.jpg" },
             { label: "360°-Simulationsraum", video: videoPaths.kugelraum, img: "/assets/video/kugelraum.jpg" },
-        ],
-    },
-    sporthalle_overlay: {
-        title: "Was möchtest du tun?",
-        options: [
-            { label: "Trainiere mit!", video: videoPaths.activities.sporthalle_train, img: "/assets/video/sporthalle_train.jpg" },
-            { label: "Weiter zur Karte", video: "karte", img: "/assets/video/back_to_map.jpg" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/back_to_map.jpg" }
+            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
         ],
     },
     rtw_overlay: {
         title: "Was möchtest du tun?",
         options: [
-            { label: "Vitalzeichen messen", video: videoPaths.activities.rtw_vitalzeichen, img: "/assets/video/rtw_vitalzeichen.jpg" },
-            { label: "Notfallausrüstung zeigen", video: videoPaths.activities.rtw_notfallausrüstung, img: "/assets/video/rtw_ausrüstung.jpg" },
-            { label: "Weiter zur Karte", video: "karte", img: "/assets/video/back_to_map.jpg" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/back_to_map.jpg" }
+            { label: "Vitalzeichen messen", video: videoPaths.activities.rtw_vitalzeichen, img: "" },
+            { label: "Notfallausrüstung zeigen", video: videoPaths.activities.rtw_notfallausrüstung, img: "" },
+            { label: "Weiter zur Karte", video: "karte", img: "" },
+            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
         ],
     },
     wohnzimmer_overlay: {
         title: "Was möchtest du tun?",
         options: [
-            { label: "Erstversorgung zeigen", video: videoPaths.activities.wohnzimmer_erstversorgung, img: "/assets/video/wohnzimmer_erstversorgung.jpg" },
-            { label: "Ausrüstung erklären", video: videoPaths.activities.wohnzimmer_ausrüstung, img: "/assets/video/wohnzimmer_ausrüstung.jpg" },
-            { label: "Weiter zur Karte", video: "karte", img: "/assets/video/back_to_map.jpg" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/back_to_map.jpg" }
+            { label: "Erstversorgung zeigen", video: videoPaths.activities.wohnzimmer_erstversorgung, img: "" },
+            { label: "Ausrüstung erklären", video: videoPaths.activities.wohnzimmer_ausrüstung, img: "" },
+            { label: "Weiter zur Karte", video: "karte", img: "" },
+            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
         ],
     },
     kugelraum_overlay: {
         title: "Was möchtest du tun?",
         options: [
-            { label: "Schau dich um", video: videoPaths.activities.kugelraum_umsehen, img: "/assets/video/kugelraum_umsehen.jpg" },
-            { label: "Wie trainiert ihr hier?", video: videoPaths.activities.kugelraum_train, img: "/assets/video/kugelraum_train.jpg" },
-            { label: "Weiter zur Karte", video: "karte", img: "/assets/video/back_to_map.jpg" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/back_to_map.jpg" }
+            { label: "Schau dich um", video: videoPaths.activities.kugelraum_umsehen, img: "" },
+            { label: "Wie trainiert ihr hier?", video: videoPaths.activities.kugelraum_train, img: "" },
+            { label: "Weiter zur Karte", video: "karte", img: "" },
+            { label: "Zum Ausgang", video: videoPaths.finale, img: "/assets/video/exit.png" }
         ],
     },
 };
 
 const Video: React.FC = () => {
-    const [playing, setPlaying] = useState(false);
     const [requestRotate, setRequestRotate] = useState(false);
     const [currentVideo, setCurrentVideo] = useState(videoPaths.intro);
     const [showOverlay, setShowOverlay] = useState<keyof typeof overlays | null>(null);
@@ -89,8 +79,6 @@ const Video: React.FC = () => {
     const handleVideoEnd = () => {
         if (currentVideo === videoPaths.intro) {
             setShowOverlay("karte");
-        } else if (currentVideo === videoPaths.sporthalle || currentVideo === videoPaths.activities.sporthalle_train) {
-            setShowOverlay("sporthalle_overlay");
         } else if (currentVideo === videoPaths.rtw || currentVideo === videoPaths.activities.rtw_vitalzeichen || currentVideo === videoPaths.activities.rtw_notfallausrüstung) {
             setShowOverlay("rtw_overlay");
         } else if (currentVideo === videoPaths.wohnzimmer || currentVideo === videoPaths.activities.wohnzimmer_erstversorgung || currentVideo === videoPaths.activities.wohnzimmer_ausrüstung) {
@@ -104,7 +92,6 @@ const Video: React.FC = () => {
                 setShowEndMessage(true); // Show end message after fade
             }, 2000); // 2 seconds fade duration
         }
-        setPlaying(false);
     };
 
     const handleOverlayClick = (video: string) => {
@@ -113,7 +100,6 @@ const Video: React.FC = () => {
         } else {
             setCurrentVideo(video);
             setShowOverlay(null);
-            setPlaying(true);
         }
     };
 
@@ -137,14 +123,8 @@ const Video: React.FC = () => {
         };
     }, []);
 
-    const handleStart = () => {
-        setPlaying(true);
-    };
-
     const handleReplay = () => {
-        // Reset to the intro video and set playing to true to start the intro video
         setCurrentVideo(videoPaths.intro);
-        setPlaying(true); // This will start the intro video
         setShowEndMessage(false); // Hide the end screen
         setFadeToBlack(false); // Remove the fade effect
     };
@@ -176,12 +156,10 @@ const Video: React.FC = () => {
             <ReactPlayer
                 ref={videoRef}
                 url={currentVideo}
-                playing={playing}
                 controls={true}
                 playsinline={true}
                 width="100%"
                 height="100%"
-                onStart={handleStart}
                 onEnded={handleVideoEnd}
             />
 
@@ -246,16 +224,20 @@ const Video: React.FC = () => {
                                         maxWidth: "200px", // Prevents buttons from getting too big
                                         aspectRatio: "36/25", // Maintains correct aspect ratio
                                         textAlign: "center",
+                                        cursor: "pointer", // Indicates the option is clickable
                                     }}
+                                    onClick={() => handleOverlayClick(option.video)} // Make the entire option clickable
                                 >
+                                    {/* Image Container */}
                                     <div
                                         style={{
                                             width: "100%",
-                                            height: "100%", // Ensures it scales within its container
+                                            height: "80%", // 70% of the option's height for the image
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
                                             overflow: "hidden", // Prevents any overflow
+                                            backgroundColor: option.img ? "transparent" : "rgba(0, 0, 0, 0.7)", // Background for imageless options
                                         }}
                                     >
                                         <img
@@ -269,8 +251,26 @@ const Video: React.FC = () => {
                                                 borderTopLeftRadius: "10px",
                                                 borderTopRightRadius: "10px",
                                             }}
-                                            onClick={() => handleOverlayClick(option.video)}
                                         />
+                                    </div>
+
+                                    {/* Title Container */}
+                                    <div
+                                        style={{
+                                            width: "100%",
+                                            height: "20%", // 30% of the option's height for the title
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            backgroundColor: "white", // White background for the title
+                                            color: "black", // Text color for the title
+                                            fontSize: "0.9rem",
+                                            overflow: "hidden", // Prevents any overflow
+                                            borderBottomLeftRadius: "10px",
+                                            borderBottomRightRadius: "10px",
+                                        }}
+                                    >
+                                        {option.label}
                                     </div>
                                 </div>
                             ))}
@@ -280,21 +280,21 @@ const Video: React.FC = () => {
             )}
 
 
-             {fadeToBlack && (
-                 <div
-                     style={{
-                         position: "absolute",
-                         top: 0,
-                         left: 0,
-                         width: "100%",
-                         height: "100%",
-                         backgroundColor: "black",
-                         opacity: 0,
-                         animation: "fadeToBlack 2s forwards",
-                         zIndex: 10,
-                     }}
-                 />
-             )}
+            {fadeToBlack && (
+                <div
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "black",
+                        opacity: 0,
+                        animation: "fadeToBlack 2s forwards",
+                        zIndex: 10,
+                    }}
+                />
+            )}
 
             {showEndMessage && (
                 <div
