@@ -65,7 +65,7 @@ export default function JobsPage() {
                     Laufbahn.
                 </p>
 
-                <div style={{display: 'flex', justifyContent: 'center', marginTop: '2rem'}}>
+                <div style={{display: 'flex', justifyContent: 'center', marginTop: '2.1rem'}}>
                     <button
                         onClick={() => window.location.href = '/quiz'}
                         className={styles.zumNavigator}
