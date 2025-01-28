@@ -216,7 +216,7 @@ const Video: React.FC = () => {
                         <div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(2, 1fr)", // 2 Columns
+                                gridTemplateColumns: showOverlay === "karte" ? "repeat(3, 1fr)" : "repeat(2, 1fr)",
                                 gap: "10px",
                                 justifyContent: "center",
                                 alignItems: "center", // Ensures vertical centering
@@ -234,9 +234,12 @@ const Video: React.FC = () => {
                                         borderRadius: "10px",
                                         overflow: "hidden",
                                         backgroundColor: "#ffffff",
-                                        width: "40vw", // Each button is 40% of screen width
-                                        maxWidth: "200px", // Prevents buttons from getting too big
-                                        aspectRatio: "36/25", // Maintains correct aspect ratio
+
+                                        // Unterscheidung zwischen "karte" und anderen Overlays
+                                        width: showOverlay === "karte" ? "40vw" : "25vw",  // "karte" bleibt groß, andere werden kleiner
+                                        maxWidth: showOverlay === "karte" ? "190px" : "150px", // Reduziert maxWidth für Optionen
+                                        aspectRatio: showOverlay === "karte" ? "36/25" : "36/15", // Kleinere Höhe für Optionen
+
                                         textAlign: "center",
                                         cursor: "pointer", // Indicates the option is clickable
                                     }}
