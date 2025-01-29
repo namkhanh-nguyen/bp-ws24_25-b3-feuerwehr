@@ -58,8 +58,8 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
                         cursor: "pointer",
                     }}
                 >
-            Mehr Infos
-        </span>
+                    Mehr Infos
+                </span>
             </div>
 
             <div className="flex flex-col justify-between flex-grow relative">
@@ -69,34 +69,11 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
                 >
                     {name}
                 </h3>
-
-                <div
-                    className="md:hidden"
-                    style={{
-                        padding: "0.5rem",
-                        paddingBottom: "1rem",
-                        position: "absolute",
-                        top: "0px",
-                        right: "0px",
-                    }}
-                >
-                    <button
-                        style={{padding: "0.5rem"}}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            document
-                                .getElementById(`desc-${id}`)
-                                ?.classList.toggle("hidden");
-                        }}
-                    >
-                        ▼
-                    </button>
-                </div>
             </div>
 
             <div
                 id={`desc-${id}`}
-                className="hidden transition-all rounded-lg"
+                className="block md:hidden transition-all rounded-lg"
                 style={{
                     width: "85%",
                     marginLeft: "1rem",
@@ -113,8 +90,8 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
                         cursor: "pointer",
                     }}
                 >
-            Mehr Infos
-        </span>
+                    Mehr Infos
+                </span>
             </div>
         </div>
     );
