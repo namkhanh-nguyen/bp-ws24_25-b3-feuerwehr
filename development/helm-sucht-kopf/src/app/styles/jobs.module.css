@@ -42,6 +42,7 @@
     display: none;
     padding: 0.5rem; /* Equivalent to p-2 */
     justify-content: space-between; /* Equivalent to justify-between */
+    max-height: 75px;
 }
 
 .mobileFilterContainer {

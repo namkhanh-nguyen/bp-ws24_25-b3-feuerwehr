@@ -157,41 +157,46 @@ export default function JobsPage() {
                     </button>
                 </div>
 
-                <div style={{display: 'flex', flexDirection: 'column', flexGrow: '1'}}>
-
-                    <div className={styles.mobileFilterButton}>
-                        <h3 className="p-2">
+                <div style={{ flexDirection: 'column', flexGrow: '1' }}>
+                    <div
+                        className={styles.mobileFilterButton}
+                    >
+                        <h3 className="p-2" style={{ margin: 0 }}>
                             Ergebnisse: {filteredJobs.length}
                         </h3>
-                        <button
-                            style={{
-                                borderRadius: '1.5rem',
-                                border: '1px solid black',
-                                width: '30%',
-                                padding: '0.5rem',
-                                backgroundColor: '#E5E7EB',
-                                display: isFiltersVisible ? 'none' : 'block'
-                            }}
-                            onClick={() => setIsFiltersVisible(true)}
-                        >
-                            Filtern
-                        </button>
-                        <button
-                            style={{
-                                borderRadius: '1.5rem',
-                                border: '1px solid black',
-                                width: '30%',
-                                padding: '0.5rem',
-                                backgroundColor: '#E5E7EB',
-                                color: 'var(--red-primary)',
-                                display: isFiltersVisible ? 'block' : 'none'
-                            }}
-                            onClick={() => setIsFiltersVisible(false)}
-                        >
-                            Schließen
-                        </button>
-
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                            <button
+                                style={{
+                                    borderRadius: '1.5rem',
+                                    border: '1px solid black',
+                                    width: '10rem',
+                                    padding: '0.5rem',
+                                    backgroundColor: '#E5E7EB',
+                                    display: isFiltersVisible ? 'none' : 'block',
+                                    height: 'fit-content', // Adjust height to fit content
+                                }}
+                                onClick={() => setIsFiltersVisible(true)}
+                            >
+                                Filtern
+                            </button>
+                            <button
+                                style={{
+                                    borderRadius: '1.5rem',
+                                    border: '1px solid black',
+                                    width: '10rem',
+                                    padding: '0.5rem',
+                                    backgroundColor: '#E5E7EB',
+                                    color: 'var(--red-primary)',
+                                    display: isFiltersVisible ? 'block' : 'none',
+                                    height: 'fit-content', // Adjust height to fit content
+                                }}
+                                onClick={() => setIsFiltersVisible(false)}
+                            >
+                                Schließen
+                            </button>
+                        </div>
                     </div>
+
                     {isFiltersVisible && (
                         <div className={styles.mobileFilterContainer}>
                             <div className="block p-2">
