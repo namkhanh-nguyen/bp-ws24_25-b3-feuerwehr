@@ -68,8 +68,29 @@ const Video: React.FC = () => {
     const videoContainerRef = useRef<HTMLDivElement>(null);
     const [fadeToBlack, setFadeToBlack] = useState(false);
 
+    const enterFullscreen = () => {
+        if (videoContainerRef.current) {
+            if (videoContainerRef.current.requestFullscreen) {
+                videoContainerRef.current.requestFullscreen();
+            } else if ((videoContainerRef.current as any).webkitEnterFullscreen) {
+                (videoContainerRef.current as any).webkitEnterFullscreen(); // For iOS
+            } else if ((videoContainerRef.current as any).webkitRequestFullscreen) {
+                (videoContainerRef.current as any).webkitRequestFullscreen(); // For Safari
+            }
+        }
+    };
+
+    const exitFullscreen = () => {
+        if (document.fullscreenElement != null) {
+            document.exitFullscreen();
+        } else if ((document as any).webkitExitFullscreen) {
+            (document as any).webkitExitFullscreen(); // For Safari
+        }
+    };
 
     const handleVideoEnd = () => {
+        exitFullscreen();
+
         if (currentVideo === videoPaths.intro) {
             setShowOverlay("karte");
         } else if (currentVideo === videoPaths.rtw || currentVideo === videoPaths.activities.rtw_vitalzeichen) {
@@ -78,8 +99,7 @@ const Video: React.FC = () => {
             setShowOverlay("wohnzimmer_overlay");
         } else if (currentVideo === videoPaths.kugelraum) {
             setShowOverlay("kugelraum_overlay");
-        }
-        else if (currentVideo === videoPaths.finale) {
+        } else if (currentVideo === videoPaths.finale) {
             setFadeToBlack(true); // Trigger fade to black
             setTimeout(() => {
                 setShowEndMessage(true); // Show end message after fade
@@ -98,6 +118,18 @@ const Video: React.FC = () => {
         }
     };
 
+    const handleStart = () => {
+        setPlaying(true);
+        enterFullscreen(); // Enter fullscreen when the video starts
+    };
+
+    const handleReplay = () => {
+        setCurrentVideo(videoPaths.intro);
+        setPlaying(true);
+        setShowEndMessage(false);
+        setFadeToBlack(false);
+    };
+
     useEffect(() => {
         const checkOrientation = () => {
             if (window.innerHeight > window.innerWidth) {
@@ -107,10 +139,7 @@ const Video: React.FC = () => {
             }
         };
 
-        // Check on mount
         checkOrientation();
-
-        // Listen for resize events
         window.addEventListener("resize", checkOrientation);
 
         return () => {
@@ -118,39 +147,21 @@ const Video: React.FC = () => {
         };
     }, []);
 
-    const handleStart = () => {
-        setPlaying(true);
-    };
-
-    const handleReplay = () => {
-        // Reset to the intro video and set playing to true to start the intro video
-        setCurrentVideo(videoPaths.intro);
-        setPlaying(true); // This will start the intro video
-        setShowEndMessage(false); // Hide the end screen
-        setFadeToBlack(false); // Remove the fade effect
-    };
-
-
     return (
         <div
             ref={videoContainerRef}
-            style={{ position: "relative", width: "100%", maxWidth: "720px", margin: "0 auto", aspectRatio: "16 / 9" }} >
+            style={{ position: "relative", width: "100%", maxWidth: "720px", margin: "0 auto", aspectRatio: "16 / 9" }}
+        >
             <style>{`
-                    @keyframes fadeToBlack {
-                        from {
-                            opacity: 0;
-                        }
-                        to {
-                            opacity: 1;
-                        }
-                    }
-                `}</style>
+                @keyframes fadeToBlack {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+            `}</style>
 
             {requestRotate && (
                 <div>
-                    <h2>
-                        Bitte dein Gerät zu Landscape drehen
-                    </h2>
+                    <h2>Bitte dein Gerät zu Landscape drehen</h2>
                 </div>
             )}
 
@@ -162,6 +173,7 @@ const Video: React.FC = () => {
                 playsinline={true}
                 width="100%"
                 height="100%"
+                light="/assets/video/Azubis.jpg"
                 onStart={handleStart}
                 onEnded={handleVideoEnd}
             />
@@ -176,20 +188,19 @@ const Video: React.FC = () => {
                         height: "100%",
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "center", // Centers the entire container vertically
-                        alignItems: "center", // Centers the entire container horizontally
-                        backgroundColor: "rgba(0, 0, 0, 0.6)", // Darker semi-transparent background
-                        overflow: "hidden", // Prevents unwanted overflow
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "rgba(0, 0, 0, 0.6)",
+                        overflow: "hidden",
                     }}
                 >
-                    {/* Container for header and buttons to keep them together */}
                     <div
                         style={{
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
-                            justifyContent: "center", // Ensures this block is centered
-                            width: "100%", // Take full width to ensure proper alignment
+                            justifyContent: "center",
+                            width: "100%",
                         }}
                     >
                         <h2
@@ -198,23 +209,22 @@ const Video: React.FC = () => {
                                 backgroundColor: "rgba(0, 0, 0, 0.7)",
                                 borderRadius: "10px",
                                 textAlign: "center",
-                                padding: "10px", // Add padding for better spacing
-                                marginBottom: "20px", // Add margin to separate from the grid
+                                padding: "10px",
+                                marginBottom: "20px",
                             }}
                         >
                             {overlays[showOverlay].title}
                         </h2>
 
-                        {/* Centered Grid Layout */}
                         <div
                             style={{
                                 display: "grid",
                                 gridTemplateColumns: showOverlay === "karte" ? "repeat(3, 1fr)" : "repeat(2, 1fr)",
                                 gap: "10px",
                                 justifyContent: "center",
-                                alignItems: "center", // Ensures vertical centering
-                                maxWidth: "100vw", // Prevents overflow
-                                maxHeight: "90vh", // Prevents exceeding screen height
+                                alignItems: "center",
+                                maxWidth: "100vw",
+                                maxHeight: "90vh",
                             }}
                         >
                             {overlays[showOverlay].options.map((option, index: number) => (
@@ -227,18 +237,14 @@ const Video: React.FC = () => {
                                         borderRadius: "10px",
                                         overflow: "hidden",
                                         backgroundColor: "#ffffff",
-
-                                        // Unterscheidung zwischen "karte" und anderen Overlays
-                                        width: showOverlay === "karte" ? "40vw" : "25vw",  // "karte" bleibt groß, andere werden kleiner
-                                        maxWidth: showOverlay === "karte" ? "190px" : "150px", // Reduziert maxWidth für Optionen
-                                        aspectRatio: showOverlay === "karte" ? "36/25" : "36/15", // Kleinere Höhe für Optionen
-
+                                        width: showOverlay === "karte" ? "40vw" : "25vw",
+                                        maxWidth: showOverlay === "karte" ? "190px" : "150px",
+                                        aspectRatio: showOverlay === "karte" ? "36/25" : "36/15",
                                         textAlign: "center",
-                                        cursor: "pointer", // Indicates the option is clickable
+                                        cursor: "pointer",
                                     }}
-                                    onClick={() => handleOverlayClick(option.video)} // Make the entire option clickable
+                                    onClick={() => handleOverlayClick(option.video)}
                                 >
-                                    {/* Image Container */}
                                     <div
                                         style={{
                                             width: "100%",
@@ -246,7 +252,7 @@ const Video: React.FC = () => {
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
-                                            overflow: "hidden", // Prevents any overflow
+                                            overflow: "hidden",
                                             backgroundColor: option.img ? "transparent" : "white",
                                         }}
                                     >
@@ -256,9 +262,9 @@ const Video: React.FC = () => {
                                                 alt={option.label}
                                                 style={{
                                                     width: "100%",
-                                                    height: "100%", // Ensures full scaling
-                                                    objectFit: "cover", // Maintains aspect ratio without cropping
-                                                    aspectRatio: "36/25", // Enforces the correct proportions
+                                                    height: "100%",
+                                                    objectFit: "cover",
+                                                    aspectRatio: "36/25",
                                                     borderTopLeftRadius: "10px",
                                                     borderTopRightRadius: "10px",
                                                 }}
@@ -278,19 +284,18 @@ const Video: React.FC = () => {
                                         )}
                                     </div>
 
-                                    {/* Title Container */}
                                     {option.img && (
                                         <div
                                             style={{
                                                 width: "100%",
-                                                height: "20%", // 20% of the option's height for the title
+                                                height: "20%",
                                                 display: "flex",
                                                 alignItems: "center",
                                                 justifyContent: "center",
-                                                backgroundColor: "white", // White background for the title
-                                                color: "black", // Text color for the title
+                                                backgroundColor: "white",
+                                                color: "black",
                                                 fontSize: "0.9rem",
-                                                overflow: "hidden", // Prevents any overflow
+                                                overflow: "hidden",
                                                 borderBottomLeftRadius: "10px",
                                                 borderBottomRightRadius: "10px",
                                             }}
@@ -304,7 +309,6 @@ const Video: React.FC = () => {
                     </div>
                 </div>
             )}
-
 
             {fadeToBlack && (
                 <div
@@ -331,8 +335,8 @@ const Video: React.FC = () => {
                         transform: "translate(-50%, -50%)",
                         textAlign: "center",
                         zIndex: 20,
-                        width: "90%", // Ensures it doesn’t overflow
-                        maxWidth: "500px", // Limits size on larger screens
+                        width: "90%",
+                        maxWidth: "500px",
                         padding: "20px",
                         borderRadius: "10px",
                     }}
@@ -342,7 +346,7 @@ const Video: React.FC = () => {
                         alt="Berliner Feuerwehr Logo"
                         style={{
                             maxWidth: "100%",
-                            height: "auto",   // Maintains aspect ratio
+                            height: "auto",
                         }}
                     />
                     <button
@@ -355,30 +359,29 @@ const Video: React.FC = () => {
                             borderRadius: "5px",
                             cursor: "pointer",
                             marginTop: "50px",
-                            width: "100%", // Makes sure it doesn’t overflow
-                            maxWidth: "200px", // Limits button width
+                            width: "100%",
+                            maxWidth: "200px",
                         }}
                         onClick={() => (window.location.href = `/ausbildungen/`)}
                     >
                         Jetzt bewerben!
                     </button>
 
-                    {/* Replay Button */}
                     <button
                         style={{
                             padding: "8px 15px",
                             fontSize: "1rem",
-                            backgroundColor: "#444",  // Different background for replay button
+                            backgroundColor: "#444",
                             color: "white",
                             border: "none",
                             borderRadius: "5px",
                             cursor: "pointer",
                             display: "block",
-                            marginLeft: "auto", // Centers button horizontally
-                            marginRight: "auto", // Centers button horizontally
-                            marginTop: "20px", // Spacing between the buttons
-                            width: "100%", // Makes sure it doesn’t overflow
-                            maxWidth: "200px", // Limits button width
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                            marginTop: "20px",
+                            width: "100%",
+                            maxWidth: "200px",
                         }}
                         onClick={handleReplay}
                     >
@@ -386,8 +389,6 @@ const Video: React.FC = () => {
                     </button>
                 </div>
             )}
-
-
         </div>
     );
 };
