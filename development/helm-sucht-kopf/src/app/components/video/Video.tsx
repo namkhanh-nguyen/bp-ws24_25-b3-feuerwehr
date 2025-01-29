@@ -2,19 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 
 const videoPaths = {
-    intro: "https://static.videezy.com/system/resources/previews/000/052/918/original/21.mp4",
-    rtw: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-    wohnzimmer: "https://static.videezy.com/system/resources/previews/000/055/884/original/201118-CountdownChristmas.mp4",
-    kugelraum: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-    finale: "https://static.videezy.com/system/resources/previews/000/007/291/original/Dunes.mp4",
+    intro: "/assets/videos/intro.mp4",
+    rtw: "/assets/videos/rtw.mp4",
+    wohnzimmer: "/assets/videos/wohnzimmer.mp4",
+    kugelraum: "/assets/videos/kugelraum.mp4",
+    finale: "/assets/videos/final.mp4",
     activities: {
-        sporthalle_train: "https://static.videezy.com/system/resources/previews/000/031/414/original/4k-numbers-digits-countdown-close-up-background.mp4",
-        rtw_vitalzeichen: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        rtw_notfallausruestung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        wohnzimmer_erstversorgung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-        wohnzimmer_ausruestung: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        kugelraum_umsehen: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4",
-        kugelraum_train: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+        rtw_vitalzeichen: "/assets/videos/vitalzeichen.mp4",
+        wohnzimmer_erstversorgung: "/assets/videos/erstversorgung.mp4",
+        wohnzimmer_ausruestung: "/assets/videos/ausruestung.mp4",
     },
 };
 
@@ -40,7 +36,6 @@ const overlays: Record<string, Overlay> = {
         title: "Was möchtest Du tun?",
         options: [
             { label: "Vitalzeichen messen", video: videoPaths.activities.rtw_vitalzeichen, img: "" },
-            { label: "Notfallausrüstung zeigen", video: videoPaths.activities.rtw_notfallausruestung, img: "" },
             { label: "Weiter zur Karte", video: "karte", img: "" },
             { label: "Zum Ausgang", video: videoPaths.finale, img: "" }
         ],
@@ -57,8 +52,6 @@ const overlays: Record<string, Overlay> = {
     kugelraum_overlay: {
         title: "Was möchtest Du tun?",
         options: [
-            { label: "Schau Dich um", video: videoPaths.activities.kugelraum_umsehen, img: "" },
-            { label: "Wie trainiert ihr hier?", video: videoPaths.activities.kugelraum_train, img: "" },
             { label: "Weiter zur Karte", video: "karte", img: "" },
             { label: "Zum Ausgang", video: videoPaths.finale, img: "" }
         ],
@@ -79,11 +72,11 @@ const Video: React.FC = () => {
     const handleVideoEnd = () => {
         if (currentVideo === videoPaths.intro) {
             setShowOverlay("karte");
-        } else if (currentVideo === videoPaths.rtw || currentVideo === videoPaths.activities.rtw_vitalzeichen || currentVideo === videoPaths.activities.rtw_notfallausruestung) {
+        } else if (currentVideo === videoPaths.rtw || currentVideo === videoPaths.activities.rtw_vitalzeichen) {
             setShowOverlay("rtw_overlay");
         } else if (currentVideo === videoPaths.wohnzimmer || currentVideo === videoPaths.activities.wohnzimmer_erstversorgung || currentVideo === videoPaths.activities.wohnzimmer_ausruestung) {
             setShowOverlay("wohnzimmer_overlay");
-        } else if (currentVideo === videoPaths.kugelraum || currentVideo === videoPaths.activities.kugelraum_umsehen || currentVideo === videoPaths.activities.kugelraum_train) {
+        } else if (currentVideo === videoPaths.kugelraum) {
             setShowOverlay("kugelraum_overlay");
         }
         else if (currentVideo === videoPaths.finale) {
