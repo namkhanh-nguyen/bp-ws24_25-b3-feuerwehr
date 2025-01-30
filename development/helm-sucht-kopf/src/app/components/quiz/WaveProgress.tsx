@@ -29,7 +29,7 @@ export default function WaveProgress({ progress }: WaveProgressProps) {
     }, [progress]);
 
     return (
-        <div className="w-full h-16 flex items-center justify-center bg-transparent relative">
+        <div className="w-full h-14 flex items-center justify-center bg-transparent relative">
             {/* SVG container */}
             <svg
                 viewBox="0 0 600 100"

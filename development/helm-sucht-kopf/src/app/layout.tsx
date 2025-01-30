@@ -2,21 +2,22 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./styles/globals.css";
 import React from "react";
-import Chatbot from "@/app/components/chatbot/Chatbot";
+import Chatbot from '@/app/components/chatbot/Chatbot'
 import Header from "./components/navigation/Header";
 import DynamicHeader from "./components/DynamicHeader";
 import Footer from "./components/navigation/Footer";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import ChatbotWrapper from "@/app/components/quiz/ChatbotWrapper";
 
 // Load custom fonts
 const berlinTypeWebRegular = localFont({
-  src: "../../public/fonts/BerlinTypeWeb-Regular.woff",
+  src: "../../public/fonts/BerlinTypeWeb-Regular.woff", // Korrigierter Pfad
   variable: "--font-berlin-type-regular",
   weight: "400",
 });
 
 const berlinTypeWebBold = localFont({
-  src: "../../public/fonts/BerlinTypeWeb-Bold.woff",
+  src: "../../public/fonts/BerlinTypeWeb-Bold.woff", // Korrigierter Pfad
   variable: "--font-berlin-type-bold",
   weight: "700",
 });
@@ -61,7 +62,7 @@ export default function RootLayout({
       >
         {/*<Header />*/}
         <DynamicHeader />
-        <Chatbot />
+        <ChatbotWrapper />
         <div style={{ paddingTop: "80px" }}>
           {children}
           <SpeedInsights />
