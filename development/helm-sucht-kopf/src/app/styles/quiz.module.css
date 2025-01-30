@@ -77,6 +77,14 @@
     outline: none;
     border: 2px solid #E40422;
 }
+.imageGridContainer {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
 .imageOptionsContainer {
     display: grid;
@@ -361,17 +369,17 @@
 }
 
 .questionNumber {
+    margin-top: -0.8rem;
     font-weight: bold;
     font-size: 1.4rem;
     color: black;
-    margin-top: 0.4rem;
     margin-bottom: 0.2rem;
 }
 
 .questionTitle {
     font-size: 1.3rem;
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     line-height: 1.1;
     color: #333;
 }
@@ -379,7 +387,7 @@
 .optionsContainer {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.7rem;
 }
 
 .optionPrefix {
@@ -392,7 +400,7 @@
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 1.5rem;
-    padding: 0.8rem;
+    padding: 0.9rem;
     text-align: left;
     font-size: 1.2rem;
     line-height: 1.3;
@@ -510,12 +518,10 @@
     margin-bottom: 10px;
 }
 .imageGridContainer {
-    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
 }
 .imageOptionsContainer {
     display: grid;
@@ -530,7 +536,7 @@
 .imageOption {
     position: relative;
     width: 100%;
-    padding-top: 10rem;
+    padding-top: 58%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -680,7 +686,7 @@
 .message {
     font-size: 1rem;
     color: #E40422;
-    margin-top: 2rem;
+    margin-top: 1rem;
     padding: 0.5rem;
     border-radius: 10px;
     border: 1px solid #E40422;
@@ -702,31 +708,21 @@
 
 
 /* Media Queries for Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .questionNumber {
         font-size: 1.2rem;
-    }
-    .quizContainer {
-        padding: 1rem;
+        margin-top: -1.2rem;
     }
     .questionTitle {
         font-size: 1.1rem;
+        margin-bottom: 0.5rem;
     }
     .optionButton {
-        font-size: 1rem;
+        font-size: 1.09rem;
+    }
+    .imageOption {
+        padding-top: 75%;
     }
 
-}
-
-@media (max-width: 480px) {
-    .questionNumber {
-        font-size: 1.2rem;
-    }
-    .questionTitle {
-        font-size: 1.1rem;
-    }
-    .optionButton {
-        font-size: 1rem;
-    }
 
 }
