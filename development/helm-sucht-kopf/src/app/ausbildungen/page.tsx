@@ -75,16 +75,18 @@ export default function JobsPage() {
 
     return (
         <div className={styles.pageMasterDiv}>
-            <div style={{width: '100%', padding: '1.5rem'}}>
-                <h1 className={styles.deinWeg}>
-                    Dein Weg bei der Berliner Feuerwehr
-                </h1>
+            <div style={{padding: '1.5rem'}}>
+                <div className={styles.container}>
+                    <h1 className={styles.deinWeg}>
+                        Dein Weg bei der Berliner Feuerwehr
+                    </h1>
 
-                <p style={{textAlign: 'left', marginTop: '0.5rem'}}>
-                    Finde deinen idealen Karriereweg bei der Feuerwehr Berlin. Der Karriere Navigator zeigt dir
-                    alle Optionen, Spezialisierungen und Aufstiegschancen – für eine erfolgreiche und spannende
-                    Laufbahn.
-                </p>
+                    <p style={{ marginTop: '0.5rem' }}>
+                        Finde deinen idealen Karriereweg bei der Feuerwehr Berlin. Der Karriere Navigator zeigt dir
+                        alle Optionen, Spezialisierungen und Aufstiegschancen – für eine erfolgreiche und spannende
+                        Laufbahn.
+                    </p>
+                </div>
 
                 <div style={{display: 'flex', justifyContent: 'center', marginTop: '2.1rem'}}>
                     <button
