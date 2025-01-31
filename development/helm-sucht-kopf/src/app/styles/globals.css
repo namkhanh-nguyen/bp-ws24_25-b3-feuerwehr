@@ -325,6 +325,10 @@ h3.card-title {
   min-height: 25rem;
 }
 
+.card-process .card-button {
+  display: none;
+}
+
 .card-process .card-icon {
   align-self: flex-end;
   height: 6rem;
