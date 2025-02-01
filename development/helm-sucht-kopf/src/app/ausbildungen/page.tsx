@@ -88,12 +88,12 @@ export default function JobsPage() {
                     </p>
                 </div>
 
-                <div style={{display: 'flex', justifyContent: 'center', marginTop: '2.1rem'}}>
+                <div style={{display: 'flex', justifyContent: 'center'}}>
                     <button
                         onClick={() => window.location.href = '/quiz'}
-                        className={styles.zumNavigator}
+                        className="hero-button"
                     >
-                        Zum Navigator
+                        Zum Karriere Quiz
                     </button>
                 </div>
 
