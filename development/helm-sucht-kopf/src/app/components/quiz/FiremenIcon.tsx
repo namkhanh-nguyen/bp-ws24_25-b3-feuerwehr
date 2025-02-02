@@ -1,10 +1,10 @@
 const FiremenIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        fillRule="evenodd"
-        strokeLinejoin="round"
-        strokeMiterlimit="2"
-        clipRule="evenodd"
+        fill-rule="evenodd"
+        stroke-linejoin="round"
+        stroke-miterlimit="2"
+        clip-rule="evenodd"
         viewBox="0 0 2509 1559"
     >
         <path fill="none" d="M0 0h2508v1559H0z" />

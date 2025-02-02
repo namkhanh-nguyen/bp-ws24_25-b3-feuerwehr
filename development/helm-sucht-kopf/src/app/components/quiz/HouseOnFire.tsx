@@ -37,7 +37,7 @@ const HouseOnFire = () => (
             r="8.3"
             fill="#fff"
             stroke="#CA684E"
-            strokeWidth="2"
+            stroke-width="2"
         />
         <path
             fill="#FFB31F"
