@@ -18,7 +18,7 @@ export default function Hero() {
               zu dir passt.
             </p>
             <Link href="/ausbildungen" className="hero-button">
-              Zu Ausbildungen
+              Zu den Ausbildungen
             </Link>
           </div>
         </div>
