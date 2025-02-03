@@ -6,11 +6,17 @@
     font-family: var(--font-berlin-type-regular), serif;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 .deinWeg {
-    max-width: 75%;
     font-size: 2rem;
     font-weight: bold;
-    text-align: left;
     font-family: var(--font-berlin-type-bold), serif;
 }
 
@@ -170,6 +176,13 @@
 
     .pageMasterDiv {
         padding: 0;
+    }
+
+    .container {
+        align-items: flex-start; /* Left-align items */
+        text-align: left; /* Left-align text */
+        padding: 1rem; /* Add some padding for better spacing */
+        height: auto; /* Adjust height for mobile */
     }
 
     .zumNavigator {

@@ -68,6 +68,16 @@ const Video: React.FC = () => {
     const videoContainerRef = useRef<HTMLDivElement>(null);
     const [fadeToBlack, setFadeToBlack] = useState(false);
 
+    // Scroll to the top when the component mounts
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to the top of the page
+    }, []); // Empty dependency array ensures this runs once when the component mounts
+
+    // Auto-start video after component mount
+    useEffect(() => {
+        setPlaying(true);  // Start the video automatically when the component loads
+    }, [currentVideo]);  // Only when the currentVideo changes (such as when the user selects a new video)
+
     const enterFullscreen = () => {
         if (videoContainerRef.current) {
             if (videoContainerRef.current.requestFullscreen) {
@@ -150,7 +160,7 @@ const Video: React.FC = () => {
     return (
         <div
             ref={videoContainerRef}
-            style={{ position: "relative", width: "100%", maxWidth: "720px", margin: "0 auto", aspectRatio: "16 / 9" }}
+            style={{position: "relative", width: "100%", maxWidth: "720px", margin: "0 auto", aspectRatio: "16 / 9"}}
         >
             <style>{`
                 @keyframes fadeToBlack {
@@ -160,10 +170,15 @@ const Video: React.FC = () => {
             `}</style>
 
             {requestRotate && (
-                <div>
-                    <h2>Bitte dein Gerät zu Landscape drehen</h2>
-                </div>
-            )}
+                <>
+                    <div className="mt-1 text-center text-xs md:text-sm max-w-lg mx-auto space-y-0">
+                        <p>📱 Tipp: Drehe dein Handy horizontal für das beste Erlebnis!</p>
+                    </div>
+                    <div className="mt-1 text-center text-xs md:text-sm max-w-lg mx-auto">
+                        <p className="mb-4">⚠ Wichtig: Beende den Fullscreen-Modus, um fortzufahren.</p>
+                    </div>
+                </>
+                )}
 
             <ReactPlayer
                 ref={videoRef}

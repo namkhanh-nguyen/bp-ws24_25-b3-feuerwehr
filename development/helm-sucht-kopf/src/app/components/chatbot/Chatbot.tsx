@@ -1,244 +1,511 @@
-'use client'
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import { Button } from "@/app/components/chatbot/ui/Button"
-import { Card } from "@/app/components/chatbot/ui/Card"
-import { MessageCircle, X, ChevronRight } from 'lucide-react'
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/app/components/chatbot/ui/Button";
+import { Card } from "@/app/components/chatbot/ui/Card";
+import {
+    MessageCircle,
+    X,
+    ChevronRight,
+    Send,
+    ArrowLeft,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+    rankQuestions,
+    highlightText,
+} from "@/app/components/chatbot/ui/text-processing";
 
-type Message = {
-    id: string
-    text: string
-    sender: 'bot' | 'user'
-    options?: Option[]
-}
+import BotIcon from "@/app/components/chatbot/ui/Bot.svg";
+import UserIcon from "@/app/components/chatbot/ui/User.svg";
+import { Message, Option } from "@/app/components/chatbot/ui/chat";
 
-type Option = {
-    text: string
-    value: string
-}
+/* -----DATA: CATEGORIES, QUESTIONS, ANSWERS------ */
+const CATEGORIES: Option[] = [
+    { text: "Bewerbung", value: "category_bewerbung" },
+    {
+        text: "Formale, körperliche und gesundheitliche Voraussetzungen",
+        value: "category_voraussetzungen",
+    },
+    { text: "Auswahlverfahren", value: "category_auswahlverfahren" },
+];
 
-const mainCategories = [
-    { text: 'Bewerbung', value: 'bewerbung' },
-    { text: 'Formale, körperliche und gesundheitliche Voraussetzungen', value: 'voraussetzungen' },
-    { text: 'Auswahlverfahren', value: 'auswahlverfahren' },
-    { text: 'Ausbildung', value: 'ausbildung' },
-]
-
-const ausbildungCategories = [
-    { text: '112 Direkt', value: 'direkt' },
-    { text: '112 Direkt Plus', value: 'direkt-plus' },
-    { text: '112 Medic', value: 'medic' },
-    { text: '112 Dual', value: 'dual' },
-    { text: '112 Classic', value: 'classic' },
-    { text: '112 Medic Expert', value: 'medic-expert' },
-    { text: '112 Bachelor', value: 'bachelor' },
-    { text: '112 Master', value: 'master' },
-]
-
-const questionsByCategory: Record<string, Option[]> = {
-    'bewerbung': [
-        { text: 'Wie viele Ausbildungsstellen werden jährlich ausgeschrieben?', value: 'stellen' },
-        { text: 'Ist eine Bewerbung außerhalb der Fristen möglich?', value: 'fristen' },
-        { text: 'Wo lade ich Unterlagen hoch, für die es kein passendes Anlagefeld gibt?', value: 'unterlagen' },
-        { text: 'Was passiert bei unvollständigen Bewerbungsunterlagen?', value: 'unvollstaendig' },
-        { text: 'Kann ich mich für mehrere Stellenausschreibungen gleichzeitig bewerben?', value: 'mehrfach' },
-        { text: 'Bringt eine Mitgliedschaft bei der Freiwilligen Feuerwehr Vorteile?', value: 'freiwillig' },
-        { text: 'Werden Lehrgänge der Freiwilligen Feuerwehr anerkannt?', value: 'lehrgaenge' },
+const QUESTIONS_BY_CATEGORY: Record<string, Option[]> = {
+    bewerbung: [
+        {
+            text: "Wie viele Ausbildungsstellen werden jährlich bei der Berliner Feuerwehr ausgeschrieben?",
+            value: "bewerbung_stellen",
+        },
+        {
+            text: "Ist es möglich sich außerhalb der Fristen zu bewerben?",
+            value: "bewerbung_fristen",
+        },
+        {
+            text: "Wo lade ich meine Unterlagen hoch, wenn kein passendes Anlagefeld existiert?",
+            value: "bewerbung_unterlagen",
+        },
+        {
+            text: "Was passiert bei unvollständigen Bewerbungsunterlagen und wie reiche ich nach?",
+            value: "bewerbung_unvollstaendig",
+        },
+        {
+            text: "Kann ich mich zeitgleich für mehrere Stellenausschreibungen bewerben?",
+            value: "bewerbung_mehrfach",
+        },
+        {
+            text: "Bringt mir eine Mitgliedschaft bei der Freiwilligen Feuerwehr Pluspunkte?",
+            value: "bewerbung_freiwillig",
+        },
+        {
+            text: "Werden Lehrgänge der Freiwilligen Feuerwehr anerkannt (Ausbildungszeit verkürzen)?",
+            value: "bewerbung_lehrgaenge",
+        },
     ],
-    'voraussetzungen': [
-        { text: 'Welche Berufsausbildungen werden bei 112 Classic berücksichtigt?', value: 'berufsausbildung' },
-        { text: 'Kann ich mich mit Fachabitur für 112 Dual bewerben?', value: 'fachabitur' },
-        { text: 'Kann ich das Abschlusszeugnis nachreichen?', value: 'zeugnis' },
-        { text: 'Was, wenn mein Schwimmabzeichen älter als zwei Jahre ist?', value: 'schwimmen' },
-        { text: 'Was, wenn mein Sportabzeichen älter als ein Jahr ist?', value: 'sport' },
-        { text: 'Muss ich ohne Führerschein einen Auszug aus dem Fahreignungsregister beantragen?', value: 'fuehrerschein' },
-        { text: 'Brauche ich ein polizeiliches Führungszeugnis?', value: 'fuehrungszeugnis' },
-        { text: 'Warum gelten für Bewerberinnen die gleichen Sportanforderungen?', value: 'sportanforderungen' },
+    voraussetzungen: [
+        {
+            text: "Werden nur handwerkliche/technische Berufsausbildungen (112 Classic) anerkannt?",
+            value: "voraussetzungen_berufsausbildung",
+        },
+        {
+            text: "Kann ich mich für 112 Dual auch mit einem Fachabitur bewerben?",
+            value: "voraussetzungen_fachabitur",
+        },
+        {
+            text: "Kann ich das Zeugnis nachreichen, wenn ich erst später abschließe?",
+            value: "voraussetzungen_zeugnis",
+        },
+        {
+            text: "Was ist, wenn mein Schwimmabzeichen älter ist als zwei Jahre?",
+            value: "voraussetzungen_schwimmen",
+        },
+        {
+            text: "Was ist, wenn mein Sportabzeichen älter ist als ein Jahr?",
+            value: "voraussetzungen_sport",
+        },
+        {
+            text: "Benötige ich den Auszug aus dem Fahreignungsregister, wenn ich keinen Führerschein habe?",
+            value: "voraussetzungen_fuehrerschein",
+        },
+        {
+            text: "Brauche ich ein polizeiliches Führungszeugnis?",
+            value: "voraussetzungen_fuehrungszeugnis",
+        },
+        {
+            text: "Warum gelten für Bewerberinnen die gleichen Sportanforderungen?",
+            value: "voraussetzungen_sportanforderungen",
+        },
     ],
-    'auswahlverfahren': [
-        { text: 'Wie geht es nach dem Einreichen der Bewerbung weiter?', value: 'ablauf' },
-        { text: 'Was tun bei Krankheit am Auswahltag?', value: 'krankheit' },
-        { text: 'Kann ich mich nach Nichtbestehen erneut bewerben?', value: 'wiederholung' },
+    auswahlverfahren: [
+        {
+            text: "Wie geht es nach dem Einreichen der Bewerbung weiter?",
+            value: "auswahl_ablauf",
+        },
+        {
+            text: "Was mache ich, wenn ich am Auswahltag krank bin?",
+            value: "auswahl_krankheit",
+        },
+        {
+            text: "Kann ich mich erneut bewerben, wenn ich das Auswahlverfahren nicht bestehe?",
+            value: "auswahl_wiederholung",
+        },
     ],
-    'ausbildung': [
-        { text: 'Fragen zur Ausbildung', value: 'ausbildung_fragen' },
-    ],
-}
+};
 
-const answers: Record<string, string> = {
-    'stellen': 'Insgesamt stellt die Berliner Feuerwehr mehrere Hundert Nachwuchskräfte pro Jahr ein. Die Einstellungszahlen unterscheiden sich je nach Einstiegsweg.',
-    'fristen': 'Nein, das ist nicht möglich.',
-    'unterlagen': 'Wenn für eines der geforderten Dokumente kein eigenes Anlagefeld zum Hochladen der Datei vorhanden ist, fügen Sie bitte alle Unterlagen in einem Dokument zusammen und laden es unter dem Feld „Anschreiben / Komplette Unterlagen" hoch.',
-    'unvollstaendig': 'Sie erhalten einen Hinweis per E-Mail mit einer Erinnerung an die fehlenden Unterlagen. Bis zum Ende der Bewerbungsfrist müssen alle geforderten Bewerbungsunterlagen vollständig vorliegen, da die Bewerbung sonst keine Berücksichtigung findet. Falls es einen triftigen Grund gibt, warum Sie ein Dokument erst später einreichen können, weisen Sie uns bitte in Ihrer Bewerbung darauf hin und nennen uns das Datum, zu dem Sie das Dokument nachreichen können. Zum Nachreichen antworten Sie auf die automatische Eingangsbestätigung Ihrer Bewerbung und fügen die fehlenden Unterlagen als Dateianhang bei.',
-    'mehrfach': 'Ja. Über das Online-Portal ist es möglich sich zeitgleich auf weitere Laufbahnen zu bewerben. Bei mehreren Bewerbungen im gleichen Zeitraum müssen Sie nur an einem strukturierten Auswahlverfahren teilnehmen.',
-    'freiwillig': 'Pluspunkte bringt eine Mitgliedschaft im Ehrenamt nicht. Im Auswahlverfahren hilft Ihnen Ihre Erfahrung sicherlich, Ihre Motivation darzustellen.',
-    'lehrgaenge': 'Nein, diese Möglichkeit besteht nicht.',
-    'berufsausbildung': 'Es werden alle staatlich anerkannten Ausbildungsberufe mit einer mindestens zweijährigen Berufsausbildung anerkannt. Außerdem wird auch die Zeit in der Bundeswehr als Soldatin oder Soldat auf Zeit ab einer Dienstzeit von vier Jahren als gleichwertig anerkannt.',
-    'fachabitur': 'Nein. Bei der Bewerbung für den Einstiegsweg 112 Dual müssen Sie die allgemeine Hochschulreife vorweisen. Das Fachabitur reicht leider nicht aus.',
-    'zeugnis': 'Ja, bitte weisen Sie in Ihrem Anschreiben darauf hin, bis wann Sie das Zeugnis nachreichen können. Mit der Bewerbung reichen Sie dann bitte das letzte Zeugnis ein, bzw. ein Schreiben der Ober-, Berufs- oder Hochschule aus dem hervorgeht, wann der voraussichtliche Abschluss erfolgt.',
-    'schwimmen': 'In diesem Fall muss ein neuer Schwimmtest absolviert werden. Jeder ausgebildete Bademeister, z.B. in einem öffentlichen Schwimmbad, darf ein solches Schwimmabzeichen abnehmen. In der Regel muss der Deutsche Schwimmpass für Erwachsene vorgelegt werden. Der Jugendschwimmpass wird nur bei Bewerbenden unter 18 Jahren akzeptiert. Der Schwimmpass muss zudem unbedingt vom Passinhaber unterschrieben werden. Das gültige Schwimmabzeichen kann in der Regel bis zu drei Monate vor dem Einstellungstermin nachgereicht werden. Zu diesem Zeitpunkt darf das Schwimmabzeichen nicht älter als zwei Jahre sein.',
-    'sport': 'Bewerbende des höheren feuerwehrtechnischen Diensts müssen zum Zeitpunkt der Einstellung im Besitz eines Deutschen Sportabzeichens in Silber sein. Dieses darf beim Einstellungstermin nicht älter als ein Jahr alt sein. Falls dies nicht der Fall ist, müssen Sie ein neues Sportabzeichen machen. Informationen hierzu finden Sie auf der Internetseite des Deutschen Sportabzeichens (DOSB): <a href="https://deutsches-sportabzeichen.de/service/sportabzeichen-erwerben" target="_blank" rel="noopener noreferrer">https://deutsches-sportabzeichen.de/service/sportabzeichen-erwerben</a>',
-    'fuehrerschein': 'Ja. Wir benötigen die Auskunft aus dem Fahreignungsregister, auch wenn keine Eintragungen vorliegen. Das gilt auch für diejenigen Bewerbenden, die noch keinen Führerschein besitzen. Die Beantragung ist unentgeltlich möglich unter: <a href="https://www.kba.de/DE/Themen/ZentraleRegister/FAER/Auskunft/faer_auskunft_node.html" target="_blank" rel="noopener noreferrer">https://www.kba.de/DE/Themen/ZentraleRegister/FAER/Auskunft/faer_auskunft_node.html</a>',
-    'fuehrungszeugnis': 'Nein, ein polizeiliches Führungszeugnis muss nicht eingereicht werden. Bei den ausgewählten Bewerbenden fordern wir auf dem Behördenweg einen Auszug aus dem Zentralregister des Bundesamtes für Justiz an.',
-    'ablauf': 'Wenn Sie noch kein Sportzertifikat eingereicht haben, laden wir Sie zu einem der monatlichen Sportprüfungstermine ein. Nach dem Ende der Bewerbungsfrist verschicken wir an alle Bewerbenden einen Link zum Onlinetest, der von zu Hause aus zu bearbeiten ist. Außerdem werden alle eingegangenen Bewerbungen von uns auf ihre Vollständigkeit und die formalen Voraussetzungen geprüft. Ungefähr 4-6 Wochen nach Ende der Bewerbungsfrist werden in der Regel die Einladungen zum Auswahlverfahren verschickt.',
-    'krankheit': 'In einem solchen Fall bitten wir Sie sich unverzüglich per E-Mail bei uns zu melden. Schreiben Sie bitte eine E-Mail an bewerbungsbuero@berliner-feuerwehr.de (für den mittleren feuerwehrtechnischen Dienst), an auswahlverfahren@berliner-feuerwehr.de (für den gehobenen und höheren feuerwehrtechnischen Dienst) oder benutzen Sie die Antwortfunktion der Einladungsmail. Gegebenenfalls kann zeitnah ein neuer Termin nach Maßgabe freier Plätze vereinbart werden.',
-    'wiederholung': 'Ja. Zum nächstmöglichen Termin ist es möglich, sich wieder über das Online-Portal zu bewerben.',
-    'ausbildung_fragen': 'Bitte wählen Sie eine spezifische Ausbildungskategorie aus, um detaillierte Informationen zu erhalten.',
-}
+// Answers
+const ANSWERS: Record<string, string> = {
+    // Bewerbung
+    bewerbung_stellen:
+        "Insgesamt stellt die Berliner Feuerwehr mehrere Hundert Nachwuchskräfte pro Jahr ein. Die Einstellungszahlen unterscheiden sich je nach Einstiegsweg.",
+    bewerbung_fristen: "Nein, das ist nicht möglich.",
+    bewerbung_unterlagen:
+        'Wenn für eines der geforderten Dokumente kein eigenes Anlagefeld vorhanden ist, fügen Sie bitte alle Unterlagen in einem Dokument zusammen und laden es unter dem Feld „Anschreiben / Komplette Unterlagen“ hoch.',
+    bewerbung_unvollstaendig:
+        "Sie erhalten einen Hinweis per E-Mail mit einer Erinnerung an die fehlenden Unterlagen. Bis zum Ende der Bewerbungsfrist müssen alle Unterlagen vollständig vorliegen. Falls Dokumente später eingereicht werden müssen, weisen Sie uns bitte in Ihrer Bewerbung darauf hin und nennen uns das Datum. Zum Nachreichen antworten Sie auf die automatische Eingangsbestätigung Ihrer Bewerbung und fügen die fehlenden Unterlagen an.",
+    bewerbung_mehrfach:
+        "Ja. Über das Online-Portal ist es möglich, sich zeitgleich auf weitere Laufbahnen zu bewerben. Bei mehreren Bewerbungen im gleichen Zeitraum nehmen Sie nur an einem strukturierten Auswahlverfahren teil.",
+    bewerbung_freiwillig:
+        "Pluspunkte bringt eine Mitgliedschaft im Ehrenamt nicht. Im Auswahlverfahren kann Ihnen Ihre Erfahrung jedoch helfen, Ihre Motivation darzustellen.",
+    bewerbung_lehrgaenge: "Nein, diese Möglichkeit besteht nicht.",
 
+    // Formale, körperliche und gesundheitliche Voraussetzungen
+    voraussetzungen_berufsausbildung:
+        "Alle staatlich anerkannten Ausbildungsberufe mit mindestens zweijähriger Dauer werden anerkannt. Bundeswehrzeit ab vier Dienstjahren kann ebenfalls gleichwertig sein.",
+    voraussetzungen_fachabitur:
+        "Nein. Für 112 Dual ist die allgemeine Hochschulreife erforderlich. Fachabitur reicht leider nicht.",
+    voraussetzungen_zeugnis:
+        "Ja, bitte vermerken Sie in Ihrem Anschreiben, bis wann das Zeugnis nachgereicht werden kann. Reichen Sie sonst ein letztes Zeugnis oder ein Schreiben Ihrer Schule/Hochschule ein.",
+    voraussetzungen_schwimmen:
+        "Wenn Ihr Schwimmabzeichen älter als zwei Jahre ist, benötigen Sie einen neuen Schwimmtest. Ein Bademeister kann das Schwimmabzeichen abnehmen. Es darf bei Einstellung nicht älter als zwei Jahre sein.",
+    voraussetzungen_sport:
+        "Für den höheren Dienst darf das Deutsche Sportabzeichen in Silber zum Einstellungstermin nicht älter als ein Jahr sein. Sonst ist ein neues zu machen.",
+    voraussetzungen_fuehrerschein:
+        "Ja, wir benötigen die Auskunft aus dem Fahreignungsregister auch ohne Führerschein. Sie können sie unentgeltlich unter https://www.kba.de/... beantragen.",
+    voraussetzungen_fuehrungszeugnis:
+        "Nein, ein polizeiliches Führungszeugnis ist nicht nötig. Bei ausgewählten Bewerbenden fordern wir den Auszug aus dem Zentralregister selbst an.",
+    voraussetzungen_sportanforderungen:
+        "Der Einsatzdienst ist körperlich sehr anstrengend. Einsatzkräfte aller Geschlechter müssen gleichermaßen Verantwortung übernehmen können. Daher gelten gleiche Sportanforderungen.",
+
+    // Auswahlverfahren
+    auswahl_ablauf:
+        "Wenn Sie kein Sportzertifikat eingereicht haben, laden wir Sie zu einem der Sportprüfungstermine ein. Nach der Frist erhalten Sie einen Onlinetest-Link. Wir prüfen Ihre Bewerbung auf Vollständigkeit und versenden Einladungen ca. 4–6 Wochen nach Fristende.",
+    auswahl_krankheit:
+        "Bitte informieren Sie uns sofort per E-Mail (z. B. bewerbungsbuero@berliner-feuerwehr.de) oder Antwort auf die Einladungsmail. Wir können ggf. einen neuen Termin vereinbaren.",
+    auswahl_wiederholung:
+        "Ja, eine erneute Bewerbung ist zum nächstmöglichen Termin über das Online-Portal möglich.",
+};
+
+/* --------- Chatbot Component ------- */
 export default function Chatbot() {
-    const [isOpen, setIsOpen] = useState(false)
-    const [messages, setMessages] = useState<Message[]>([])
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-    const messageIdCounter = useRef(0)
-    const chatContainerRef = useRef<HTMLDivElement>(null)
+    const [isOpen, setIsOpen] = useState(false);
+    const [isChatIconVisible, setIsChatIconVisible] = useState(true);
 
-    const addMessage = (text: string, sender: 'bot' | 'user', options?: Option[]) => {
-        const newId = messageIdCounter.current++
-        setMessages(prev => [...prev, { id: newId.toString(), text, sender, options }])
+    // The chat message list
+    const [messages, setMessages] = useState<Message[]>([]);
+    // For user text input
+    const [userInput, setUserInput] = useState("");
+    // For showing the "..." typing indicator
+    const [isTyping, setIsTyping] = useState(false);
+
+    const messageIdCounter = useRef(0);
+    const chatContainerRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    /* --------- Bot Typing ------- */
+    async function simulateTyping() {
+        setIsTyping(true);
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        setIsTyping(false);
     }
 
-    const handleToggle = () => {
-        setIsOpen(prev => !prev);
+    /* --------- Add a new message to the chat ------- */
+    async function addMessage(
+        text: string,
+        sender: "bot" | "user",
+        options?: Option[]
+    ) {
+        if (sender === "bot") {
+            await simulateTyping();
+        }
+        const newId = messageIdCounter.current++;
+        setMessages((prev) => [
+            ...prev,
+            { id: newId.toString(), text, sender, options },
+        ]);
+    }
+
+    /* --------- Toggle chat ------- */
+    async function handleToggle() {
+        setIsOpen((prev) => !prev);
+        setIsChatIconVisible((prev) => !prev);
+
+        // Greet user if first time open
         if (!isOpen && messages.length === 0) {
-            addMessage('Hallo, ich würde mich freuen, wenn ich Dir helfen kann. In welchem Bereich brauchst Du Unterstützung?', 'bot', mainCategories);
-        }
-    };
-
-    const handleOptionClick = (option: Option) => {
-        addMessage(option.text, 'user')
-
-        if (mainCategories.find(cat => cat.value === option.value)) {
-            setSelectedCategory(option.value)
-            if (option.value === 'ausbildung') {
-                addMessage('Zu welcher Ausbildungskategorie haben Sie Fragen?', 'bot', ausbildungCategories)
-            } else {
-                addMessage(`Hier sind häufig gestellte Fragen zur Kategorie "${option.text}":`, 'bot', questionsByCategory[option.value])
-            }
-        } else if (ausbildungCategories.find(cat => cat.value === option.value)) {
-            addMessage('Hier sind häufig gestellte Fragen zu dieser Ausbildungskategorie:', 'bot', questionsByCategory['ausbildung'])
-        } else if (answers[option.value]) {
-            addMessage(answers[option.value], 'bot')
-            addMessage('War diese Information hilfreich?', 'bot', [
-                { text: 'Ja', value: 'feedback_yes' },
-                { text: 'Nein', value: 'feedback_no' },
-            ])
-        } else if (option.value === 'feedback_yes') {
-            addMessage('Das freut mich! Wie kann ich Ihnen weiter helfen?', 'bot', [
-                { text: 'Ich habe weitere Fragen', value: 'more_questions' },
-                { text: 'Zurück zur Hauptauswahl', value: 'main_menu' },
-            ])
-        } else if (option.value === 'feedback_no') {
-            addMessage('Es tut mir leid, dass die Information nicht hilfreich war. Bitte kontaktieren Sie uns für weitere Unterstützung:', 'bot', [
-                { text: 'E-Mail: info@berliner-feuerwehr.de', value: 'contact_email' },
-                { text: 'Telefon: +49 30 12345678', value: 'contact_phone' },
-                { text: 'Zurück zur Hauptauswahl', value: 'main_menu' },
-            ])
-        } else if (option.value === 'more_questions') {
-            addMessage('Gerne! Zu welchem Thema haben Sie weitere Fragen?', 'bot', mainCategories)
-        } else if (option.value === 'main_menu') {
-            addMessage('Alles klar, lassen Sie uns zum Hauptmenü zurückkehren. Welches Thema interessiert Sie?', 'bot', mainCategories)
-        } else if (option.value === 'end_chat') {
-            addMessage('Vielen Dank für Ihr Interesse an der Berliner Feuerwehr. Wenn Sie weitere Fragen haben, zögern Sie nicht, mich erneut zu kontaktieren. Auf Wiedersehen!', 'bot')
-        } else if (option.value === 'contact_email' || option.value === 'contact_phone') {
-            addMessage('Vielen Dank. Wir hoffen, dass Sie die benötigte Unterstützung erhalten. Kann ich Ihnen bei etwas anderem helfen?', 'bot', [
-                { text: 'Ja, zurück zur Hauptauswahl', value: 'main_menu' },
-                { text: 'Nein, Chat beenden', value: 'end_chat' },
-            ])
+            await addMessage(
+                "Hallo! Wie kann ich Dir helfen? Stelle deine Frage oder wähle eine Kategorie.",
+                "bot"
+            );
         }
     }
 
+    /* --------- CLose Chat ------- */
+    function handleClose() {
+        setIsOpen(false);
+        setIsChatIconVisible(true);
+    }
+
+    /* --------- When user types and submits a question ------- */
+    async function handleUserInput() {
+        const query = userInput.trim();
+        if (!query) return;
+
+        // Add user's question
+        await addMessage(query, "user");
+
+        // Combine all questions from all categories
+        const allQuestions = [
+            ...QUESTIONS_BY_CATEGORY.bewerbung,
+            ...QUESTIONS_BY_CATEGORY.voraussetzungen,
+            ...QUESTIONS_BY_CATEGORY.auswahlverfahren,
+        ];
+        // Rank them
+        const ranked = rankQuestions(query, allQuestions);
+
+        if (ranked.length === 0) {
+            // No relevant matches => fallback to 3 categories
+            await addMessage(
+                "Ich konnte keine passenden Fragen finden. Bitte wähle eine Kategorie:",
+                "bot",
+                CATEGORIES
+            );
+        } else {
+            // Show relevant questions
+            await addMessage("Ich habe folgende relevante Fragen gefunden:", "bot");
+            const topMatches: Option[] = ranked.map((r) => ({
+                text: highlightText(r.text, r.highlights),
+                value: r.value,
+            }));
+            await addMessage(
+                "Wähle eine aus, um mehr Informationen zu erhalten:",
+                "bot",
+                topMatches
+            );
+        }
+
+        setUserInput("");
+    }
+
+    /* --------- Handle user clicking on an Option ------- */
+    async function handleOptionClick(option: Option) {
+        // Display the selected text as user message
+        await addMessage(option.text.replace(/<[^>]*>/g, ""), "user");
+
+        // Check if user picked a category
+        if (option.value.startsWith("category_")) {
+            const catValue = option.value.replace("category_", "");
+            const catQuestions = QUESTIONS_BY_CATEGORY[catValue];
+            if (catQuestions) {
+                await addMessage(
+                    `Du hast die Kategorie "${option.text}" ausgewählt. Hier sind die Fragen:`,
+                    "bot"
+                );
+
+                const questionOptions = catQuestions.map((q) => ({
+                    text: q.text,
+                    value: q.value,
+                }));
+
+                await addMessage("Bitte wähle eine Frage aus:", "bot", questionOptions);
+            } else {
+                await addMessage(
+                    "Entschuldigung, ich konnte diese Kategorie nicht finden.",
+                    "bot"
+                );
+            }
+            return;
+        }
+
+        // If user picked a question => show the answer
+        if (ANSWERS[option.value]) {
+            // Show answer
+            const answerText = ANSWERS[option.value];
+            await addMessage(answerText, "bot");
+
+            // After giving the answer, ask for feedback
+            await addMessage("War diese Information hilfreich?", "bot", [
+                { text: "Ja", value: "feedback_yes" },
+                { text: "Nein", value: "feedback_no" },
+            ]);
+            return;
+        }
+
+        // If user clicked "Yes/No" feedback
+        if (option.value === "feedback_yes") {
+            await addMessage(
+                "Das freut mich sehr! Wie kann ich Dir sonst noch helfen?",
+                "bot"
+            );
+        } else if (option.value === "feedback_no") {
+            await addMessage(
+                "Es tut mir leid, dass die Information nicht hilfreich war. Bitte kontaktiere uns für weitere Unterstützung.",
+                "bot"
+            );
+            // Provide contact info
+            await addMessage("E-Mail: info@berliner-feuerwehr.de\nTelefon: +49 30 12345678", "bot");
+            await addMessage(
+                "Kann ich Dir sonst noch weiterhelfen?",
+                "bot"
+            );
+        } else {
+            // No recognized value => fallback
+            await addMessage(
+                `Ich habe keine Antwort für "${option.value}".`,
+                "bot"
+            );
+        }
+    }
+
+    /* --------- Auto-scroll & focus input ------- */
     useEffect(() => {
         if (chatContainerRef.current) {
-            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+            chatContainerRef.current.scrollTo({
+                top: chatContainerRef.current.scrollHeight,
+                behavior: "smooth",
+            });
         }
-    }, [messages])
+        if (isOpen && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [messages, isOpen]);
 
+    /* --------- Render ------- */
     return (
         <>
             {isOpen && (
-                <div className="fixed bottom-24 right-4 w-full max-w-[320px] sm:max-w-[350px] z-50">
-                    <Card className="border-2">
-                        <div className="p-3 border-b bg-red-600 text-white flex items-center justify-between rounded-t-lg">
-                            <div className="flex items-center gap-2">
+                <div className="fixed top-20 sm:top-40 inset-0 sm:inset-auto sm:bottom-24 sm:right-4 w-full sm:w-[400px] h-[calc(100%-5rem)] sm:h-auto z-50">
+                    <Card className="flex flex-col h-full rounded-none sm:rounded-xl border-0 sm:border shadow-2xl bg-zinc-50">
+                        {/* HEADER */}
+                        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-none sm:rounded-t-xl border-b border-red-700">
+                            <div className="flex items-center gap-3">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={handleClose}
+                                    className="md:hidden text-white hover:text-white hover:bg-white/20"
+                                >
+                                    <ArrowLeft className="h-5 w-5" />
+                                </Button>
                                 <img
-                                    src={`./assets/chatbot/chatbot-avatar.png`}
+                                    src={BotIcon.src || "/placeholder.svg"}
                                     alt="Chatbot Avatar"
-                                    className="w-8 h-8 rounded-full"
+                                    className="w-10 h-10 rounded-full bg-white p-2 [&>path]:fill-red-600"
                                 />
-                                <span className="font-semibold text-sm">Feuerwehr Support</span>
+                                <div>
+                                    <h2 className="font-semibold text-white">Feuerwehr Support</h2>
+                                    <p className="text-xs text-white/80">Immer für Dich da</p>
+                                </div>
                             </div>
                             <Button
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => setIsOpen(false)}
-                                className="text-white hover:text-white hover:bg-red-700"
+                                onClick={handleClose}
+                                className="text-white hover:text-white hover:bg-white/20"
                             >
-                                <X className="h-4 w-4" />
+                                <X className="h-5 w-5" />
                             </Button>
                         </div>
-                        <div ref={chatContainerRef} className="h-[350px] overflow-y-auto p-3 space-y-3">
-                            {messages.map((message) => (
+
+                        {/* MESSAGES */}
+                        <div
+                            ref={chatContainerRef}
+                            className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-custom"
+                        >
+                            {messages.map((msg) => (
                                 <div
-                                    key={message.id}
-                                    className={`flex items-start ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                                >
-                                    {message.sender === 'bot' && (
-                                        <img
-                                            src={`./assets/chatbot/chatbot-avatar.png`}
-                                            alt="Bot Avatar"
-                                            className="w-6 h-6 rounded-full mr-2"
-                                        />
+                                    key={msg.id}
+                                    className={cn(
+                                        "flex gap-3 transition-all",
+                                        msg.sender === "user" && "flex-row-reverse"
                                     )}
+                                >
+                                    <img
+                                        src={msg.sender === "bot" ? BotIcon.src : UserIcon.src}
+                                        alt={msg.sender === "bot" ? "Bot Avatar" : "User Avatar"}
+                                        className="w-8 h-8 rounded-full mt-1 bg-white p-1.5 [&>path]:fill-red-600"
+                                    />
                                     <div
-                                        className={`max-w-[85%] rounded-lg overflow-hidden text-sm ${
-                                            message.sender === 'user'
-                                                ? 'bg-red-600 text-white p-3'
-                                                : 'bg-gray-100 text-gray-900 p-5'
-                                        }`}
+                                        className={cn(
+                                            "flex flex-col gap-2 max-w-[80%]",
+                                            msg.sender === "user" ? "items-end" : "items-start"
+                                        )}
                                     >
-                                        <p className="break-words" dangerouslySetInnerHTML={{ __html: message.text }}></p>
-                                        {message.options && (
-                                            <div className="mt-6 space-y-3">
-                                                {message.options.map((option) => (
+                                        <div
+                                            className={cn(
+                                                "rounded-2xl px-4 py-2 text-sm",
+                                                msg.sender === "user"
+                                                    ? "bg-gradient-to-r from-red-600 to-red-700 text-white"
+                                                    : "bg-white shadow-sm border"
+                                            )}
+                                        >
+                                            <p
+                                                className="break-words whitespace-pre-line"
+                                                dangerouslySetInnerHTML={{ __html: msg.text }}
+                                            />
+                                        </div>
+
+                                        {/* RENDER OPTIONS IF ANY */}
+                                        {msg.options && msg.options.length > 0 && (
+                                            <div className="w-full space-y-2 max-w-full animate-in slide-in-from-bottom-3">
+                                                {msg.options.map((option) => (
                                                     <Button
                                                         key={option.value}
                                                         variant="outline"
-                                                        size="sm"
-                                                        className="w-full justify-between text-left h-auto whitespace-normal text-xs py-3 px-4"
+                                                        className="w-full justify-between text-left h-auto text-sm py-3 px-4 bg-white hover:bg-zinc-50"
                                                         onClick={() => handleOptionClick(option)}
                                                     >
-                                                        <span className="mr-2">{option.text}</span>
-                                                        <ChevronRight className="h-3 w-3 flex-shrink-0" />
+                            <span
+                                className="mr-2 whitespace-normal"
+                                dangerouslySetInnerHTML={{
+                                    __html: option.text,
+                                }}
+                            />
+                                                        <ChevronRight className="h-4 w-4 flex-shrink-0 opacity-50 ml-2" />
                                                     </Button>
                                                 ))}
                                             </div>
                                         )}
                                     </div>
-                                    {message.sender === 'user' && (
-                                        <img
-                                            src={`./assets/chatbot/user-avatar.gif`}
-                                            alt="User Avatar"
-                                            className="w-6 h-6 rounded-full ml-2"
-                                        />
-                                    )}
                                 </div>
                             ))}
+
+                            {/* TYPING INDICATOR */}
+                            {isTyping && (
+                                <div className="flex gap-2">
+                                    <img
+                                        src={BotIcon.src || "/placeholder.svg"}
+                                        alt="Bot Avatar"
+                                        className="w-6 h-6 rounded-full mt-1 bg-white p-1 [&>path]:fill-red-600"
+                                    />
+                                    <div className="bg-white rounded-2xl px-3 py-1 text-xs shadow-sm border">
+                                        <div className="flex gap-1">
+                                            <span className="animate-bounce">●</span>
+                                            <span className="animate-bounce [animation-delay:0.2s]">
+                        ●
+                      </span>
+                                            <span className="animate-bounce [animation-delay:0.4s]">
+                        ●
+                      </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* INPUT / FORM */}
+                        <div className="p-4 bg-gray-100 border-t rounded-t-[2rem]">
+                            <form
+                                onSubmit={async (e) => {
+                                    e.preventDefault();
+                                    await handleUserInput();
+                                }}
+                                className="flex items-center gap-2"
+                            >
+                                <div className="relative flex-1">
+                                    <input
+                                        ref={inputRef}
+                                        type="text"
+                                        placeholder="Stelle deine Frage..."
+                                        value={userInput}
+                                        onChange={(e) => setUserInput(e.target.value)}
+                                        className="w-full px-4 py-3 rounded-full bg-zinc-100 border-0 focus:ring-0 placeholder:text-zinc-400 text-sm"
+                                    />
+                                </div>
+                                <Button
+                                    type="submit"
+                                    size="icon"
+                                    className="rounded-full w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 flex-shrink-0"
+                                >
+                                    <Send className="h-4 w-4" />
+                                </Button>
+                            </form>
                         </div>
                     </Card>
                 </div>
             )}
 
-            <div className="fixed z-10 bottom-4 right-4">
+            {/* FLOATING CHAT ICON (when chat is closed) */}
+            {isChatIconVisible && (
                 <Button
                     size="icon"
-                    className="w-12 h-12 rounded-full bg-red-600 hover:bg-red-700 shadow-lg"
                     onClick={handleToggle}
+                    className={cn(
+                        "fixed bottom-4 right-4 w-14 h-14 rounded-full shadow-lg transition-all duration-200",
+                        "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800",
+                        "z-50 animate-in slide-in-from-bottom-3"
+                    )}
                 >
                     <MessageCircle className="h-6 w-6" />
                 </Button>
-            </div>
+            )}
         </>
-    )
+    );
 }
-

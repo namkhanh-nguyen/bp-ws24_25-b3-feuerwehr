@@ -114,13 +114,14 @@ const Results = () => {
                             marginBottom: '1rem'
                         }}>
                             <img
-                                src={`./assets/jobs/undecided-1.png`}
+                                src={`./assets/video/Azubis.jpg`}
                                 alt="Noch unsicher 1"
                                 style={{
                                     borderRadius: '2rem',
-                                    filter: 'brightness(0.7)',
+                                    filter: 'brightness(0.5)',
                                     width: '85vw',
                                     objectFit: 'cover',
+                                    objectPosition: 'center 15%',
                                     height: '30vh',
                                 }}
                             />
@@ -129,7 +130,7 @@ const Results = () => {
                                 Probiere unseren interaktiven Rundgang!
                             </div>
                             <button
-                                onClick={() => window.location.href = '/quiz'}
+                                onClick={() => window.location.href = '/tour'}
                                 className={styles2.startButton}
                             >
                                 Starten!
