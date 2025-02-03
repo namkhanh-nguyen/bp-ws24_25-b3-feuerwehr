@@ -5,7 +5,7 @@ export default function Hero() {
     <div>
       <section className="homepage-hero">
         <img
-          src="/assets/home/hero-4.jpg"
+          src="/assets/home/hero.jpg"
           alt="Hero Background"
           className="hero-background-image"
         />

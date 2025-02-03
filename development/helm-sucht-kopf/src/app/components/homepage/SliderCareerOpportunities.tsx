@@ -10,7 +10,7 @@ export default function SliderCareerOpportunities() {
       subtitle: "Ausbildung",
       description:
         "Du rettest Leben, versorgst Menschen, begleitest Patienten ins Krankenhaus und sorgst für professionelle Unterstützung.",
-      image: "/assets/home/Notsan-2.jpg",
+      image: "/assets/home/Notsan.jpg",
       link: "https://www.berliner-feuerwehr.de/karriere/ausbildung-zur-notfallsanitaeterin-oder-zum-notfallsanitaeter/",
     },
     {
