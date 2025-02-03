@@ -18,12 +18,10 @@
 }
 
 .container {
-    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 40vh;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .introImage{
@@ -33,12 +31,12 @@
 }
 
 .imageContainer {
-    margin: 1rem;
+    margin: 0.5rem;
 }
 
 .customSvg{
     width: 50vw;
-    height: auto;
+    height: 30vh;
     margin: 0.5rem;
 }
 
@@ -77,31 +75,34 @@
     outline: none;
     border: 2px solid #E40422;
 }
+
 .imageGridContainer {
-    height: auto;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 20px;
 }
 
 .imageOptionsContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    gap: 0.5rem;
-    width: 100%;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .imageOption {
-    position: relative;
-    max-width: 300px;
-    padding-top: 60%;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.2s ease-in-out;
     overflow: hidden;
+    aspect-ratio: 2 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
 }
 
 .imageOption img {
@@ -109,7 +110,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 50%;
     object-fit: cover;
 }
 
@@ -523,20 +524,20 @@
     justify-content: center;
     align-items: center;
 }
+
 .imageOptionsContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
     justify-items: center;
     align-items: center;
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
 }
 
 .imageOption {
     position: relative;
     width: 100%;
-    padding-top: 58%;
+    padding: 25%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -708,7 +709,7 @@
 
 
 /* Media Queries for Responsiveness */
-@media (max-width: 600px) {
+@media (max-width: 500px) {
     .questionNumber {
         font-size: 1.2rem;
         margin-top: -1.2rem;
@@ -720,8 +721,19 @@
     .optionButton {
         font-size: 1.09rem;
     }
+
+    .imageOptionsContainer {
+        width: 110%;
+    }
+
     .imageOption {
-        padding-top: 75%;
+        padding: 30%;
+    }
+
+    .imageOption img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
 
