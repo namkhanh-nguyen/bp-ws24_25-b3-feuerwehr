@@ -228,7 +228,7 @@ const FireVictory = () => (
                 r="257.331"
                 fill="#fff"
                 stroke="#ca684e"
-                stroke-width="40.87"
+                strokeWidth="40.87"
             />
             <path
                 fill="#fdf4cf"
