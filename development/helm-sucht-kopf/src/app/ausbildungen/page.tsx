@@ -279,7 +279,8 @@ export default function JobsPage() {
                              display: 'grid',
                              gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
                              gap: '1rem',
-                             width: '100%', // Ensure it uses full width available
+                             width: '95%',
+                             maxWidth: '70rem',
                          }}>
                         <div style={{
                             position: 'relative',
@@ -288,7 +289,7 @@ export default function JobsPage() {
                             marginBottom: '1rem'
                         }}>
                             <img
-                                src={`./assets/jobs/undecided-1.png`}
+                                src={`./assets/jobs/undecided-2.png`}
                                 alt="Noch unsicher 1"
                                 className={styles.undecidedImage}
                             />
@@ -307,20 +308,20 @@ export default function JobsPage() {
                         <div style={{
                             position: 'relative',
                             display: 'inline-block',
-                            width: '100%', // Full width for stacking vertically
+                            width: '100%',
                             marginBottom: '1rem'
                         }}>
                             <img
-                                src={`./assets/jobs/undecided-2.png`}
+                                src={`./assets/video/Azubis.jpg`}
                                 alt="Noch unsicher 2"
                                 className={styles.undecidedImage}
                             />
                             <div className={styles.undecidedText}>
-                                Stell dich der Gefahr und<br/>
-                                prüfe dein Können!
+                                Entdecke deine Ausbildung – <br/>
+                                im interaktiven Video-Rundgang!
                             </div>
                             <button
-                                onClick={() => window.location.href = '/quiz'}
+                                onClick={() => window.location.href = '/tour'}
                                 className={styles.startButton}
                             >
                                 Starten!
