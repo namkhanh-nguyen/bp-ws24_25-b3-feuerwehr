@@ -476,6 +476,10 @@ h3.card-title {
   .counter {
     min-width: 12.5rem;
   }
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
+  }
 }
 
 @media (min-width: 75em) {
