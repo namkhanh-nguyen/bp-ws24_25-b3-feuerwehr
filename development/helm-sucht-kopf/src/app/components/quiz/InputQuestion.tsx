@@ -12,10 +12,31 @@ type InputQuestionProps = {
     };
     value: string | number;
     onChange: (value: string) => void;
-    onBlur?: () => void;
+    onValidation?: (message: string) => void;
 };
 
-const InputQuestion: FC<InputQuestionProps> = ({ question, value, onChange, onBlur }) => {
+const InputQuestion: FC<InputQuestionProps> = ({ question, value, onChange, onValidation }) => {
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        if (inputValue === '' || !isNaN(Number(inputValue))) {
+            onChange(inputValue);
+
+            // Trigger validation logic
+            if (onValidation) {
+                const heightValue = parseFloat(inputValue);
+                if (!isNaN(heightValue)) {
+                    if (heightValue < question.minValue!) {
+                        onValidation(`Für die Verbeamtung bei der Berliner Feuerwehr ist eine Mindestgröße von ${question.minValue} cm erforderlich. Du kannst jedoch ohne Verbeamtung einsteigen.`);
+                    } else if (heightValue > question.maxValue!) {
+                        onValidation(`Für die Verbeamtung bei der Berliner Feuerwehr darf die Größe ${question.maxValue} cm nicht überschreiten. Du kannst jedoch ohne Verbeamtung einsteigen.`);
+                    } else {
+                        onValidation("");
+                    }
+                }
+            }
+        }
+    };
 
     return (
         <div className={styles.inputContainer}>
@@ -25,15 +46,7 @@ const InputQuestion: FC<InputQuestionProps> = ({ question, value, onChange, onBl
                 placeholder="in cm"
                 className={styles.inputField}
                 value={value}
-                onChange={(e) => {
-                    const inputValue = e.target.value;
-                    if (
-                        inputValue === '' ||!isNaN(Number(inputValue)))
-                    {
-                        onChange(inputValue);
-                    }
-                }}
-                onBlur={onBlur}
+                onChange={handleChange}
             />
         </div>
     );

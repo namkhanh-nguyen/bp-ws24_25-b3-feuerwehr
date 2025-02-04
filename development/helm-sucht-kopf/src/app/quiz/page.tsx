@@ -273,19 +273,9 @@ const submitQuiz = async () => {
                                             return updatedAnswers;
                                         });
                                     }}
-                                    onBlur={() => {
-                                        const heightValue = parseFloat(answers[currentQuestionIndex]?.fullText || '');
-                                        if (!isNaN(heightValue)) {
-                                            if (heightValue < currentQuestion.minValue!) {
-                                                setMessages({ ...messages, heightMessage: `Für die Verbeamtung bei der Berliner Feuerwehr ist eine Mindestgröße von ${currentQuestion.minValue} cm erforderlich. Du kannst jedoch ohne Verbeamtung einsteigen.` });
-                                            } else if (heightValue > currentQuestion.maxValue!) {
-                                                setMessages({ ...messages, heightMessage: `Für die Verbeamtung bei der Berliner Feuerwehr darf die Größe ${currentQuestion.maxValue} cm nicht überschreiten. Du kannst jedoch ohne Verbeamtung einsteigen.` });
-                                            } else {
-                                            setMessages({ ...messages, heightMessage: "" });
-                                        }
-                                        }
-                                    }
-                                    }
+                                    onValidation={(message) => {
+                                        setMessages({ ...messages, heightMessage: message });
+                                    }}
                                 />
                                 {messages.heightMessage && <div className={styles.message}>{messages.heightMessage}</div>}
                             </div>
@@ -429,10 +419,10 @@ const submitQuiz = async () => {
                         <img src='/assets/quiz/unfallNeu.svg'
                              className={styles.storyImage}
                         />
-                        <h3>Erlebe eine Geschichte, in der Du die Entscheidungen triffst!</h3>
-                        <p style={{fontSize: '18px', color: '#333' }}> Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden 👨🏻‍🤝‍👨🏼
-                            unterwegs.</p>
-                        <p style={{fontSize: '18px', color: '#333' }}>Als plötzlich ein lautes Krachen durch die Luft hallt. Ein Auto
+                        <h3 style={{textAlign: "left"}}>Erlebe eine Geschichte, in der Du die Entscheidungen triffst!</h3>
+                        <p style={{fontSize: '18px', color: '#333',  textAlign: "left" }}> Es ist ein entspannter Nachmittag und Du bist mit Deinen Freunden 👨🏻‍🤝‍👨🏼 unterwegs.
+                            <br />
+                            Als plötzlich ein lautes Krachen durch die Luft hallt. Ein Auto
                             ist frontal in einem Baum gekracht 🚗💥 und Rauch 💨 steigt aus der Motorhaube auf.</p>
                         {/* Navigation Buttons */}
                         <div className={styles.navButtons}>
