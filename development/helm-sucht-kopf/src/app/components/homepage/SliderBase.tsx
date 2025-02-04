@@ -2,6 +2,7 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Keyboard } from "swiper/modules";
 
@@ -22,7 +23,7 @@ export default function SliderBase({
       mousewheel={true}
       keyboard={true}
       modules={[Navigation, Pagination, Keyboard]}
-      pagination={true}
+      pagination={{clickable: true}}
       spaceBetween={20}
       slidesPerView={slidesPerView}
       breakpoints={{
