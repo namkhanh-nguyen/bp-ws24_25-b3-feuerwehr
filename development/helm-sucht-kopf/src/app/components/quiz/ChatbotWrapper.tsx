@@ -7,8 +7,10 @@ import Chatbot from "@/app/components/chatbot/Chatbot";
 const ChatbotWrapper: React.FC = () => {
     const pathname = usePathname();
 
-    // Conditionally render the Chatbot
     if (pathname.includes("quiz")) {
+        return null;
+    }
+    if (pathname.includes("tour")) {
         return null;
     }
 
