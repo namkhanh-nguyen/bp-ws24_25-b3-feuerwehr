@@ -14,7 +14,7 @@
 .storyImage {
     width: 50%;
     height: auto;
-    margin: 0 auto 20px;
+    margin: 0 auto 15px;
 }
 
 .container {
@@ -132,7 +132,7 @@
 }
 
 .fitnessLabel {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #333;
     margin-bottom: 15px;
@@ -144,7 +144,7 @@
     width: 90%;
     max-width: 400px;
     padding: 12px;
-    font-size: 1rem;
+    font-size: 1.05rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #fff;
@@ -278,8 +278,7 @@
 }
 
 .introContainer,
-.intermediateContainer,
-.storyContainer {
+.intermediateContainer{
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -289,7 +288,9 @@
 }
 
 .storyContainer{
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    min-height: 70vh;
 }
 
 .intermediateContainer div {
