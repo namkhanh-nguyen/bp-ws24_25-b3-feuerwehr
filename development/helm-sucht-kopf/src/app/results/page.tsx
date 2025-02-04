@@ -101,24 +101,23 @@ const Results = () => {
                     Quiz erneut starten
                 </button>
             </div>
-            <div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <div className={styles2.undecidedDiv}>
                     <div
                          style={{
-                             width: '100%',
+                             width: '90%',
                          }}>
                         <div style={{
                             position: 'relative',
-                            display: 'inline-block',
-                            width: '100%', // Full width for stacking vertically
-                            marginBottom: '1rem'
+                            width: '90%',
+                            margin: '1rem'
                         }}>
                             <img
                                 src={`./assets/video/Azubis.jpg`}
                                 alt="Noch unsicher 1"
                                 style={{
                                     borderRadius: '2rem',
-                                    filter: 'brightness(0.5)',
+                                    filter: 'brightness(0.7)',
                                     width: '85vw',
                                     objectFit: 'cover',
                                     objectPosition: 'center 15%',
@@ -126,8 +125,8 @@ const Results = () => {
                                 }}
                             />
                             <div className={styles2.undecidedText}>
-                                Noch unsicher?<br/>
-                                Probiere unseren interaktiven Rundgang!
+                                Entdecke deine Ausbildung – <br/>
+                                im interaktiven Video-Rundgang!
                             </div>
                             <button
                                 onClick={() => window.location.href = '/tour'}
