@@ -187,7 +187,7 @@ const FireVictory = () => (
             />
             <path
                 fill="#fad3a9"
-                fill-rule="nonzero"
+                fillRule="nonzero"
                 d="m6603.65 689.03 1021.81 794.698h-2043.6l1021.8-794.698Z"
             />
             <path
