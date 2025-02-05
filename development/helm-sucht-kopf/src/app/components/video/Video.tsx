@@ -20,6 +20,7 @@ type Overlay = {
         label: string;
         video: string;
         img: string;
+        doubleSize?: boolean;
     }[];
 };
 
@@ -36,8 +37,8 @@ const overlays: Record<string, Overlay> = {
         title: "Was möchtest Du tun?",
         options: [
             { label: "Vitalzeichen messen", video: videoPaths.activities.rtw_vitalzeichen, img: "" },
-            { label: "Weiter zur Karte", video: "karte", img: "" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "" }
+            { label: "Zum Abschluss", video: videoPaths.finale, img: "" },
+            { label: "Weiter zur Übersicht", video: "karte", img: "", doubleSize: true },
         ],
     },
     wohnzimmer_overlay: {
@@ -45,15 +46,15 @@ const overlays: Record<string, Overlay> = {
         options: [
             { label: "Erstversorgung zeigen", video: videoPaths.activities.wohnzimmer_erstversorgung, img: "" },
             { label: "Ausrüstung erklären", video: videoPaths.activities.wohnzimmer_ausruestung, img: "" },
-            { label: "Weiter zur Karte", video: "karte", img: "" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "" }
+            { label: "Weiter zur Übersicht", video: "karte", img: "" },
+            { label: "Zum Abschluss", video: videoPaths.finale, img: "" }
         ],
     },
     kugelraum_overlay: {
         title: "Was möchtest Du tun?",
         options: [
-            { label: "Weiter zur Karte", video: "karte", img: "" },
-            { label: "Zum Ausgang", video: videoPaths.finale, img: "" }
+            { label: "Weiter zur Übersicht", video: "karte", img: "" },
+            { label: "Zum Abschluss", video: videoPaths.finale, img: "" }
         ],
     },
 };
@@ -203,10 +204,11 @@ const Video: React.FC = () => {
                         height: "100%",
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "center",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         backgroundColor: "rgba(0, 0, 0, 0.6)",
                         overflow: "hidden",
+                        paddingTop: "7%"
                     }}
                 >
                     <div
@@ -252,11 +254,13 @@ const Video: React.FC = () => {
                                         borderRadius: "10px",
                                         overflow: "hidden",
                                         backgroundColor: "#ffffff",
-                                        width: showOverlay === "karte" ? "40vw" : "25vw",
-                                        maxWidth: showOverlay === "karte" ? "190px" : "150px",
-                                        aspectRatio: showOverlay === "karte" ? "36/25" : "36/15",
+                                        width: option.doubleSize ? "100%" : showOverlay === "karte" ? "40vw" : "25vw",
+                                        maxWidth: option.doubleSize ? "380px" : showOverlay === "karte" ? "190px" : "150px",
+                                        aspectRatio:  option.doubleSize ? "36/7.5" : showOverlay === "karte" ? "36/25" : "36/15",
                                         textAlign: "center",
                                         cursor: "pointer",
+                                        gridColumn: option.doubleSize ? "span 2" : "auto", // Make it span both columns
+                                        justifySelf: option.doubleSize ? "center" : "auto", // Center only if double-sized
                                     }}
                                     onClick={() => handleOverlayClick(option.video)}
                                 >
