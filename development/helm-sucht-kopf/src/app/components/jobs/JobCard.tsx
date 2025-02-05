@@ -12,7 +12,7 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
     return (
         <div
             key={id}
-            className="job-card flex flex-col md:flex-row md:items-center mt-8 group"
+            className="job-card flex flex-col md:flex-row mt-8 group"
             style={{
                 marginTop: "2rem",
                 flexDirection: "column",
@@ -47,22 +47,7 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
                 onClick={() => (window.location.href = `/ausbildungen/${slug}`)}
             />
 
-            <div className={styles.jobHoverInfo}>
-                <p className={styles.jobShortDesc}>{shortDesc}</p>
-                <span
-                    className={styles.jobShortDesc}
-                    onClick={() => (window.location.href = `/ausbildungen/${slug}`)}
-                    style={{
-                        color: "var(--red-primary)",
-                        textDecorationLine: "underline",
-                        cursor: "pointer",
-                    }}
-                >
-                    Mehr Infos
-                </span>
-            </div>
-
-            <div className="flex flex-col justify-between flex-grow relative">
+            <div className="flex flex-col flex-grow">
                 <h3
                     className={styles.jobName}
                     onClick={() => (window.location.href = `/ausbildungen/${slug}`)}
@@ -73,7 +58,7 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
 
             <div
                 id={`desc-${id}`}
-                className="block md:hidden transition-all rounded-lg"
+                className="block transition-all rounded-lg"
                 style={{
                     width: "85%",
                     marginLeft: "1rem",
