@@ -78,7 +78,7 @@ const Results = () => {
             {/* Display Future Opportunities */}
             {futureJobs.length > 0 && (
                 <>
-                    <h3 className={styles.centeredHeader}>Zukünftige Möglichkeiten:</h3>
+                    <h3 className={styles.centeredHeader2}>Zukünftige Möglichkeiten:</h3>
                     <p className={styles.centeredText}>
                         Diese Ausbildungen kannst Du nach weiteren Qualifikationen oder Abschlüssen beginnen:
                     </p>
@@ -106,6 +106,7 @@ const Results = () => {
                     <div
                          style={{
                              width: '90%',
+                             maxWidth: '700px'
                          }}>
                         <div style={{
                             position: 'relative',

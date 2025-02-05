@@ -563,26 +563,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
-    max-width: 750px;
-    margin: 0 auto;
+    justify-content: center;
+    width: 100vw;
+    padding: 20px;
 }
-
-.resultsContainer h2 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-.resultsContainer p {
-    font-size: 18px;
-    color: #333;
-    line-height: 1.5;
-    margin-bottom: 0.5rem;
-}
-
 .restartButton {
-    margin-top: 20px;
+    margin-top: 3rem;
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
     font-weight: bold;
@@ -598,18 +584,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
 }
 .restartButton:hover {
     background-color: #E40422;
 }
 .centeredHeader {
-    text-align: center;
     font-size: 1.7rem;
     font-weight: bold;
     margin-bottom: 1rem;
-    margin-top: 2rem;
-
+}
+.centeredHeader2{
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-top: 3rem;
 }
 .centeredText {
     text-align: center;
@@ -617,11 +604,15 @@
     margin-bottom: 1rem;
 }
 .jobList {
+    /*
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+     */
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
     flex-grow: 1;
-    width: 90%;
+    max-width: 700px;
 }
 
 .jobList.mdGrid {
