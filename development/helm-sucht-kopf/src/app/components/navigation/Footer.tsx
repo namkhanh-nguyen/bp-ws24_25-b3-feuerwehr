@@ -147,9 +147,10 @@ export default function Footer() {
           <div>&copy; {currentYear}, Berliner Feuerwehr</div>
           <div>
             <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.berliner-feuerwehr.de/impressum/"
+              //target="_blank"
+              //rel="noopener noreferrer"
+              //href="https://www.berliner-feuerwehr.de/impressum/"
+                href="/impressum"
             >
               Impressum
             </a>{" "}
