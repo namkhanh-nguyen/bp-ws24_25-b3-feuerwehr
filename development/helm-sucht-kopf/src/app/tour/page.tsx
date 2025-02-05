@@ -1,14 +1,19 @@
 'use client';
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 export default function Tour() {
 
     const Video = dynamic(() => import("../components/video/Video"), { ssr: false });
 
     return (
-
         <div className="sec">
+            <div className="absolute top-20 left-5">
+                <Link href="/" className="text-lg font-semibold hover:no-underline" style={{ color: '#e40422' }}>
+                    ← Zurück zur Startseite
+                </Link>
+            </div>
             <div>
                 <Video/>
             </div>
@@ -22,6 +27,7 @@ export default function Tour() {
                 Tauche ein in die Welt der Berliner Feuerwehr und erlebe hautnah, was es bedeutet,
                 Teil eines Teams zu sein, das täglich Leben rettet.
             </p>
+
         </div>
     );
 }
