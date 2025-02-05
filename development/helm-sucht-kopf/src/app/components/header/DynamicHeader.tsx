@@ -1,24 +1,13 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import styles from "../styles/dynamicHeader.module.css";
+import styles from "../../styles/dynamicHeader.module.css";
 
 const DynamicHeader: React.FC = () => {
   const [isShrunk, setIsShrunk] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const toggleRef = useRef<HTMLDivElement | null>(null);
-
-  /*   useEffect(() => {
-    const handleScroll = () => {
-      setIsShrunk(window.scrollY > 120);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []); */
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

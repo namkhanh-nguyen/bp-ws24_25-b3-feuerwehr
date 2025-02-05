@@ -2,22 +2,19 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./styles/globals.css";
 import React from "react";
-import Chatbot from '@/app/components/chatbot/Chatbot'
-import Header from "./components/navigation/Header";
-import DynamicHeader from "./components/DynamicHeader";
 import Footer from "./components/navigation/Footer";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import ChatbotWrapper from "@/app/components/quiz/ChatbotWrapper";
+import DynamicHeaderWrapper from "@/app/components/header/DynamicHeaderWrapper";
 
-// Load custom fonts
 const berlinTypeWebRegular = localFont({
-  src: "../../public/fonts/BerlinTypeWeb-Regular.woff", // Korrigierter Pfad
+  src: "../../public/fonts/BerlinTypeWeb-Regular.woff",
   variable: "--font-berlin-type-regular",
   weight: "400",
 });
 
 const berlinTypeWebBold = localFont({
-  src: "../../public/fonts/BerlinTypeWeb-Bold.woff", // Korrigierter Pfad
+  src: "../../public/fonts/BerlinTypeWeb-Bold.woff",
   variable: "--font-berlin-type-bold",
   weight: "700",
 });
@@ -61,7 +58,7 @@ export default function RootLayout({
         className={`${berlinTypeWebRegular.variable} ${berlinTypeWebBold.variable} antialiased`}
       >
         {/*<Header />*/}
-        <DynamicHeader />
+        <DynamicHeaderWrapper />
         <ChatbotWrapper />
         <div style={{ paddingTop: "80px" }}>
           {children}
