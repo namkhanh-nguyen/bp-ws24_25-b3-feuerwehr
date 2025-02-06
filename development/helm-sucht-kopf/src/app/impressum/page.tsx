@@ -15,13 +15,13 @@ export default function Impressum() {
                 </p>
                 <h3>Projektteam:</h3>
                 <ul>
-                    <li>Duha</li>
-                    <li>Maria</li>
-                    <li>Sara</li>
-                    <li>Nhi</li>
-                    <li>Christoph</li>
-                    <li>Nam</li>
-                    <li>Sandip</li>
+                    <li>Duha Kasem</li>
+                    <li>Maria Ivanova</li>
+                    <li>Sara Tahmasebi Abdar</li>
+                    <li>Phuong Nhi Phan</li>
+                    <li>Christoph Friedrich</li>
+                    <li>Nam Khanh Nguyen</li>
+                    <li>Sandip Sarraf</li>
                 </ul>
 
                 <h2>Haftungsausschluss:</h2>
