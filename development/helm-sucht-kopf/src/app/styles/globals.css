@@ -4,6 +4,7 @@
 
 html {
   scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 
 :root {
@@ -15,7 +16,7 @@ html {
 * {
   font-family: var(--font-berlin-type-regular);
   font-weight: 400;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 /* Allgemeine Schriftstile */
@@ -67,6 +68,8 @@ body {
   color: var(--foreground);
   background: var(--background);
   text-overflow: ellipsis;
+
+  min-height: 90vh;
 }
 
 .container {
@@ -277,7 +280,7 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color:rgb(256, 256, 256, 0.8);
+  background-color: rgb(256, 256, 256, 0.8);
   width: 50px !important;
   height: 50px !important;
   border-radius: 30px;
@@ -343,7 +346,6 @@ h3.card-title {
 .card-career .card-content {
   padding: 1rem;
 }
-
 
 .card-career .card-subtitle {
   color: var(--red-primary);
@@ -457,9 +459,10 @@ h3.card-title {
     font-size: 15px !important;
     top: 10px !important;
     left: 10px !important;
-    padding: 10px!important;
+    padding: 10px !important;
   }
-  .play-button {    font-size: 25px !important; /* Smaller play button */
+  .play-button {
+    font-size: 25px !important; /* Smaller play button */
     margin-top: 10px !important; /* Adjust the margin for better positioning */
   }
   .image-container {
@@ -469,8 +472,7 @@ h3.card-title {
   .aftertext {
     max-width: 100% !important; /* Allow text to use full width */
   }
-
-  }
+}
 
 @media (max-width: 43rem) {
   .counter {
