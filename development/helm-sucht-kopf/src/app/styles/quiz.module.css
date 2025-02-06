@@ -441,9 +441,10 @@
 .navButtons {
     display: flex;
     justify-content: space-between;
-    position: absolute;
+    position: relative;
     bottom: 1%;
     left: 50%;
+    margin-top: 1rem;
     transform: translateX(-50%);
     width: 100%;
     max-width: 600px;
