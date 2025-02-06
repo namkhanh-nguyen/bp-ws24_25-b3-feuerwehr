@@ -58,10 +58,10 @@ bo .fadeIn {
 }
 
 .inputContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .inputField {
@@ -680,13 +680,13 @@ bo .fadeIn {
 }
 
 .message {
-  font-size: 1rem;
-  color: #e40422;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 10px;
-  border: 1px solid #e40422;
-  animation: fadeIn 0.3s ease-in-out;
+    font-size: 1rem;
+    color: #E40422;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid #E40422;
+    animation: fadeIn 0.3s ease-in-out;
 }
 .successContainer h3 {
   font-size: 2rem;
