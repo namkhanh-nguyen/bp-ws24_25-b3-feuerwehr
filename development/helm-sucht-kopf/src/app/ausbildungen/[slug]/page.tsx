@@ -1,5 +1,5 @@
 import {fetchJobs} from '@/app/api/jobs/fetchJobs';
-import BackButton from '@/app/components/button/backbutton';
+import BackButton from '@/app/components/button/BackButton';
 type JobProps = {
     params: Promise<{
         slug: string;
