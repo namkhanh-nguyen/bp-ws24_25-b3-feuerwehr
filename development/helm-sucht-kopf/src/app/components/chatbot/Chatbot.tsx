@@ -8,7 +8,6 @@ import {
     X,
     ChevronRight,
     Send,
-    ArrowLeft,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -332,9 +331,6 @@ export default function Chatbot() {
                 behavior: "smooth",
             });
         }
-        if (isOpen && inputRef.current) {
-            inputRef.current.focus();
-        }
     }, [messages, isOpen]);
 
     /* --------- Render ------- */
@@ -344,23 +340,15 @@ export default function Chatbot() {
                 <div className="fixed top-20 sm:top-40 inset-0 sm:inset-auto sm:bottom-24 sm:right-4 w-full sm:w-[400px] h-[calc(100%-5rem)] sm:h-auto z-50">
                     <Card className="flex flex-col h-full rounded-none sm:rounded-xl border-0 sm:border shadow-2xl bg-zinc-50">
                         {/* HEADER */}
-                        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-none sm:rounded-t-xl border-b border-red-700">
+                        <div className="flex items-center justify-between px-4 py-3 bg-[#e40422] text-white rounded-none sm:rounded-t-xl border-b border-red-700">
                             <div className="flex items-center gap-3">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={handleClose}
-                                    className="md:hidden text-white hover:text-white hover:bg-white/20"
-                                >
-                                    <ArrowLeft className="h-5 w-5" />
-                                </Button>
                                 <img
                                     src={BotIcon.src || "/placeholder.svg"}
                                     alt="Chatbot Avatar"
                                     className="w-10 h-10 rounded-full bg-white p-2 [&>path]:fill-red-600"
                                 />
                                 <div>
-                                    <h2 className="font-semibold text-white">Feuerwehr Support</h2>
+                                    <h2 className="font-semibold text-white text-base whitespace-nowrap m-0">Feuerwehr Support</h2>
                                     <p className="text-xs text-white/80">Immer für Dich da</p>
                                 </div>
                             </div>
@@ -402,7 +390,7 @@ export default function Chatbot() {
                                             className={cn(
                                                 "rounded-2xl px-4 py-2 text-sm",
                                                 msg.sender === "user"
-                                                    ? "bg-gradient-to-r from-red-600 to-red-700 text-white"
+                                                    ? "bg-[#e40422] text-white"
                                                     : "bg-white shadow-sm border"
                                             )}
                                         >
@@ -476,13 +464,13 @@ export default function Chatbot() {
                                         placeholder="Stelle deine Frage..."
                                         value={userInput}
                                         onChange={(e) => setUserInput(e.target.value)}
-                                        className="w-full px-4 py-3 rounded-full bg-zinc-100 border-0 focus:ring-0 placeholder:text-zinc-400 text-sm"
+                                        className="w-full px-4 py-3 rounded-full bg-zinc-100 border-0 focus:ring-0 placeholder:text-zinc-400 text-[16px]"
                                     />
                                 </div>
                                 <Button
                                     type="submit"
                                     size="icon"
-                                    className="rounded-full w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 flex-shrink-0"
+                                    className="rounded-full w-10 h-10 bg-[#e40422] hover:bg-[#c9031d] flex-shrink-0"
                                 >
                                     <Send className="h-4 w-4" />
                                 </Button>
