@@ -271,11 +271,14 @@ const submitQuiz = async () => {
                                             return updatedAnswers;
                                         });
                                     }}
-                                    // onValidation={(message) => {
-                                    //     setMessages({ ...messages, heightMessage: message });
-                                    // }}
+                                    onValidation={(message) => {
+                                        setMessages({...messages, heightMessage: message});
+                                    }}
                                 />
-                                {messages.heightMessage && <div className={styles.message}>{messages.heightMessage}</div>}
+                                <div style={{ marginTop:'0.7rem',marginBottom: '0.5rem'}}>
+                                    {messages.heightMessage &&
+                                        <div className={styles.message}>{messages.heightMessage}</div>}
+                                </div>
                             </div>
                         )}
 
