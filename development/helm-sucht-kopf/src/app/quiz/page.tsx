@@ -10,9 +10,7 @@ import QuestionSlider from '../components/quiz/QuestionSlider';
 import QuestionTimer from '../components/quiz/QuestionTimer';
 import { useRouter } from 'next/navigation';
 import WaveProgress from '../components/quiz/WaveProgress';
-import FireVictoryIcon from '@/app/components/quiz/FIreVictory';
-import HouseOnFireIcon from "@/app/components/quiz/HouseOnFire";
-import FIreVictory from "@/app/components/quiz/FIreVictory";
+import FireVictoryIcon from '@/app/components/quiz/FireVictory';
 
 const Quiz = () => {
     const [currentScreen, setCurrentScreen] = useState<'intro' | 'story' | 'intermediate' | 'quiz' | 'illustration01'| 'illustration02'| 'results' | 'success'>('intro')  ;
