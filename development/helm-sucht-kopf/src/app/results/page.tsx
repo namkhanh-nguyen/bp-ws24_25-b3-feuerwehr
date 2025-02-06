@@ -101,17 +101,17 @@ const Results = () => {
                     Quiz erneut starten
                 </button>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width:'120%'}}>
                 <div className={styles2.undecidedDiv}>
                     <div
                          style={{
-                             width: '90%',
-                             maxWidth: '700px'
+                             width: '100%',
+                             maxWidth: '700px',
+                             marginTop: '0.5rem'
                          }}>
                         <div style={{
                             position: 'relative',
-                            width: '90%',
-                            margin: '1rem'
+                            width: '100%',
                         }}>
                             <img
                                 src={`./assets/video/Azubis.jpg`}
