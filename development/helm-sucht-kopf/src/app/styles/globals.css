@@ -44,7 +44,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   line-height: 1.2;
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -95,6 +95,10 @@ a:not(h1, h2, h3, h4, h5, h6):hover {
 a:has(h1, h2, h3, h4, h5, h6):hover {
   text-decoration: none;
   color: inherit;
+}
+
+main ul li {
+  font-size: 1.25rem;
 }
 
 /* Hero Section */
