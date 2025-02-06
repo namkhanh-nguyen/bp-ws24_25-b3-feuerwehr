@@ -572,6 +572,7 @@ bo .fadeIn {
 }
 .restartButton {
   margin-top: 3rem;
+  margin-bottom: 3rem;
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
   font-family: var(--font-berlin-type-bold);
@@ -580,7 +581,6 @@ bo .fadeIn {
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  max-width: 200px;
   width: 100%;
 }
 .buttonContainer {
