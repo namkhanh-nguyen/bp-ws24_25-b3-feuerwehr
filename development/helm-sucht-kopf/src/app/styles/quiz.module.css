@@ -467,9 +467,6 @@
     background-color: #E40422;
 }
 
-.backButton:hover, .nextButton:hover {
-    background-color: #000000;
-}
 
 .backButton:disabled, .nextButton:disabled {
     background-color: #ddd;
