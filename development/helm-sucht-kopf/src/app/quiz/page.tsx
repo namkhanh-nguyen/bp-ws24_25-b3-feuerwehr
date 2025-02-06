@@ -273,9 +273,9 @@ const submitQuiz = async () => {
                                             return updatedAnswers;
                                         });
                                     }}
-                                    onValidation={(message) => {
-                                        setMessages({ ...messages, heightMessage: message });
-                                    }}
+                                    // onValidation={(message) => {
+                                    //     setMessages({ ...messages, heightMessage: message });
+                                    // }}
                                 />
                                 {messages.heightMessage && <div className={styles.message}>{messages.heightMessage}</div>}
                             </div>
