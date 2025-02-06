@@ -55,7 +55,7 @@ const Results = () => {
       {currentJobs.length > 0 ? (
         <>
           <p className={styles.centeredText}>
-            Anhand deiner Antworten im Quiz haben wir für dich folgende Auswahl
+            Anhand Deiner Antworten im Quiz haben wir für Dich folgende Auswahl
             getroffen.
             <br />
             Diese Ausbildungen kannst Du direkt mit Deinem aktuellen Abschluss

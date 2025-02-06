@@ -1,17 +1,15 @@
 .pageMasterDiv {
+  margin-top: 5rem;
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 2vh 2vh 0;
   font-family: var(--font-berlin-type-regular), serif;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.introSection {
+  margin-bottom: 4rem;
+  max-width: 75%;
+  margin-left: auto;
 }
 
 .deinWeg {
@@ -39,9 +37,12 @@
   display: block;
   flex-shrink: 0;
   max-width: 25%;
-  padding: 0.5rem 1rem;
-  margin-top: 2rem;
+  padding-right: 2rem;
   align-self: flex-start;
+}
+
+.filterContainer h2 {
+  margin-top: 0;
 }
 
 .mobileFilterButton {
@@ -72,11 +73,11 @@
 }
 
 .resetButton {
-  background-color: var(--red-primary);
   margin-top: 1rem;
   padding: 0.5rem;
   border-radius: 1rem;
-  color: white;
+  border: 1px solid;
+  color: var(--foreground-color);
   width: 50%;
   display: block;
   margin-left: auto;
@@ -86,8 +87,6 @@
 .jobsList {
   display: grid;
   gap: 1rem;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
   flex-grow: 1;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -145,9 +144,11 @@
 }
 
 .undecidedDiv {
+  max-width: 75%;
+  margin-left: auto !important;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: right;
+  align-items: Right;
   margin: 2rem 0;
 }
 
@@ -176,13 +177,6 @@
     padding: 0;
   }
 
-  .container {
-    align-items: flex-start; /* Left-align items */
-    text-align: left; /* Left-align text */
-    padding: 1rem; /* Add some padding for better spacing */
-    height: auto; /* Adjust height for mobile */
-  }
-
   .zumNavigator {
     width: 100%;
   }
@@ -206,8 +200,6 @@
 
   .jobsList {
     grid-template-columns: repeat(1, minmax(0, 1fr));
-    padding-left: 1rem;
-    padding-right: 1rem;
   }
 
   .jobHoverInfo {
@@ -224,7 +216,15 @@
 }
 
 /* Media query for smaller viewports (or when zoomed in) */
-@media (max-width: 1200px) {
+@media (max-width: 75rem) {
+  .undecidedDiv {
+    max-width: 100%;
+  }
+
+  .introSection {
+    max-width: 100%;
+  }
+
   .jobShortDesc {
     bottom: 1.2rem;
     font-size: 1rem;
