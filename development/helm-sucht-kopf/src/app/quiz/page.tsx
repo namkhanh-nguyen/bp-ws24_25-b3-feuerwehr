@@ -159,12 +159,10 @@ const Quiz = () => {
               Finde den Job, der zu Dir passt!
             </h3>
             <p style={{ fontSize: "1.1rem" }}>
-              Willkommen beim Karriere-Navigator! Mit diesem Quiz findest Du
-              heraus, welche Ausbildungsmöglichkeiten bei der{" "}
-              <span style={{ fontWeight: "bold", color: "red" }}>
-                Berliner Feuerwehr
-              </span>{" "}
-              perfekt zu Dir und Deinen Stärken passen.
+              Willkommen beim Karriere-Quiz! Mit diesem Quiz findest Du heraus,
+              welche Ausbildungsmöglichkeiten bei der{" "}
+              <span style={{ color: "red" }}>Berliner Feuerwehr</span> perfekt
+              zu Dir und Deinen Stärken passen.
             </p>
             <button onClick={goNext} className={styles.continueButton}>
               Start

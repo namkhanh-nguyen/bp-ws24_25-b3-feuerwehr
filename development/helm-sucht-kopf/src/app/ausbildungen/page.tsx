@@ -82,16 +82,17 @@ export default function JobsPage() {
               Dein Weg bei der Berliner Feuerwehr
             </h1>
             <p style={{ marginTop: "0.5rem" }}>
-              Finde deinen idealen Karriereweg bei der Feuerwehr Berlin. Der
-              Karriere Navigator zeigt dir alle Optionen, Spezialisierungen und
-              Aufstiegschancen – für eine erfolgreiche und spannende Laufbahn.
+              Entdecke Deine Zukunft bei der Berliner Feuerwehr! Probier unser
+              Karriere-Quiz und lass Dich überraschen – wir haben die passende
+              Empfehlung für Dich! Oder nutze unsere Filter, um die Position zu
+              finden, die zu Dir passt.
             </p>
           </div>
           <button
             onClick={() => (window.location.href = "/quiz")}
             className="hero-button"
           >
-            Zum Karriere Quiz
+            Zum Karriere-Quiz
           </button>
         </div>
         <div className={styles.jobSection}>
