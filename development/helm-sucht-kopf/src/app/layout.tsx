@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./styles/globals.css";
 import React from "react";
 import Footer from "./components/navigation/Footer";
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import ChatbotWrapper from "@/app/components/quiz/ChatbotWrapper";
 import DynamicHeaderWrapper from "@/app/components/header/DynamicHeaderWrapper";
 
