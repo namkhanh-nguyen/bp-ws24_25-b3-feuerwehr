@@ -144,12 +144,11 @@
 }
 
 .undecidedDiv {
-  max-width: 75%;
-  margin-left: auto !important;
   display: flex;
   justify-content: right;
   align-items: Right;
   margin: 2rem 0;
+  margin-top: 4rem;
 }
 
 .undecidedText {
