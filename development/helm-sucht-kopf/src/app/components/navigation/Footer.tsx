@@ -70,26 +70,6 @@ export default function Footer() {
             </ul>
           </div>
           <div className={styles.column}>
-            <h2>Kontakt</h2>
-            <ul>
-              <li>
-                <a href="mailto:info@berliner-feuerwehr.de">
-                  info@berliner-feuerwehr.de
-                </a>
-              </li>
-              <li>
-                <a href="tel:+4930387111">+49 30 387 111</a>
-              </li>
-              <li>
-                <a href={geoLink} target="_blank" rel="noopener noreferrer">
-                  Berliner Feuerwehr
-                  <br />
-                  10150 Berlin
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className={styles.column}>
             <h2>Social Media</h2>
             <ul className={styles.socialLinks}>
               <li>
