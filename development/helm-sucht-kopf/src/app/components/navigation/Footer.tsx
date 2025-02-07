@@ -144,21 +144,9 @@ export default function Footer() {
       </div>
       <div className={styles.bottomBar}>
         <div className="container">
-          <div>&copy; {currentYear}, Berliner Feuerwehr</div>
           <div>
-            <a
-                href="/impressum"
-            >
-              Impressum
-            </a>{" "}
-            |{" "}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.berliner-feuerwehr.de/datenschutz/"
-            >
-              Datenschutz
-            </a>
+            <a href="/impressum">Impressum</a> |{" "}
+            <a href="/das-projekt">Über das Projekt</a>
           </div>
         </div>
       </div>

@@ -55,6 +55,9 @@ const Results = () => {
       {currentJobs.length > 0 ? (
         <>
           <p className={styles.centeredText}>
+            Anhand Deiner Antworten im Quiz haben wir für Dich folgende Auswahl
+            getroffen.
+            <br />
             Diese Ausbildungen kannst Du direkt mit Deinem aktuellen Abschluss
             beginnen:
           </p>
@@ -73,9 +76,9 @@ const Results = () => {
         </>
       ) : (
         <p className={styles.centeredText}>
-          Leider gibt es derzeit keine Ausbildungen, die direkt mit Ihrem
-          aktuellen Abschluss begonnen werden können. Schauen Sie sich jedoch
-          die zukünftigen Möglichkeiten an.
+          Leider gibt es derzeit keine Ausbildungen, die direkt mit Deinem
+          aktuellen Abschluss begonnen werden können. Schau Dir jedoch gerne
+          deine zukünftigen Möglichkeiten an.
         </p>
       )}
 
@@ -116,14 +119,14 @@ const Results = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          margin: "0",
         }}
       >
         <div className={styles2.undecidedDiv}>
           <div
             style={{
-              width: "100%",
-              maxWidth: "700px",
-              marginTop: "0.5rem",
+              marginTop: "1rem",
+              marginBottom: "1rem",
             }}
           >
             <div
@@ -138,10 +141,9 @@ const Results = () => {
                 style={{
                   borderRadius: "2rem",
                   filter: "brightness(0.7)",
-                  maxWidth: "100vw",
                   objectFit: "cover",
                   objectPosition: "center 15%",
-                  height: "30vh",
+                  maxHeight: "40vh",
                 }}
               />
               <div className={styles2.undecidedText}>
