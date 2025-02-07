@@ -12,7 +12,7 @@ const JobCard: React.FC<JobCardProps> = ({ id, slug, name, shortDesc }) => {
   return (
     <div
       key={id}
-      className="job-card flex flex-col md:flex-row group"
+      className="job-card flex flex-col md:flex-row mt-5 group bg-white"
       style={{
         flexDirection: "column",
         borderWidth: "1px",
